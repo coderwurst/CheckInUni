@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!-- LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+              android:gravity="center_horizontal">
+
+    Sample Dashboard screen with Two buttons
+     Button to view all products screen
+    <Button android:id="@+id/btnViewProducts"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="View Products"
+            android:layout_marginTop="25dip"/>
+
+     Button to create a new product screen
+    <Button android:id="@+id/btnCreateProduct"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Add New Products"
+            android:layout_marginTop="25dip"/>
+
+</LinearLayout-->
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:background="@color/UUJBlue">
+
+<Button android:id="@+id/test_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/test"
+            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
+            android:layout_marginBottom="100dp" android:textSize="26dp" android:textStyle="bold"/>
+
+<Button android:id="@+id/scan_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/scan"
+        android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp" android:textSize="26dp" android:textStyle="bold"/>
+
+<TextView
+        android:id="@+id/scan_format"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/scan_button" />
+<TextView
+        android:id="@+id/scan_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/scan_format" />
+<ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/UULogo"
+        android:background="@drawable/uulogo"
+        android:layout_alignParentTop="true" android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp" android:contentDescription="@string/uuj_logo_att"/>
+
+</RelativeLayout>
