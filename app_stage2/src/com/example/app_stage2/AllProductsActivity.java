@@ -46,7 +46,7 @@ public class AllProductsActivity extends ListActivity {
 
 	// url to get all products list
 	// private static String url_all_products = "http://172.17.42.133/xampp/PHPTest/get_all_products.php";         //http://localhost/xampp/PHPTest/get_all_products.php
-    private static String url_all_students = "http://172.17.42.133/xampp/student_attendance/get_all_students.php";
+    private static String url_all_students = "http://172.17.45.96/xampp/student_attendance/get_all_students.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
@@ -176,7 +176,7 @@ public class AllProductsActivity extends ListActivity {
 					// no products found
 					// Launch Add New product Activity
 					Intent i = new Intent(getApplicationContext(),
-							NewProductActivity.class);
+							SignIn.class);
 					// Closing all previous activities
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(i);

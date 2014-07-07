@@ -42,7 +42,7 @@
 
         <!-- Add Product Activity -->
         <activity
-                android:name="com.example.app_stage2.NewProductActivity"
+                android:name="com.example.app_stage2.SignIn"
                 android:label="Add New Product" >
         </activity>
 

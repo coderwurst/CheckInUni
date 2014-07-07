@@ -1,13 +1,5 @@
 package com.example.app_stage2;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,6 +9,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -31,32 +30,41 @@ import android.widget.EditText;
  */
 
 
-public class NewProductActivity extends Activity
+public class SignIn extends Activity
 {
+
+    // String to hold captured data
+    String scanInfo = "";
 
 	// Progress Dialog
 	private ProgressDialog pDialog;
 
 	JSONParser jsonParser = new JSONParser();
-	EditText inputName;
-	EditText inputPrice;
-	EditText inputDesc;
+	EditText inputStudentID;
+	EditText inputModuleID;
+	EditText inputType;
 
 	// url to create new product
-	private static String url_create_product = "http://172.17.42.133/xampp/PHPTest/create_product.php";
+	private static String url_sign_in = "http://172.17.45.96/xampp/student_attendance/sign_in.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+    {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.add_product);
+		setContentView(R.layout.sign_in);
+
+        //unpack the data scanned into the app
+        Bundle bundle = getIntent().getExtras();
+        scanInfo = bundle.getString("Info");
 
 		// Edit Text
-		inputName = (EditText) findViewById(R.id.inputName);
-		inputPrice = (EditText) findViewById(R.id.inputPrice);
-		inputDesc = (EditText) findViewById(R.id.inputDesc);
+		inputStudentID = (EditText) findViewById(R.id.student_id);
+		inputModuleID = (EditText) findViewById(R.id.module_id);
+        inputModuleID.setText(scanInfo);
+		inputType = (EditText) findViewById(R.id.type);
 
 		// Create button
 		Button btnCreateProduct = (Button) findViewById(R.id.btnCreateProduct);
@@ -65,17 +73,19 @@ public class NewProductActivity extends Activity
 		btnCreateProduct.setOnClickListener(new View.OnClickListener() {
 
 			@Override
-			public void onClick(View view) {
+			public void onClick(View view)
+            {
 				// creating new product in background thread
-				new CreateNewProduct().execute();
-			}
+				new SignIntoClass().execute();
+			}// onClick
 		});
-	}
+	}// onCreate
 
 	/**
 	 * Background Async Task to Create new product
 	 * */
-	class CreateNewProduct extends AsyncTask<String, String, String> {
+	class SignIntoClass extends AsyncTask<String, String, String>
+    {
 
 		/**
 		 * Before starting background thread Show Progress Dialog
@@ -83,30 +93,33 @@ public class NewProductActivity extends Activity
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialog = new ProgressDialog(NewProductActivity.this);
-			pDialog.setMessage("Creating Product..");
+			pDialog = new ProgressDialog(SignIn.this);
+			pDialog.setMessage("Signing in...");
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(true);
 			pDialog.show();
 		}
 
 		/**
-		 * Creating product
+		 * Registering the Student as Present
 		 * */
-		protected String doInBackground(String... args) {
-			String name = inputName.getText().toString();
-			String price = inputPrice.getText().toString();
-			String description = inputDesc.getText().toString();
+		protected String doInBackground(String... args)
+        {
+
+
+			String student_id = inputStudentID.getText().toString();
+			String module_id = inputModuleID.getText().toString();
+			String type = inputType.getText().toString();
 
 			// Building Parameters
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("name", name));
-			params.add(new BasicNameValuePair("price", price));
-			params.add(new BasicNameValuePair("description", description));
+			params.add(new BasicNameValuePair("student_id", student_id));
+			params.add(new BasicNameValuePair("module_id", module_id));
+			params.add(new BasicNameValuePair("type", type));
 
 			// getting JSON Object
 			// Note that create product url accepts POST method
-			JSONObject json = jsonParser.makeHttpRequest(url_create_product,
+			JSONObject json = jsonParser.makeHttpRequest(url_sign_in,
 					"POST", params);
 			
 			// check log cat fro response
@@ -141,5 +154,5 @@ public class NewProductActivity extends Activity
 			pDialog.dismiss();
 		}
 
-	}
-}
+	}// createNewProduct
+}//

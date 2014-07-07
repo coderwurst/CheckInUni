@@ -2,19 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" >
+              android:orientation="vertical" android:background="@color/UUJBlue">
 
     <!-- Name Label -->
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="Product Name"
+              android:text="Student I.D."
               android:paddingLeft="10dip"
               android:paddingRight="10dip"
               android:paddingTop="10dip"
               android:textSize="17dip"/>
 
     <!-- Input Name -->
-    <EditText android:id="@+id/inputName"
+    <EditText android:id="@id/student_id"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:layout_margin="5dip"
@@ -24,32 +24,32 @@
     <!-- Price Label -->
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="Price"
+              android:text="Module I.D."
               android:paddingLeft="10dip"
               android:paddingRight="10dip"
               android:paddingTop="10dip"
               android:textSize="17dip"/>
 
     <!-- Input Price -->
-    <EditText android:id="@+id/inputPrice"
+    <EditText android:id="@id/module_id"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:layout_margin="5dip"
               android:layout_marginBottom="15dip"
               android:singleLine="true"
-              android:inputType="numberDecimal"/>
+              android:inputType="text"/>
 
     <!-- Description Label -->
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="Description"
+              android:text="Type"
               android:paddingLeft="10dip"
               android:paddingRight="10dip"
               android:paddingTop="10dip"
               android:textSize="17dip"/>
 
     <!-- Input description -->
-    <EditText android:id="@+id/inputDesc"
+    <EditText android:id="@id/type"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:layout_margin="5dip"
@@ -61,6 +61,6 @@
     <Button android:id="@+id/btnCreateProduct"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Create Product"/>
+            android:text="Confirm Details"/>
 
 </LinearLayout>
