@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="student_id" type="id"/>
+    <item name="module_id" type="id"/>
+    <item name="type" type="id"/>
+    <item name="user_id" type="id"/>
+    <item name="confirm_reg_details" type="id"/>
+</resources>
