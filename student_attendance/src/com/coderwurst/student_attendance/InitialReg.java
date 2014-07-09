@@ -3,6 +3,7 @@ package com.coderwurst.student_attendance;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,9 +25,12 @@ public class InitialReg extends Activity
 {
     String scannedID = "";      // string to store scanned ID data
 
-    public static final String USER_ID = "User ID File";
+    // opens the sharedPref file to allow user id to be stored
+    public static final String PREFERENCES_FILE = "User ID File";
+    static SharedPreferences userDetails;
     EditText userID;
 
+    // need to think about identifying staff & student ids to allow for different interfaces
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -34,7 +38,7 @@ public class InitialReg extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.initial_reg);
 
-        // unpack the data scanned into the app
+        // unpack the data scanned into the activity
         Bundle bundle = getIntent().getExtras();
         scannedID = bundle.getString("Info");
 
@@ -53,16 +57,18 @@ public class InitialReg extends Activity
                 // creating new product in background thread
                 // new SignIntoClass().execute();
 
-                SharedPreferences userDetails = getSharedPreferences(USER_ID, 0); // create the shared preferences package
 
-                SharedPreferences.Editor editor = userDetails.edit();
+                userDetails = getSharedPreferences(PREFERENCES_FILE, 0); // create the shared preferences package
+
+                SharedPreferences.Editor editor = userDetails.edit();           // edit the userID to the shared preference file
                 editor.putString("user_ID", userID.getText().toString());
-
-                editor.commit();
+                editor.commit();                                                // save changes
 
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "user stored: " + userDetails.getString("user_ID", "default") , Toast.LENGTH_LONG);
                 toast.show();
+
+                Log.d(userID.getText().toString(), "initial ID value");          // logcat tag to view contents of string
 
 
             }// onClick

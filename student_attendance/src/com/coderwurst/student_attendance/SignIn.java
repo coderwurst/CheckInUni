@@ -1,6 +1,7 @@
 package com.coderwurst.student_attendance;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -33,10 +34,14 @@ import java.util.List;
 public class SignIn extends Activity
 {
 
+    public static final String USER_ID = "User ID File";
+
+    static SharedPreferences userDetails;
+
     // Strings to hold data elements
     String allInfo = "";
     String moduleInfo = "";
-    String userID = "B00652181";
+    String userID = "";
     String classInfo = "";
 
 	// progress dialog to inform user
@@ -48,7 +53,7 @@ public class SignIn extends Activity
 	EditText inputType;
 
 	// url to create new product
-	private static String url_sign_in = "http://172.17.47.241/xampp/student_attendance/sign_in.php";
+	private static String url_sign_in = "http://172.17.50.167/xampp/student_attendance/sign_in.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
@@ -56,7 +61,17 @@ public class SignIn extends Activity
 	@Override
 	public void onCreate(Bundle savedInstanceState)
     {
-		super.onCreate(savedInstanceState);
+        // retrieves the shared preferences file containing the user ID
+        userDetails = getSharedPreferences(USER_ID, 0);
+        userID = userDetails.getString("user_ID", "default");
+        Log.d(userID, "middle ID value");          // logcat tag to view contents of string at this stage (testing purposes only)
+
+
+        /* code if the user ID is not in the database to inform them of an error or
+           not saved to take the user to the register screen */
+
+        // opens up sign-in confirmation screen
+        super.onCreate(savedInstanceState);
 		setContentView(R.layout.sign_in);
 
         // unpack the data scanned into the app
@@ -67,6 +82,9 @@ public class SignIn extends Activity
         * for class type */
         moduleInfo = allInfo.substring(allInfo.indexOf("{") + 1, allInfo.indexOf("}"));
         classInfo = allInfo.substring(allInfo.indexOf("[") + 1, allInfo.indexOf("]"));
+
+        Log.d(userID, "end ID value");          // logcat tag to view contents of string at this stage (testing purposes only)
+
 
 		// edit text in input boxes for comparison before being sent
 		inputStudentID = (EditText) findViewById(R.id.student_id);
@@ -109,7 +127,7 @@ public class SignIn extends Activity
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(true);
 			pDialog.show();
-		} // onPreExectue
+		} // onPreExecute
 
 		/**
 		 * registering the student as present
@@ -131,7 +149,7 @@ public class SignIn extends Activity
 			// NB url accepts POST method
 			JSONObject json = jsonParser.makeHttpRequest(url_sign_in,
 					"POST", params);
-			
+
 			// check log cat for response
 			Log.d("Create Response", json.toString());
 
