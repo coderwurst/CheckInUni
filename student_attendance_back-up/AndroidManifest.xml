@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.coderwurst.student_attendance"
+          android:versionCode="1"
+          android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="8" />
+
+    <application
+            android:configChanges="keyboardHidden|orientation"
+            android:icon="@drawable/uulogo"
+            android:label="@string/app_name" >
+
+    <!-- Splash screen -->
+    <activity
+            android:name="com.coderwurst.student_attendance.Splash"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+
+    </activity>
+
+    <activity
+                android:name="com.coderwurst.student_attendance.MainScreenActivity"
+                android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- All Product Activity -->
+        <activity
+                android:name="com.coderwurst.student_attendance.AllProductsActivity"
+                android:label="test activity" >
+        </activity>
+
+        <!-- Sign-in Activity -->
+        <activity
+                android:name="com.coderwurst.student_attendance.SignIn"
+                android:label="sign-in" >
+        </activity>
+
+        <!-- Register Activity -->
+        <activity
+                android:name="com.coderwurst.student_attendance.InitialReg"
+                android:label="initial registration" >
+        </activity>
+
+        <!-- Lecturer UI -->
+        <activity
+                android:name="com.coderwurst.student_attendance.LecturerUI"
+                android:label="student_attendance" >
+        </activity>
+
+        <!-- Student UI -->
+        <activity
+                android:name="com.coderwurst.student_attendance.StudentUI"
+                android:label="student_attendance" >
+        </activity>
+
+        <!-- Edit Product Activity -->
+        <activity
+                android:name="com.coderwurst.student_attendance.EditProductActivity"
+                android:label="Edit Product" >
+        </activity>
+    </application>
+
+    <!--  Internet Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+</manifest>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" android:background="@color/UUJBlue">
+
+    <!-- ID Label -->
+    <TextView android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="Student I.D."
+              android:paddingLeft="10dip"
+              android:paddingRight="10dip"
+              android:paddingTop="10dip"
+              android:textSize="17dip"/>
+
+    <!-- Input Student ID -->
+    <EditText android:id="@id/student_id"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="5dip"
+              android:layout_marginBottom="15dip"
+              android:singleLine="true"/>
+
+    <!-- Module Label -->
+    <TextView android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="Module I.D."
+              android:paddingLeft="10dip"
+              android:paddingRight="10dip"
+              android:paddingTop="10dip"
+              android:textSize="17dip"/>
+
+    <!-- Input Module -->
+    <EditText android:id="@id/module_id"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="5dip"
+              android:layout_marginBottom="15dip"
+              android:singleLine="true"
+              android:inputType="text"/>
+
+    <!-- Type Label -->
+    <TextView android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="Type"
+              android:paddingLeft="10dip"
+              android:paddingRight="10dip"
+              android:paddingTop="10dip"
+              android:textSize="17dip"/>
+
+    <!-- Input Type -->
+    <EditText android:id="@id/type"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="5dip"
+              android:layout_marginBottom="15dip"
+              android:singleLine="true"
+              android:gravity="top"/>
+
+    <!-- Button Subimit -->
+    <Button android:id="@+id/btnCreateProduct"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm Details"/>
+
+</LinearLayout>

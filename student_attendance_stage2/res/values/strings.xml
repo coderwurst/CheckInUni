@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">app_stage2</string>
+    <string name="scan">sign-in</string>
+    <string name="test">test</string>
+    <string name="uuj_logo_att">main UUJ Logo</string>
+    <string name="splash_welcome">main UUJ Logo</string>
+</resources>
