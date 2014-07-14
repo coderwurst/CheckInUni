@@ -48,6 +48,18 @@
                 android:label="initial registration" >
         </activity>
 
+        <!-- Lecturer UI -->
+        <activity
+                android:name="com.coderwurst.student_attendance.LecturerUI"
+                android:label="student_attendance" >
+        </activity>
+
+        <!-- Student UI -->
+        <activity
+                android:name="com.coderwurst.student_attendance.StudentUI"
+                android:label="student_attendance" >
+        </activity>
+
         <!-- Edit Product Activity -->
         <activity
                 android:name="com.coderwurst.student_attendance.EditProductActivity"

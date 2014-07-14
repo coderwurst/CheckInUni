@@ -47,13 +47,16 @@ public class SignIn extends Activity
 	// progress dialog to inform user
 	private ProgressDialog pDialog;
 
+    // creates the JSONParser object
 	JSONParser jsonParser = new JSONParser();
+
+    // fields to store data - for testing purposes only
 	EditText inputStudentID;
 	EditText inputModuleID;
 	EditText inputType;
 
 	// url to create new product
-	private static String url_sign_in = "http://172.17.50.167/xampp/student_attendance/sign_in.php";
+	private static String url_sign_in = "http://192.168.1.104/xampp/student_attendance/sign_in.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
@@ -66,9 +69,6 @@ public class SignIn extends Activity
         userID = userDetails.getString("user_ID", "default");
         Log.d(userID, "middle ID value");          // logcat tag to view contents of string at this stage (testing purposes only)
 
-
-        /* code if the user ID is not in the database to inform them of an error or
-           not saved to take the user to the register screen */
 
         // opens up sign-in confirmation screen
         super.onCreate(savedInstanceState);
@@ -185,5 +185,5 @@ public class SignIn extends Activity
 			pDialog.dismiss();
 		}// onPostExecute
 
-	}// createNewProduct
+	}// signIntoClass
 }// SignIn

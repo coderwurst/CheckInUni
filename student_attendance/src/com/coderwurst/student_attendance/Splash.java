@@ -25,6 +25,7 @@ public class Splash extends Activity
     public void onCreate(Bundle icicle)
     {
         super.onCreate(icicle);
+
         setContentView(R.layout.splash);
 
         // handler to start the MainScreenActivity and close this Splash-Screen after 1000 milliseconds

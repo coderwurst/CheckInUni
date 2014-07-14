@@ -46,7 +46,7 @@ public class AllProductsActivity extends ListActivity
 	ArrayList<HashMap<String, String>> studentsList;
 
 	// url to get all products list
-    private static String url_all_students = "http://172.17.50.167/xampp/student_attendance/get_all_students.php";
+    private static String url_all_students = "http://192.168.1.104/xampp/student_attendance/get_all_students.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
