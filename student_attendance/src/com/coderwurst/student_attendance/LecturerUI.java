@@ -17,8 +17,8 @@ import com.google.zxing.integration.android.IntentResult;
  * User: andrew
  * Date: 14/07/2014
  * Time: 08:36
- * Version: V1.0
- * ADD CLASS INFORMATION HERE
+ * Version: V4.0
+ * USER INTERFACE FOR STAFF MEMBERS
  * ************************
  */
 public class LecturerUI extends Activity implements View.OnClickListener
@@ -100,17 +100,29 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 {
                     // launching SignIn Activity
                     Intent i = new Intent(getApplicationContext(), SignIn.class);
+
                     // takes the scanned info and packs it into a bundle before sending it to the SignIn class
                     String scannedInfo = scanContent;
                     i.putExtra("Info", scannedInfo);
                     startActivity(i);
+
+                    // closing this screen
+                    finish();
+
                 } else {            // && formatTxt == "Code_128"   called to change user ID (testing purposes only)
+
                     // launching Registration Activity
                     Intent i = new Intent(getApplicationContext(), InitialReg.class);
+
+
                     // takes the scanned info and packs it into a bundle before sending it to the Registration class
                     String scannedInfo = scanContent;
                     i.putExtra("Info", scannedInfo);
                     startActivity(i);
+
+                    // closing this screen
+                    finish();
+
                 }// if-else to determine if scan was to sign in or register
 
         } else {

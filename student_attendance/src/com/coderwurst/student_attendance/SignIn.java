@@ -46,6 +46,7 @@ public class SignIn extends Activity
 
 	// progress dialog to inform user
 	private ProgressDialog pDialog;
+    private String dialogText = "success";
 
     // creates the JSONParser object
 	JSONParser jsonParser = new JSONParser();
@@ -56,7 +57,7 @@ public class SignIn extends Activity
 	EditText inputType;
 
 	// url to create new product
-	private static String url_sign_in = "http://192.168.1.104/xampp/student_attendance/sign_in.php";
+	private static String url_sign_in = "http://192.168.1.112/xampp/student_attendance/sign_in.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
@@ -107,6 +108,7 @@ public class SignIn extends Activity
 				new SignIntoClass().execute();
 			}// onClick
 		});
+
 	}// onCreate
 
 	/**
@@ -159,15 +161,27 @@ public class SignIn extends Activity
 
 				if (success == 1) {
 
-                    // successfully created product
-					Intent i = new Intent(getApplicationContext(), MainScreenActivity.class);
-					startActivity(i);
+                    // returns user to home screen
+					Intent signInSuccess = new Intent(getApplicationContext(), MainScreenActivity.class);
+					startActivity(signInSuccess);
 
-					// closing this screen
-					finish();
+                    // finish this activity
+                    finish();
+
 				} else {
-					// failed to create product
-				}
+
+					// failed to sign-in
+                    // error message needed for when sign in is not successful
+                    dialogText = "an error has occurred, please try again...";
+
+                    // returns user to home screen
+                    Intent signInError = new Intent(getApplicationContext(), MainScreenActivity.class);
+                    startActivity(signInError);
+
+                    // finish this activity
+                    finish();
+
+				} // if - else
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -180,10 +194,13 @@ public class SignIn extends Activity
 		 * **/
 		protected void onPostExecute(String file_url)
         {
-            pDialog.setMessage("success!");
+            // dialog to inform user sign in result
+            pDialog.setMessage(dialogText);
 			// dismiss the dialog once done
 			pDialog.dismiss();
+
 		}// onPostExecute
+
 
 	}// signIntoClass
 }// SignIn

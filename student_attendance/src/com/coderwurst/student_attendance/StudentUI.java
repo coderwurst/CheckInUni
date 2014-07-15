@@ -16,8 +16,8 @@ import com.google.zxing.integration.android.IntentResult;
  * User: andrew
  * Date: 14/07/2014
  * Time: 09:13
- * Version: V1.0
- * ADD CLASS INFORMATION HERE
+ * Version: V4.0
+ * USER INTERFACE FOR STUDENTS
  * ************************
  */
 public class StudentUI extends Activity implements View.OnClickListener
@@ -91,18 +91,28 @@ public class StudentUI extends Activity implements View.OnClickListener
                 if (scanID == 2) // && formatTxt == "QR_CODE"
                 {
                     // launching SignIn Activity
-                    Intent i = new Intent(getApplicationContext(), SignIn.class);
+                    Intent openSignIn = new Intent(getApplicationContext(), SignIn.class);
+
                     // takes the scanned info and packs it into a bundle before sending it to the SignIn class
                     String scannedInfo = scanContent;
-                    i.putExtra("Info", scannedInfo);
-                    startActivity(i);
+                    openSignIn.putExtra("Info", scannedInfo);
+                    startActivity(openSignIn);
+
+                    // closing this screen
+                    finish();
+
                 } else {            // && formatTxt == "Code_128"   called to change user ID (testing purposes only)
                     // launching Registration Activity
-                    Intent i = new Intent(getApplicationContext(), InitialReg.class);
+                    Intent openReg = new Intent(getApplicationContext(), InitialReg.class);
+
                     // takes the scanned info and packs it into a bundle before sending it to the Registration class
                     String scannedInfo = scanContent;
-                    i.putExtra("Info", scannedInfo);
-                    startActivity(i);
+                    openReg.putExtra("Info", scannedInfo);
+                    startActivity(openReg);
+
+                    // closing this screen
+                    finish();
+
                 }// if-else to determine if scan was to sign in or register
 
         } else {

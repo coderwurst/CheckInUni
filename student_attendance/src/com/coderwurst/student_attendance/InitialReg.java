@@ -45,17 +45,16 @@ public class InitialReg extends Activity
     EditText userID;
     EditText userType;
 
-
-
     // progress dialog to inform user
     private ProgressDialog pDialog;
+    private String dialogText = "success";
 
     // creates the JSONParser object
     JSONParser jsonParser = new JSONParser();
 
     // url to authenticate user - separate PHP scripts for student and staff IDs
-    private static String url_student_auth = "http://192.168.1.104/xampp/student_attendance/auth_student.php";
-    private static String url_staff_auth = "http://192.168.1.104/xampp/student_attendance/auth_staff.php";
+    private static String url_student_auth = "http://192.168.1.112/xampp/student_attendance/auth_student.php";
+    private static String url_staff_auth = "http://192.168.1.112/xampp/student_attendance/auth_staff.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -95,7 +94,21 @@ public class InitialReg extends Activity
 
             // code to authenticate student ID with Database
 
-        } // else - if
+        } else {
+
+            // in the event that neither an B or a E id has been scanned....
+            Toast errorScan = Toast.makeText(getApplicationContext(),
+                    "ERROR: scanned data not in correct format...", Toast.LENGTH_LONG);
+            errorScan.show();
+
+            Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
+            startActivity(openMainScreen);
+
+            // closing this screen
+            finish();
+
+
+        } // if - else - if
 
 
 
@@ -165,14 +178,25 @@ public class InitialReg extends Activity
             json = jsonParser.makeHttpRequest(url_student_auth,
                     "POST", params);
 
-        } // if
-
-        if (staffUser == true)
+        } else if (staffUser == true)
         {
             json = jsonParser.makeHttpRequest(url_staff_auth,
                     "POST", params);
 
-        } // if
+        } else {
+
+            // in the event that neither an B or a E id has been scanned....
+            Toast errorScan = Toast.makeText(getApplicationContext(),
+                    "scanned data not in correct format...", Toast.LENGTH_LONG);
+            errorScan.show();
+
+            Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
+            startActivity(openMainScreen);
+
+            // closing this screen
+            finish();
+
+        } // if - else - else
 
         // check log cat for response
         Log.d("Create Response", json.toString());
@@ -211,10 +235,6 @@ public class InitialReg extends Activity
 
                     editor.commit();                                                // save changes
 
-                    /*Toast toast = Toast.makeText(getApplicationContext(),
-                            "user stored: " + userDetails.getString("user_ID", "default") + "type: " +
-                                    userDetails.getInt("user_Type", 0), Toast.LENGTH_LONG);
-                    toast.show();*/
 
                     Log.d(userID.getText().toString(), "initial ID value");          // logcat tag to view contents of string
 
@@ -227,9 +247,14 @@ public class InitialReg extends Activity
                 } else
                 {
 
+                    dialogText = "oops! an error has occurred, please try again...";// inform user that an error has occurred
+
                     // failed to authenticate user, returned to main screen to have option to register again
                     Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
                     startActivity(openMainScreen);
+
+                    // closing this screen
+                    finish();
 
                 } // if - else in the event a valid ID has been scanned but doesn't match any database records
 
@@ -249,6 +274,9 @@ public class InitialReg extends Activity
             Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
             startActivity(openMainScreen);
 
+            // closing this screen
+            finish();
+
         } // if else to determine if a student or staff number has been scanned
 
         return null;
@@ -259,7 +287,7 @@ public class InitialReg extends Activity
      * **/
     protected void onPostExecute(String file_url)
     {
-        pDialog.setMessage("complete");
+        pDialog.setMessage(dialogText);
         // dismiss the dialog once done
         pDialog.dismiss();
     }// onPostExecute

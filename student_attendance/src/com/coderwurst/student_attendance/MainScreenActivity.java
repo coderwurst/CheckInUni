@@ -59,26 +59,31 @@ public class MainScreenActivity extends Activity implements OnClickListener
         if (savedID == 2)        // if there are no savedPreferences then the app will allow user to register
         {
 
-            // code to open up student UI
-            Intent openStudentUI = new Intent(getApplicationContext(), StudentUI.class);
-            startActivity(openStudentUI);
-
-
             Toast toast2 = Toast.makeText(getApplicationContext(),
                     "User is a student member: " + savedID, Toast.LENGTH_LONG);
             toast2.show();
 
+            // code to open up student UI
+            Intent openStudentUI = new Intent(getApplicationContext(), StudentUI.class);
+            startActivity(openStudentUI);
+
+            // closing this screen
+            finish();
+
+
         } else if (savedID == 1){                    // otherwise the app will start up straight to lecturer UI
-
-
-            // code to open up staff UI
-            Intent openLecturerUI = new Intent(getApplicationContext(), LecturerUI.class);
-            startActivity(openLecturerUI);
 
 
             Toast toast1 = Toast.makeText(getApplicationContext(),
                     "User is a staff member: " + savedID, Toast.LENGTH_LONG);
             toast1.show();
+
+            // code to open up staff UI
+            Intent openLecturerUI = new Intent(getApplicationContext(), LecturerUI.class);
+            startActivity(openLecturerUI);
+
+            // closing this screen
+            finish();
 
         } else {
 
@@ -138,6 +143,9 @@ public class MainScreenActivity extends Activity implements OnClickListener
             String scannedInfo = scanContent;
             register.putExtra("Info", scannedInfo);
             startActivity(register);
+
+            // closing this screen
+            finish();
 
 
         } else {
