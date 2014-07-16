@@ -17,7 +17,7 @@ import com.google.zxing.integration.android.IntentResult;
  * User: andrew
  * Date: 14/07/2014
  * Time: 08:36
- * Version: V4.0
+ * Version: V6.0
  * USER INTERFACE FOR STAFF MEMBERS
  * ************************
  */
@@ -40,17 +40,18 @@ public class LecturerUI extends Activity implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lecturer_ui);
+        setContentView(R.layout.lecturer_ui);                           // opens up corresponding XML file
 
         // Buttons
-        btnManSignin = (Button) findViewById(R.id.lec_man_signin);      // button to return all students
-        btnAutoSignin = (Button) findViewById(R.id.lec_auto_signin);      // button to initiate scan
-        btnGetQR = (Button) findViewById(R.id.getQRCode);
+        btnManSignin = (Button) findViewById(R.id.lec_man_signin);          // to enter student & class details manually
+        btnAutoSignin = (Button) findViewById(R.id.lec_auto_signin);        // to scan student ID & class QR-Code
+        btnGetQR = (Button) findViewById(R.id.getQRCode);                   // to retrieve a particular QR-Code
 
         // TextViews for hold format and content info for testing purposes
         formatTxt = (TextView) findViewById(R.id.scan_format);
         contentTxt = (TextView) findViewById(R.id.scan_content);
 
+        // set onClick listeners for all 3 buttons
         btnManSignin.setOnClickListener(this);
         btnAutoSignin.setOnClickListener(this);
         btnGetQR.setOnClickListener(this);
@@ -62,8 +63,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
     {
         if(view.getId()==R.id.lec_man_signin)
         {
-            // opens up manual sign in activity
-
+            // opens up manual sign in activity with text input fields
             Intent openManSignin = new Intent(getApplicationContext(), AddStudentMan.class);
             startActivity(openManSignin);
 
@@ -81,10 +81,11 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
         }else {
 
-            // calls scanner to register new details in system
+            // temp test code
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
             scanID = 1;
+            // to be replaced with code to open up recall QR-Code activity
 
         }// if - else - else
     }// onClick
@@ -92,11 +93,11 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
+        // takes the scanned in data & prepares for use within this method
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
-        if (scanningResult != null)
+        if (scanningResult != null)             // as long as something has been scanned
         {
-
             // toast for unit testing to show tester scan contents
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
@@ -107,20 +108,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
                     "FORMAT: " + scanFormat + "\nCONTENT: " + scanContent, Toast.LENGTH_LONG);
             toast.show();
 
-                if (scanID == 2) // && formatTxt == "QR_CODE" to be called if auto sign-in required
-                {
-                    // launching SignIn Activity
-                    Intent i = new Intent(getApplicationContext(), SignIn.class);
-
-                    // takes the scanned info and packs it into a bundle before sending it to the SignIn class
-                    String scannedInfo = scanContent;
-                    i.putExtra("Info", scannedInfo);
-                    startActivity(i);
-
-                    // closing this screen
-                    finish();
-
-                } else {            // && formatTxt == "Code_128"   called to change user ID (testing purposes only)
+                // allows the user to re-register
 
                     // launching Registration Activity
                     Intent i = new Intent(getApplicationContext(), InitialReg.class);
@@ -133,8 +121,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
                     // closing this screen
                     finish();
-
-                }// if-else to determine if scan was to sign in or register
 
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),

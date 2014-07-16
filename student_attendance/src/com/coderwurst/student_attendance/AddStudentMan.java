@@ -25,7 +25,7 @@ import android.widget.EditText;
  * User: andrew
  * Date: 26/06/2014
  * Time: 15:08
- * Version: V1.0
+ * Version: V7.0
  * CLASS TO ALLOW LECTURER TO MANUALLY ENTER STUDENT DETAILS AND SEND TO DATABASE
  * ************************
  */

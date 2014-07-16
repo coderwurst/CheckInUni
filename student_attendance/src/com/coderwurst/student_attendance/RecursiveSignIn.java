@@ -27,7 +27,7 @@ import java.util.List;
  * User: andrew
  * Date: 16/07/2014
  * Time: 12:37
- * Version: V1.0
+ * Version: V7.0
  * ACTIVITY TO ALLOW LECTURER TO SCAN IN A STUDENT ID AND MODULE QR-CODE SEPERATELY IN ORDER TO CHECK A STUDENT IN
  * ************************
  */

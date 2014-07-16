@@ -70,7 +70,7 @@ public class InitialReg extends Activity
         scannedID = bundle.getString("Info");
 
         // user Authentication Check
-        Log.d(scannedID, "ID Auth");          // logcat tag to view contents of string at this stage (testing purposes only)
+        Log.d(scannedID, "ID Auth");          // logcat tag to view string contents (testing purposes only)
 
 
         // assign the app student or staff user privileges
@@ -110,8 +110,7 @@ public class InitialReg extends Activity
 
         } // if - else - if
 
-
-
+        // text set to scanned information for confirmation (testing purposes only)
         userID = (EditText) findViewById(R.id.user_id);
         userID.setText(scannedID);
 
@@ -213,7 +212,6 @@ public class InitialReg extends Activity
                 {
 
                     // successfully authenticated user must be saved to sharedPreferences
-
                     userDetails = getSharedPreferences(PREFERENCES_FILE, 0); // create the shared preferences package
 
                     SharedPreferences.Editor editor = userDetails.edit();           // edit the userID to the shared preference file

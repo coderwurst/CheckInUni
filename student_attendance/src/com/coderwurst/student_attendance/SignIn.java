@@ -34,9 +34,9 @@ import java.util.List;
 public class SignIn extends Activity
 {
 
-    public static final String USER_ID = "User ID File";
+    public static final String USER_ID = "User ID File";        // string to hold the user id information
 
-    static SharedPreferences userDetails;
+    static SharedPreferences userDetails;                       // sharedPreferences file for user ID
 
     // Strings to hold data elements
     String allInfo = "";
@@ -56,7 +56,7 @@ public class SignIn extends Activity
 	EditText inputModuleID;
 	EditText inputType;
 
-	// url to create new product
+	// url to create new product, NB I.P. address not static
 	private static String url_sign_in = "http://172.17.57.215/xampp/student_attendance/sign_in.php";
 
 	// JSON Node names
@@ -68,7 +68,9 @@ public class SignIn extends Activity
         // retrieves the shared preferences file containing the user ID
         userDetails = getSharedPreferences(USER_ID, 0);
         userID = userDetails.getString("user_ID", "default");
-        Log.d(userID, "middle ID value");           // logcat tag to view contents of string at this stage (testing purposes only)
+
+        // logcat tag to view contents of string at this stage (testing purposes only)
+        Log.d(userID, "middle ID value");
 
 
         // opens up sign-in confirmation screen
@@ -80,12 +82,12 @@ public class SignIn extends Activity
         allInfo = bundle.getString("Info");
 
         /** extract the necessary information out of this string to be used using special chars {} for module and []
-        * for class type */
+        * for class type. Values taken from index position +1 as indexes begin at position 0 */
         moduleInfo = allInfo.substring(allInfo.indexOf("{") + 1, allInfo.indexOf("}"));
         classInfo = allInfo.substring(allInfo.indexOf("[") + 1, allInfo.indexOf("]"));
 
-        Log.d(userID, "end ID value");              // logcat tag to view contents of string at this stage (testing purposes only)
-
+        // logcat tag to view contents of string at this stage (testing purposes only)
+        Log.d(userID, "end ID value");
 
 		// edit text in input boxes for comparison before being sent
 		inputStudentID = (EditText) findViewById(R.id.student_id);
@@ -110,6 +112,7 @@ public class SignIn extends Activity
 		});
 
 	}// onCreate
+
 
 	/**
 	 * Background Async Task to send information to database
@@ -137,7 +140,8 @@ public class SignIn extends Activity
 		protected String doInBackground(String... args)
         {
 
-			String student_id = inputStudentID.getText().toString();
+			// Strings to take contents of TextViews, to be changed when implementing automatic transition
+            String student_id = inputStudentID.getText().toString();
 			String module_id = inputModuleID.getText().toString();
 			String type = inputType.getText().toString();
 
@@ -147,8 +151,7 @@ public class SignIn extends Activity
 			params.add(new BasicNameValuePair("module_id", module_id));
 			params.add(new BasicNameValuePair("type", type));
 
-			// getting JSON Object
-			// NB url accepts POST method
+			// getting JSON Object NB url accepts POST method
 			JSONObject json = jsonParser.makeHttpRequest(url_sign_in,
 					"POST", params);
 
@@ -159,7 +162,7 @@ public class SignIn extends Activity
 			try {
 				int success = json.getInt(TAG_SUCCESS);
 
-				if (success == 1) {
+				if (success == 1) {             // if to determine if the PHP script has returned a success message (1)
 
                     // returns user to home screen
 					Intent signInSuccess = new Intent(getApplicationContext(), MainScreenActivity.class);
@@ -170,7 +173,7 @@ public class SignIn extends Activity
 
 				} else {
 
-					// failed to sign-in
+					// failed to sign-in, PHP has returned an error
                     // error message needed for when sign in is not successful
                     dialogText = "an error has occurred, please try again...";
 

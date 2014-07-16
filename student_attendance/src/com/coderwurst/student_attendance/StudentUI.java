@@ -40,38 +40,39 @@ public class StudentUI extends Activity implements View.OnClickListener
         setContentView(R.layout.student_ui);
 
         // Buttons
-        btnScan = (Button) findViewById(R.id.scan_button);      // button to return all students
+        btnScan = (Button) findViewById(R.id.scan_button);          // button to return all students
         btnResetUsr = (Button) findViewById(R.id.test_button);      // button to initiate scan
 
         // TextViews for hold format and content info for testing purposes
         formatTxt = (TextView) findViewById(R.id.scan_format);
         contentTxt = (TextView) findViewById(R.id.scan_content);
 
+        // sets onCLick listeners for both buttons
         btnScan.setOnClickListener(this);
-        btnResetUsr.setOnClickListener(this);
+        btnResetUsr.setOnClickListener(this);       // button to allow user type to be reset (testing purposes only)
 
     } // onCreate
 
     @Override
     public void onClick (View view)
     {
-        if(view.getId()==R.id.scan_button)
+        if(view.getId()==R.id.scan_button)      // determines what the user wishes to do, amends scanID accordingly
         {
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-            scanIntegrator.initiateScan();
+            scanIntegrator.initiateScan();      // opens Zxing scanner
             scanID = 2;
 
         } else {
 
             // calls scanner to register new details in system
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-            scanIntegrator.initiateScan();
+            scanIntegrator.initiateScan();      // opens Zxing scanner
             scanID = 1;
 
         }// if - else
     }// onClick
 
-    // Returns scanning results for futher computation
+    // returns scanning results for futher computation
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
@@ -79,6 +80,7 @@ public class StudentUI extends Activity implements View.OnClickListener
         if (scanningResult != null)                     // to determine if the scan was successful
         {
 
+            // Toast contents used to follow data flow through app, confirm input
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
             formatTxt.setText("FORMAT: " + scanFormat);
@@ -94,7 +96,7 @@ public class StudentUI extends Activity implements View.OnClickListener
              * of data for the function he or she has chosen
              */
 
-                if (scanID == 2 && scanFormat.equals("QR_CODE")) // "QR_CODE" is a valid QR-Code format
+                if (scanID == 2 && scanFormat.equals("QR_CODE"))            // "QR_CODE" is only valid QR-Code format
                 {
                     // launching SignIn Activity
                     Intent openSignIn = new Intent(getApplicationContext(), SignIn.class);
@@ -107,14 +109,14 @@ public class StudentUI extends Activity implements View.OnClickListener
                     // closing this screen
                     finish();
 
-                } else if (scanID == 2 && !scanFormat.equals("QR_CODE"))    // in the event the user does not scan a QR-Code
+                } else if (scanID == 2 && !scanFormat.equals("QR_CODE"))    // in the event the user does not scan a QR
                 {
 
                     Toast QRIncorrectFormat = Toast.makeText(getApplicationContext(),
                             "Format incorrect, please try again..." + scanContent, Toast.LENGTH_LONG);
                     QRIncorrectFormat.show();
 
-                } else if (scanID == 1 && scanFormat.equals("CODE_128"))         // "CODE_128" is a valid ID format
+                } else if (scanID == 1 && scanFormat.equals("CODE_128"))         // "CODE_128" is only valid ID format
                 {
                     // launching Registration Activity
                     Intent openReg = new Intent(getApplicationContext(), InitialReg.class);
@@ -127,7 +129,7 @@ public class StudentUI extends Activity implements View.OnClickListener
                     // closing this screen
                     finish();
 
-                }else if (scanID == 1 && !scanFormat.equals("CODE_128"))          // to determine if scan is not in correct format
+                }else if (scanID == 1 && !scanFormat.equals("CODE_128"))          // scan is incorrect format
                 {
 
                     Toast IDIncorrectFormat = Toast.makeText(getApplicationContext(),

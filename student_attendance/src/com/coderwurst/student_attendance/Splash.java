@@ -18,26 +18,26 @@ import android.os.Handler;
 public class Splash extends Activity
 
 {
-    private final int SPLASH_DISPLAY_LENGTH = 1000;
+    private final int SPLASH_DISPLAY_LENGTH = 1000;     // int to determine the length of time the splash screen appears
 
-    /** Called when the activity is first created. */
+    // called when the activity is first created
     @Override
     public void onCreate(Bundle icicle)
     {
         super.onCreate(icicle);
 
-        setContentView(R.layout.splash);
+        setContentView(R.layout.splash);                // opens up the splash XML file
 
-        // handler to start the MainScreenActivity and close this Splash-Screen after 1000 milliseconds
+        // handler to start the MainScreenActivity and close this Splash-Screen after specified time (1000 sec)
 
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run()
             {
-                /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(Splash.this,MainScreenActivity.class);
-                Splash.this.startActivity(mainIntent);
-                Splash.this.finish();
+
+                Intent mainIntent = new Intent(Splash.this,MainScreenActivity.class);   // creates an Intent
+                Splash.this.startActivity(mainIntent);                                  // runs new activity
+                Splash.this.finish();                                                   // closes splash activity
             }
         }, SPLASH_DISPLAY_LENGTH);
     }// onCreate

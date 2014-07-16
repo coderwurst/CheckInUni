@@ -49,6 +49,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
     {
 		super.onCreate(savedInstanceState);
 
+        // returns the stored sharedPrefs for the app and stores the usee type
         userDetails = getSharedPreferences(USER_ID, 0);
         int savedID = userDetails.getInt("user_Type", 0);
 
