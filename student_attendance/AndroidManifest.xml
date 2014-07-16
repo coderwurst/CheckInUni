@@ -60,9 +60,15 @@
                 android:label="student_attendance" >
         </activity>
 
-        <!-- Edit Product Activity -->
+        <!-- Activity to add student manually -->
         <activity
-                android:name="com.coderwurst.student_attendance.EditProductActivity"
+                android:name="com.coderwurst.student_attendance.AddStudentMan"
+                android:label="Edit Product" >
+        </activity>
+
+        <!-- Activity to add student recursively -->
+        <activity
+                android:name="com.coderwurst.student_attendance.RecursiveSignIn"
                 android:label="Edit Product" >
         </activity>
     </application>

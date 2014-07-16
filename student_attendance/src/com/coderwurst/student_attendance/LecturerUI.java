@@ -64,9 +64,20 @@ public class LecturerUI extends Activity implements View.OnClickListener
         {
             // opens up manual sign in activity
 
+            Intent openManSignin = new Intent(getApplicationContext(), AddStudentMan.class);
+            startActivity(openManSignin);
+
+            // closing this screen
+            finish();
+
         } else if (view.getId()==R.id.lec_auto_signin) {
 
-            // opens up scanner & sets scanID = 2;
+            // opens up recursive sign in activity
+            Intent openAutoSignin = new Intent(getApplicationContext(), RecursiveSignIn.class);
+            startActivity(openAutoSignin);
+
+            // closing this screen
+            finish();
 
         }else {
 

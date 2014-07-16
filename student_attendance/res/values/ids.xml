@@ -9,4 +9,9 @@
     <item name="lec_man_signin" type="id"/>
     <item name="lec_auto_signin" type="id"/>
     <item name="getQRCode" type="id"/>
+    <item name="btnConfirmDetails" type="id"/>
+    <item name="lec_scan_id" type="id"/>
+    <item name="lec_scan_mod" type="id"/>
+    <item name="add_student_man" type="id"/>
+    <item name="add_student_auto" type="id"/>
 </resources>

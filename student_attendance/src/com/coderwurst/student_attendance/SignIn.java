@@ -57,7 +57,7 @@ public class SignIn extends Activity
 	EditText inputType;
 
 	// url to create new product
-	private static String url_sign_in = "http://192.168.1.112/xampp/student_attendance/sign_in.php";
+	private static String url_sign_in = "http://172.17.57.215/xampp/student_attendance/sign_in.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
@@ -68,7 +68,7 @@ public class SignIn extends Activity
         // retrieves the shared preferences file containing the user ID
         userDetails = getSharedPreferences(USER_ID, 0);
         userID = userDetails.getString("user_ID", "default");
-        Log.d(userID, "middle ID value");          // logcat tag to view contents of string at this stage (testing purposes only)
+        Log.d(userID, "middle ID value");           // logcat tag to view contents of string at this stage (testing purposes only)
 
 
         // opens up sign-in confirmation screen
@@ -84,7 +84,7 @@ public class SignIn extends Activity
         moduleInfo = allInfo.substring(allInfo.indexOf("{") + 1, allInfo.indexOf("}"));
         classInfo = allInfo.substring(allInfo.indexOf("[") + 1, allInfo.indexOf("]"));
 
-        Log.d(userID, "end ID value");          // logcat tag to view contents of string at this stage (testing purposes only)
+        Log.d(userID, "end ID value");              // logcat tag to view contents of string at this stage (testing purposes only)
 
 
 		// edit text in input boxes for comparison before being sent

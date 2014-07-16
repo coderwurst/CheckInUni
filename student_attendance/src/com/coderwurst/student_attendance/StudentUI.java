@@ -71,12 +71,12 @@ public class StudentUI extends Activity implements View.OnClickListener
         }// if - else
     }// onClick
 
-    // Returns scanning results to the main screen - testing purposes TO BE REMOVED FOR FINAL
+    // Returns scanning results for futher computation
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
-        if (scanningResult != null)
+        if (scanningResult != null)                     // to determine if the scan was successful
         {
 
             String scanContent = scanningResult.getContents();
@@ -88,7 +88,13 @@ public class StudentUI extends Activity implements View.OnClickListener
                     "FORMAT: " + scanFormat + "\nCONTENT: " + scanContent, Toast.LENGTH_LONG);
             toast.show();
 
-                if (scanID == 2) // && formatTxt == "QR_CODE"
+            /**
+             * the following if-else block is implemented at this stage as it is
+             * important to determine if the user has scanned in the right type
+             * of data for the function he or she has chosen
+             */
+
+                if (scanID == 2 && scanFormat.equals("QR_CODE")) // "QR_CODE" is a valid QR-Code format
                 {
                     // launching SignIn Activity
                     Intent openSignIn = new Intent(getApplicationContext(), SignIn.class);
@@ -101,7 +107,15 @@ public class StudentUI extends Activity implements View.OnClickListener
                     // closing this screen
                     finish();
 
-                } else {            // && formatTxt == "Code_128"   called to change user ID (testing purposes only)
+                } else if (scanID == 2 && !scanFormat.equals("QR_CODE"))    // in the event the user does not scan a QR-Code
+                {
+
+                    Toast QRIncorrectFormat = Toast.makeText(getApplicationContext(),
+                            "Format incorrect, please try again..." + scanContent, Toast.LENGTH_LONG);
+                    QRIncorrectFormat.show();
+
+                } else if (scanID == 1 && scanFormat.equals("CODE_128"))         // "CODE_128" is a valid ID format
+                {
                     // launching Registration Activity
                     Intent openReg = new Intent(getApplicationContext(), InitialReg.class);
 
@@ -113,8 +127,14 @@ public class StudentUI extends Activity implements View.OnClickListener
                     // closing this screen
                     finish();
 
-                }// if-else to determine if scan was to sign in or register
+                }else if (scanID == 1 && !scanFormat.equals("CODE_128"))          // to determine if scan is not in correct format
+                {
 
+                    Toast IDIncorrectFormat = Toast.makeText(getApplicationContext(),
+                            "Valid User ID not scanned, please try again..." + scanContent, Toast.LENGTH_LONG);
+                    IDIncorrectFormat.show();
+
+                } // series of else - if statements
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
                     "No scan data received!", Toast.LENGTH_SHORT);
