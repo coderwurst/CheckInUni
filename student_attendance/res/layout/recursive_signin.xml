@@ -8,16 +8,16 @@
     <Button android:id="@id/lec_scan_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="scan ID"
+            android:text="@string/lecturer_scan_ID"
             android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
-            android:layout_marginBottom="150dp" android:textSize="26dp" android:textStyle="bold"/>
+            android:layout_marginBottom="100dp" android:textSize="26dp" android:textStyle="bold"/>
 
     <Button android:id="@id/lec_scan_mod"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lecturer_scan_QR"
             android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
-            android:layout_marginBottom="100dp" android:textSize="26dp" android:textStyle="bold"/>
+            android:layout_marginBottom="150dp" android:textSize="26dp" android:textStyle="bold"/>
 
     <Button android:id="@id/add_student_auto"
             android:layout_width="wrap_content"

@@ -48,7 +48,7 @@ public class AddStudentMan extends Activity
 	JSONParser jsonParser = new JSONParser();
 
 	// single product url
-	private static final String url_man_signin = "http://172.17.57.215/xampp/student_attendance/sign_in.php";
+	private static final String url_man_signin = "http://172.17.59.192/xampp/student_attendance/sign_in.php";
 
 
 	// JSON Node names

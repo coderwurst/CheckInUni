@@ -52,7 +52,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private String classInfo = null;
 
     // url to create new product
-    private static String url_sign_in = "http://172.17.57.215/xampp/student_attendance/sign_in.php";
+    private static String url_sign_in = "http://172.17.59.192/xampp/student_attendance/sign_in.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -120,14 +120,14 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
 
 
-    // Returns scanning results for futher computation
+    // Returns scanning results for further computation
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
 
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
         // code to process information
-        if (scanningResult != null)                     // to determine if the scan was successful
+        if (scanningResult != null && resultCode == RESULT_OK)                     // to determine if the scan was successful
         {
 
             String scanContent = scanningResult.getContents();
@@ -172,9 +172,25 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
                 String scannedIDInfo = scanContent;
 
-                studentNo = scannedIDInfo;
+                studentNo = scannedIDInfo;      // CHANGE TO STORE THE SCANNED ID AS AN ADDITION TO A LINKED LIST
 
                 scannedID = true;
+
+                // shows user of details recently scanned
+                String contents = intent.getStringExtra("SCAN_RESULT");
+                Toast.makeText(this, contents , Toast.LENGTH_SHORT).show();
+
+                Log.d("batch status","id scanned"); // allows programmer to follow progress for testing
+
+                // restarts activity for scanning qr code
+                IntentIntegrator repeatScan = new IntentIntegrator(this);
+                repeatScan.addExtra("studentNo", 0);
+                repeatScan.initiateScan();
+
+                /* following code also works for re-iniating scan, however pushing back on device crashes app
+                Intent scanIntent = new Intent("com.google.zxing.client.android.SCAN");
+                scanIntent.putExtra("SCAN_MODE", "ONE_D_MODE");
+                startActivityForResult(scanIntent,requestCode); */
 
             }else if (scanID == 1 && !scanFormat.equals("CODE_128"))            // to determine if scan is not in correct format
             {
@@ -183,8 +199,21 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                         "Valid User ID not scanned, please try again..." + scanContent, Toast.LENGTH_LONG);
                 IDIncorrectFormat.show();
 
+            } else {
+
+                // if no data is returned, the scanner is closed
+
+                // Handle cancel
+                Log.d("batch status","scan finished");
+
+                finish();
+
             } // series of else - if statements
         } else {
+
+            // Handle cancel
+            Log.d("batch status","scan finished");
+
             Toast toast = Toast.makeText(getApplicationContext(),
                     "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
