@@ -14,4 +14,7 @@
     <item name="lec_scan_mod" type="id"/>
     <item name="add_student_man" type="id"/>
     <item name="add_student_auto" type="id"/>
+    <item name="reset_user" type="id"/>
+    <item name="module_number" type="id"/>
+    <item name="tutorial_url" type="id"/>
 </resources>

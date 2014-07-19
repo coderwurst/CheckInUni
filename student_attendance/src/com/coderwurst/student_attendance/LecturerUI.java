@@ -28,6 +28,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
     private Button btnManSignin;
     private Button btnAutoSignin;
     private Button btnGetQR;
+    private Button btnReset;
 
     // retrieves shared preferences to be changed
     public static final String USER_ID = "User ID File";
@@ -47,6 +48,8 @@ public class LecturerUI extends Activity implements View.OnClickListener
         btnAutoSignin = (Button) findViewById(R.id.lec_auto_signin);        // to scan student ID & class QR-Code
         btnGetQR = (Button) findViewById(R.id.getQRCode);                   // to retrieve a particular QR-Code
 
+        btnReset = (Button) findViewById(R.id.reset_user);                  // testing purpose button to reset user
+
         // TextViews for hold format and content info for testing purposes
         formatTxt = (TextView) findViewById(R.id.scan_format);
         contentTxt = (TextView) findViewById(R.id.scan_content);
@@ -55,6 +58,8 @@ public class LecturerUI extends Activity implements View.OnClickListener
         btnManSignin.setOnClickListener(this);
         btnAutoSignin.setOnClickListener(this);
         btnGetQR.setOnClickListener(this);
+
+        btnReset.setOnClickListener(this);
 
     } // onCreate
 
@@ -79,9 +84,18 @@ public class LecturerUI extends Activity implements View.OnClickListener
             // closing this screen
             finish();
 
-        }else {
+        }else if (view.getId()==R.id.getQRCode){
 
-            // temp test code
+            // code to retrieve QR-Image from database
+            Intent openViewAllModules = new Intent(getApplicationContext(), ViewAllModules.class);
+            startActivity(openViewAllModules);
+
+            // closing this screen
+            finish();
+
+        } else{
+
+            // temp test code to reset user ID
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
             scanID = 1;

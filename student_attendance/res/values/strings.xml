@@ -14,10 +14,11 @@
 
     <!-- Strings relating to the lecturer functions -->
     <string name="lecturer_man_signin">manual sign-in</string>
-    <string name="lecturer_auto_signin">auto sign-in</string>
-    <string name="lecturer_scan_QR">scan module code</string>
-    <string name="lecturer_scan_ID">scan student id</string>
-    <string name="retrieve_QRCode">reset user</string>             <!-- to be changed to retrieve QR-Code-->
+    <string name="lecturer_auto_signin">card sign-in</string>
+    <string name="lecturer_scan_QR">scan QR</string>
+    <string name="lecturer_scan_ID">scan ID(s)</string>
+    <string name="retrieve_QRCode">retrieve QR</string>
+    <string name="title">default</string>
 
     <!-- Strings relating to student functions-->
     <string name="scan">check in</string>

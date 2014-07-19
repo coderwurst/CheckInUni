@@ -3,6 +3,9 @@ package com.coderwurst.student_attendance;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -31,6 +35,7 @@ import java.util.List;
  * ACTIVITY TO ALLOW LECTURER TO SCAN IN A STUDENT ID AND MODULE QR-CODE SEPERATELY IN ORDER TO CHECK A STUDENT IN
  * ************************
  */
+
 public class RecursiveSignIn extends Activity implements View.OnClickListener
 
 {
@@ -52,7 +57,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private String classInfo = null;
 
     // url to create new product
-    private static String url_sign_in = "http://172.17.59.192/xampp/student_attendance/sign_in.php";
+    private static String url_sign_in = "http://192.168.1.119/xampp/student_attendance/sign_in.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -64,6 +69,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     // creates the JSONParser object
     JSONParser jsonParser = new JSONParser();
 
+    // linkedList to store multiple students for batch processing
+    private LinkedList <String> studentBatch = new LinkedList<String>();
+    private int count;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -106,7 +114,16 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
             if (scannedID == true && scannedModule == true)     // verifies that all info necessary is present
             {
-                new LecturerSignStudentIn().execute();          // code to submit details to the database
+
+                // for (count = 0; count < studentBatch.size() ; count++)
+                // {
+
+                    new LecturerSignStudentIn().execute();          // code to submit details to the database
+
+
+                // } // for
+
+
             } else {
 
                 Toast incompleteData = Toast.makeText(getApplicationContext(),
@@ -168,15 +185,30 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
             } else if (scanID == 1 && scanFormat.equals("CODE_128"))            // "CODE_128" is a valid ID format
             {
+
+                // code to perform device beep to confirm successful scan
+                try {
+                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                    Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+
+                    r.play();
+
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
                 // stores scanned ID as the student number
 
                 String scannedIDInfo = scanContent;
 
                 studentNo = scannedIDInfo;      // CHANGE TO STORE THE SCANNED ID AS AN ADDITION TO A LINKED LIST
 
-                scannedID = true;
+                studentBatch.add(studentNo);
 
-                // shows user of details recently scanned
+                scannedID = true;               // must at least be set to true once to work
+
+                // shows details of last user scanned
                 String contents = intent.getStringExtra("SCAN_RESULT");
                 Toast.makeText(this, contents , Toast.LENGTH_SHORT).show();
 
@@ -187,11 +219,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 repeatScan.addExtra("studentNo", 0);
                 repeatScan.initiateScan();
 
-                /* following code also works for re-iniating scan, however pushing back on device crashes app
-                Intent scanIntent = new Intent("com.google.zxing.client.android.SCAN");
-                scanIntent.putExtra("SCAN_MODE", "ONE_D_MODE");
-                startActivityForResult(scanIntent,requestCode); */
-
             }else if (scanID == 1 && !scanFormat.equals("CODE_128"))            // to determine if scan is not in correct format
             {
 
@@ -199,7 +226,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                         "Valid User ID not scanned, please try again..." + scanContent, Toast.LENGTH_LONG);
                 IDIncorrectFormat.show();
 
-            } else {
+            } else {        // NOT NEEDED
 
                 // if no data is returned, the scanner is closed
 
@@ -250,56 +277,75 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         protected String doInBackground(String... args)
         {
 
-            String student_id = studentNo;
-            String module_id = moduleInfo;
-            String type = classInfo;
+            JSONObject json = null;
 
-            // parameters to be passed into PHP script on server side
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("student_id", student_id));
-            params.add(new BasicNameValuePair("module_id", module_id));
-            params.add(new BasicNameValuePair("type", type));
+            for (count = 0; count < studentBatch.size(); count++)
+            {
+                String student_id = studentBatch.get(count).toString();
+                String module_id = moduleInfo;
+                String type = classInfo;
 
-            // getting JSON Object
-            // NB url accepts POST method
-            JSONObject json = jsonParser.makeHttpRequest(url_sign_in,
-                    "POST", params);
+                // parameters to be passed into PHP script on server side
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
+                params.add(new BasicNameValuePair("student_id", student_id));
+                params.add(new BasicNameValuePair("module_id", module_id));
+                params.add(new BasicNameValuePair("type", type));
 
-            // check log cat for response
-            Log.d("Create Response", json.toString());
+                // getting JSON Object
+                // NB url accepts POST method
+                json = jsonParser.makeHttpRequest(url_sign_in,
+                        "POST", params);
 
-            // check for success tag
-            try {
-                int success = json.getInt(TAG_SUCCESS);
+                try
+                {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
 
-                if (success == 1) {
+                // check log cat for response
+                Log.d("Create Response", json.toString());
 
-                    // returns user to home screen
-                    Intent signInSuccess = new Intent(getApplicationContext(), MainScreenActivity.class);
-                    startActivity(signInSuccess);
+                // check for success tag
 
-                    // finish this activity
-                    finish();
+            } // for loop for batch progressing
 
-                } else {
+                try
+                {
+                    int success = json.getInt(TAG_SUCCESS);
 
-                    // failed to sign-in
-                    // error message needed for when sign in is not successful
-                    dialogText = "an error has occurred, please try again...";
+                    if (success == 1)
+                    {
 
-                    // returns user to home screen
-                    Intent signInError = new Intent(getApplicationContext(), MainScreenActivity.class);
-                    startActivity(signInError);
+                        // returns user to home screen
+                        Intent signInSuccess = new Intent(getApplicationContext(), MainScreenActivity.class);
+                        startActivity(signInSuccess);
 
-                    // finish this activity
-                    finish();
+                        // finish this activity
+                        finish();
 
-                } // if - else
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+                    } else
+                    {
 
-            return null;
+                        // failed to sign-in
+                        // error message needed for when sign in is not successful
+                        dialogText = "an error has occurred, please try again...";
+
+                        // returns user to home screen
+                        Intent signInError = new Intent(getApplicationContext(), MainScreenActivity.class);
+                        startActivity(signInError);
+
+                        // finish this activity
+                        finish();
+
+                    } // if - else
+                } catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+
+                return null;
         }// doInBackground
 
         /**

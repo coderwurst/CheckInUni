@@ -65,6 +65,18 @@
                 android:name="com.coderwurst.student_attendance.RecursiveSignIn"
                 android:label="@string/app_name" >
         </activity>
+
+        <!-- Activity to list all modules from Database -->
+        <activity
+                android:name="com.coderwurst.student_attendance.ViewAllModules"
+                android:label="@string/app_name" >
+        </activity>
+
+        <!-- Activity to allow user to choose between a tutorial or lecture QR-Code -->
+        <activity
+                android:name="com.coderwurst.student_attendance.ChooseQR"
+                android:label="@string/app_name" >
+        </activity>
     </application>
 
     <!--  Internet Permissions necessary to access database -->
