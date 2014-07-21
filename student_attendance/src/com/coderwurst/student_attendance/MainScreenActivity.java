@@ -5,10 +5,10 @@ package com.coderwurst.student_attendance;  // Sprint 4 - Sign into Database
  * ***********************
  * Created by IntelliJ IDEA
  * User: andrew
- * Date: 04/07/2014
- * Time: 10:00
- * Version: V2.0
- * SPRINT 4 - MAIN SCREEN TO ALLOW SIGN-IN AND TEST CONNECTION TO DATABASE
+ * Date: 21/07/2014
+ * Time: 11:52
+ * Version: V8.0
+ * SPRINT 4 - MAIN SCREEN TO ALLOW INITIAL REGISTRATION ON DEVICE AND UPON NEXT START UP DETERMINE APP INTERFACE
  * ************************
  */
 
@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -53,16 +54,18 @@ public class MainScreenActivity extends Activity implements OnClickListener
         userDetails = getSharedPreferences(USER_ID, 0);
         int savedID = userDetails.getInt("user_Type", 0);
 
-        Toast toast = Toast.makeText(getApplicationContext(),
+        /* Toast toast = Toast.makeText(getApplicationContext(),
                 "USER: " + savedID, Toast.LENGTH_LONG);
-        toast.show();
+        toast.show(); */
 
         if (savedID == 2)        // if there are no savedPreferences then the app will allow user to register
         {
 
-            Toast toast2 = Toast.makeText(getApplicationContext(),
+            /*Toast toast2 = Toast.makeText(getApplicationContext(),
                     "User is a student member: " + savedID, Toast.LENGTH_LONG);
-            toast2.show();
+            toast2.show(); */
+
+            Log.d("main screen", "user type; student");   // log in java console which type of user is registered with device
 
             // code to open up student UI
             Intent openStudentUI = new Intent(getApplicationContext(), StudentUI.class);
@@ -75,9 +78,11 @@ public class MainScreenActivity extends Activity implements OnClickListener
         } else if (savedID == 1){                    // otherwise the app will start up straight to lecturer UI
 
 
-            Toast toast1 = Toast.makeText(getApplicationContext(),
+            /* Toast toast1 = Toast.makeText(getApplicationContext(),
                     "User is a staff member: " + savedID, Toast.LENGTH_LONG);
-            toast1.show();
+            toast1.show(); */
+
+            Log.d("main screen", "user type; lecturer");   // log in java console which type of user is registered with device
 
             // code to open up staff UI
             Intent openLecturerUI = new Intent(getApplicationContext(), LecturerUI.class);
@@ -89,6 +94,8 @@ public class MainScreenActivity extends Activity implements OnClickListener
         } else {
 
             setContentView(R.layout.main_screen);
+
+            Log.d("main screen", "user type not found");   // log in java console which type of user is registered with device
 
             // Buttons
             btnReg = (Button) findViewById(R.id.reg_button);
@@ -105,7 +112,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
     }// OnCreate
 
 
-    // onClick method to determine which classes are called dependant on which button is clicked
+            // onClick method to determine which classes are called dependant on which button is clicked
             @Override
             public void onClick (View view)
             {
@@ -133,10 +140,11 @@ public class MainScreenActivity extends Activity implements OnClickListener
             formatTxt.setText("FORMAT: " + scanFormat);
             contentTxt.setText("CONTENT: " + scanContent);
 
-            Toast toast = Toast.makeText(getApplicationContext(),
+            /* Toast toast = Toast.makeText(getApplicationContext(),
                     "FORMAT: " + scanFormat + "\nCONTENT: " + scanContent, Toast.LENGTH_LONG);
-            toast.show();
+            toast.show(); */
 
+            Log.d("main screen", "new user" + scanContent);   // log in java console which type of user is registering with device
 
             // launching Registration Activity
             Intent register = new Intent(getApplicationContext(), InitialReg.class);
@@ -150,9 +158,14 @@ public class MainScreenActivity extends Activity implements OnClickListener
 
 
         } else {
+
+            Log.e("main screen", "failed registration");   // log in java console to show an error has occurred
+
+            // inform user of incompatible scan
             Toast toast = Toast.makeText(getApplicationContext(),
                     "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
+
         }// if-else to confirm scan data has been received
 
     }// onActivityResult

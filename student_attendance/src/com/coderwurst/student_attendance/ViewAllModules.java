@@ -42,8 +42,8 @@ public class ViewAllModules extends ListActivity
 	ArrayList<HashMap<String, String>> moduleList;
 
 	// url to get all modules list
-    private static String url_all_modules = "http://192.168.1.119/xampp/student_attendance/get_all_modules.php";
-    private static String url_location = "http://192.168.1.119/module_codes/";
+    private static String url_all_modules = "http://172.17.1.113/xampp/student_attendance/get_all_modules.php";
+    private static String url_location = "http://172.17.1.113/module_codes/";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
@@ -89,16 +89,15 @@ public class ViewAllModules extends ListActivity
                 String tutorialFile = ((TextView) view.findViewById(R.id.tutorial_url)).getText()
                         .toString();
 
-                Log.d("qr address: ", pid + "," + lectureFile + tutorialFile);
+                Log.d("view modules", "stored address; " + pid + "," + lectureFile + tutorialFile);
 
                 String lectureUrl = url_location + lectureFile;
                 String tutorialUrl = url_location + tutorialFile;
 
-                Log.d("qr address: ", lectureUrl + "," + tutorialUrl);
+                Log.d("view modules", "actual address; " + lectureUrl + "," + tutorialUrl);
 
 				// Starting new intent
-				Intent in = new Intent(getApplicationContext(),
-						ChooseQR.class);
+				Intent in = new Intent(getApplicationContext(),	ChooseQR.class);
 
 				// sending pid to next activity
 				in.putExtra(TAG_ID, pid);
@@ -118,6 +117,7 @@ public class ViewAllModules extends ListActivity
     {
 		super.onActivityResult(requestCode, resultCode, data);
 		// if result code 100
+
 		if (resultCode == 100) {
 			// if result code 100 is received 
 			// means user edited/deleted product
@@ -159,7 +159,7 @@ public class ViewAllModules extends ListActivity
 
 			
 			// Check your log cat for JSON reponse
-			Log.d("All Modules: ", json.toString());
+			Log.d("view modules", "all modules; " + json.toString());
 
 			try {
 				// Checking for SUCCESS TAG

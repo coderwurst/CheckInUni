@@ -8,9 +8,9 @@
     <Button android:id="@+id/test_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="reset user"
-            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
-            android:layout_marginBottom="100dp" android:textSize="26dp" android:textStyle="bold"/>
+            android:text="reset"
+            android:layout_alignParentTop="true" android:layout_centerHorizontal="false"
+            android:layout_marginTop="20dp" android:layout_marginLeft="20dp" android:textSize="26dp" android:textStyle="bold"/>
 
     <Button android:id="@+id/scan_button"
             android:layout_width="wrap_content"

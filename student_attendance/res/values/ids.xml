@@ -17,4 +17,7 @@
     <item name="reset_user" type="id"/>
     <item name="module_number" type="id"/>
     <item name="tutorial_url" type="id"/>
+    <item name="lec_tutqr" type="id"/>
+    <item name="lec_lecqr" type="id"/>
+    <item name="qr_id" type="id"/>
 </resources>

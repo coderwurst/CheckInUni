@@ -23,10 +23,10 @@ import android.widget.EditText;
  * ***********************
  * Created by IntelliJ IDEA
  * User: andrew
- * Date: 26/06/2014
+ * Date: 17/07/2014
  * Time: 15:08
  * Version: V7.0
- * CLASS TO ALLOW LECTURER TO MANUALLY ENTER STUDENT DETAILS AND SEND TO DATABASE
+ * SPRINT 7 - TO ALLOW LECTURER TO MANUALLY ENTER STUDENT DETAILS AND SEND TO DATABASE
  * ************************
  */
 
@@ -48,7 +48,7 @@ public class AddStudentMan extends Activity
 	JSONParser jsonParser = new JSONParser();
 
 	// single product url
-	private static final String url_man_signin = "http://192.168.1.119/xampp/student_attendance/sign_in.php";
+	private static final String url_man_signin = "http://172.17.1.113/xampp/student_attendance/sign_in.php";
 
 
 	// JSON Node names
@@ -59,6 +59,9 @@ public class AddStudentMan extends Activity
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_student_man);
+
+        // logcat tag to view app progress
+        Log.d("add student manual", "manual ui open");
 
 		// button to send details to server
 		btnSignIn = (Button) findViewById(R.id.add_student_man);
@@ -81,7 +84,7 @@ public class AddStudentMan extends Activity
         inputType = (EditText) findViewById(R.id.type);
         inputType.setHint("lecture or tutorial");
 
-	} // onCreate
+    } // onCreate
 
 
 	/**
@@ -96,7 +99,7 @@ public class AddStudentMan extends Activity
 		protected void onPreExecute() {
 			super.onPreExecute();
 			pDialog = new ProgressDialog(AddStudentMan.this);
-			pDialog.setMessage("Submitting Details...");
+			pDialog.setMessage("submitting Details...");
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(true);
 			pDialog.show();
@@ -108,9 +111,13 @@ public class AddStudentMan extends Activity
         protected String doInBackground(String... args)
         {
 
+            // Data captured from input fields
             String student_id = inputStudentID.getText().toString();
             String module_id = inputModuleID.getText().toString();
             String type = inputType.getText().toString();
+
+            // logcat tag to view app progress
+            Log.d("add student manual", "details to be sent: " + student_id + "," + module_id + "," + type);
 
             // parameters to be passed into PHP script on server side
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -124,13 +131,17 @@ public class AddStudentMan extends Activity
                     "POST", params);
 
             // check log cat for response
-            Log.d("Create Response", json.toString());
+            // check log cat for response
+            Log.d("add student manual", "database response; " + json.toString());
 
             // check for success tag
             try {
                 int success = json.getInt(TAG_SUCCESS);
 
                 if (success == 1) {
+
+                    // details have been stored and the student is checked in
+                    Log.d("add student manual", "check in success");
 
                     // returns user to home screen
                     Intent signInSuccess = new Intent(getApplicationContext(), MainScreenActivity.class);
@@ -141,7 +152,9 @@ public class AddStudentMan extends Activity
 
                 } else {
 
-                    // failed to sign-in
+                    // failed to sign-in, PHP has returned an error
+                    Log.e("add student manual", "php error occurred");
+
                     // error message needed for when sign in is not successful
                     dialogText = "an error has occurred, please try again...";
 
@@ -168,7 +181,7 @@ public class AddStudentMan extends Activity
 
             // dialog to inform user sign in result
             pDialog.setMessage(dialogText);
-			// dismiss the dialog once product uupdated
+			// dismiss the dialog once product updated
 			pDialog.dismiss();
 		} // onPostExecute
 	} // SignInStudent

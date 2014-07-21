@@ -44,7 +44,7 @@ public class SignIn extends Activity
     String userID = "";
     String classInfo = "";
 
-	// progress dialog to inform user
+	// progress dialog to inform user of events
 	private ProgressDialog pDialog;
     private String dialogText = "success";
 
@@ -56,8 +56,8 @@ public class SignIn extends Activity
 	EditText inputModuleID;
 	EditText inputType;
 
-	// url to create new product, NB I.P. address not static
-	private static String url_sign_in = "http://192.168.1.119/xampp/student_attendance/sign_in.php";
+	// url to create new product, NB I.P. address not static and needs to be changed depending on IP address of server
+	private static String url_sign_in = "http://172.17.1.113/xampp/student_attendance/sign_in.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
@@ -69,10 +69,6 @@ public class SignIn extends Activity
         userDetails = getSharedPreferences(USER_ID, 0);
         userID = userDetails.getString("user_ID", "default");
 
-        // logcat tag to view contents of string at this stage (testing purposes only)
-        Log.d(userID, "middle ID value");
-
-
         // opens up sign-in confirmation screen
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.sign_in);
@@ -81,21 +77,26 @@ public class SignIn extends Activity
         Bundle bundle = getIntent().getExtras();
         allInfo = bundle.getString("Info");
 
+        // logcat tag to view contents of string at this stage (testing purposes only)
+        Log.d("check in", "user ID value; " + userID);
+        Log.d("check in", "module ID value; " + allInfo);
+
         /** extract the necessary information out of this string to be used using special chars {} for module and []
         * for class type. Values taken from index position +1 as indexes begin at position 0 */
         moduleInfo = allInfo.substring(allInfo.indexOf("{") + 1, allInfo.indexOf("}"));
         classInfo = allInfo.substring(allInfo.indexOf("[") + 1, allInfo.indexOf("]"));
 
-        // logcat tag to view contents of string at this stage (testing purposes only)
-        Log.d(userID, "end ID value");
-
-		// edit text in input boxes for comparison before being sent
+        // edit text in input boxes for comparison before being sent    FOR TESTING PURPOSES ONLY, TO BE REMOVED
 		inputStudentID = (EditText) findViewById(R.id.student_id);
         inputStudentID.setText(userID);
 		inputModuleID = (EditText) findViewById(R.id.module_id);
         inputModuleID.setText(moduleInfo);
 		inputType = (EditText) findViewById(R.id.type);
         inputType.setText(classInfo);
+
+        // logcat tag to view contents of string at this stage (testing purposes only)
+        Log.d("check in", "module ID info; " + moduleInfo);
+        Log.d("check in", "class type; " + classInfo);
 
 		// button to confirm input and send to database
 		Button btnCreateProduct = (Button) findViewById(R.id.btnCreateProduct);
@@ -156,13 +157,16 @@ public class SignIn extends Activity
 					"POST", params);
 
 			// check log cat for response
-			Log.d("Create Response", json.toString());
+			Log.d("check in", "database response; " + json.toString());
 
 			// check for success tag
 			try {
 				int success = json.getInt(TAG_SUCCESS);
 
 				if (success == 1) {             // if to determine if the PHP script has returned a success message (1)
+
+                    // details have been stored and the student is checked in
+                    Log.d("check in", "check in success");
 
                     // returns user to home screen
 					Intent signInSuccess = new Intent(getApplicationContext(), MainScreenActivity.class);
@@ -174,6 +178,8 @@ public class SignIn extends Activity
 				} else {
 
 					// failed to sign-in, PHP has returned an error
+                    Log.e("check in", "php error occurred");
+
                     // error message needed for when sign in is not successful
                     dialogText = "an error has occurred, please try again...";
 
@@ -204,6 +210,7 @@ public class SignIn extends Activity
 
 		}// onPostExecute
 
-
 	}// signIntoClass
+
+
 }// SignIn

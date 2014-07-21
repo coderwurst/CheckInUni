@@ -18,7 +18,7 @@ import android.os.Handler;
 public class Splash extends Activity
 
 {
-    private final int SPLASH_DISPLAY_LENGTH = 1000;     // int to determine the length of time the splash screen appears
+    private final int SPLASH_DISPLAY_LENGTH = 4000;     // int to determine the length of time the splash screen appears
 
     // called when the activity is first created
     @Override

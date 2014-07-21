@@ -32,7 +32,7 @@ import java.util.List;
  * Date: 16/07/2014
  * Time: 12:37
  * Version: V7.0
- * ACTIVITY TO ALLOW LECTURER TO SCAN IN A STUDENT ID AND MODULE QR-CODE SEPERATELY IN ORDER TO CHECK A STUDENT IN
+ * SPRINT 7 - ACTIVITY TO ALLOW LECTURER TO SCAN IN A STUDENT ID AND MODULE QR-CODE IN ORDER TO CHECK A STUDENT IN
  * ************************
  */
 
@@ -57,7 +57,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private String classInfo = null;
 
     // url to create new product
-    private static String url_sign_in = "http://192.168.1.119/xampp/student_attendance/sign_in.php";
+    private static String url_sign_in = "http://172.17.1.113/xampp/student_attendance/sign_in.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -99,40 +99,45 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     {
         if(view.getId()==R.id.lec_scan_id)
         {
+            // logcat tag to view app progress
+            Log.d("recursive", "user wants to scan student id");
+
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
             scanID = 1;
 
         } else if (view.getId()==R.id.lec_scan_mod){
 
+            // logcat to view app progress
+            Log.d("recursive", "user wants to scan module code");
+
             // calls scanner to register new details in system
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
             scanID = 2;
 
+
         }else {
 
             if (scannedID == true && scannedModule == true)     // verifies that all info necessary is present
             {
+                // logcat to view app progress
+                Log.d("recursive", "scanned details to be sent to database");
 
-                // for (count = 0; count < studentBatch.size() ; count++)
-                // {
-
-                    new LecturerSignStudentIn().execute();          // code to submit details to the database
-
-
-                // } // for
-
+                new LecturerSignStudentIn().execute();          // code to submit details to the database
 
             } else {
 
+                // logcat to view app progress
+                Log.e("recursive", "necessary details have not been successfully scanned");
+
                 Toast incompleteData = Toast.makeText(getApplicationContext(),
-                        "Please ensure the Student ID and Module Code have both been scanned...", Toast.LENGTH_LONG);
+                        "please ensure the Student ID and Module Code have both been scanned...", Toast.LENGTH_LONG);
                 incompleteData.show();
 
             } // if - else
 
-        }// if - else-if - else
+        }// if - else - if - else
     }// onClick
 
 
@@ -144,7 +149,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
         // code to process information
-        if (scanningResult != null && resultCode == RESULT_OK)                     // to determine if the scan was successful
+        if (scanningResult != null && resultCode == RESULT_OK)              // to determine if the scan was successful
         {
 
             String scanContent = scanningResult.getContents();
@@ -152,9 +157,12 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
             formatTxt.setText("FORMAT: " + scanFormat);
             contentTxt.setText("CONTENT: " + scanContent);
 
-            Toast toast = Toast.makeText(getApplicationContext(),
+            // logcat to view app progress
+            Log.d("recursive", "scanned details; " + scanContent);
+
+            /* Toast toast = Toast.makeText(getApplicationContext(),
                     "FORMAT: " + scanFormat + "\nCONTENT: " + scanContent, Toast.LENGTH_LONG);
-            toast.show();
+            toast.show();   */
 
             /**
              * the following if-else block is implemented at this stage as it is
@@ -164,8 +172,12 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
             if (scanID == 2 && scanFormat.equals("QR_CODE"))                    // "QR_CODE" is a valid QR-Code format
             {
+
                 // store scanned information as the module information
                 String scannedQRInfo = scanContent;
+
+                // logcat to view app progress
+                Log.d("recursive", "scanned module details");
 
                 /** extract the necessary information out of this string to be used using special chars {} for module and []
                  * for class type */
@@ -173,21 +185,42 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
                 classInfo = scannedQRInfo.substring(scannedQRInfo.indexOf("[") + 1, scannedQRInfo.indexOf("]"));
 
-                scannedModule = true;
+                // toast to notify user of error in scanning of information
+                Toast QRCorrectFormat = Toast.makeText(getApplicationContext(),
+                        "module Code: " + moduleInfo + ", class type: " + classInfo, Toast.LENGTH_LONG);
+
+                QRCorrectFormat.show();
+
+
+
+                // logcat to view app progress
+                Log.d("recursive", "module info; " + moduleInfo);
+                Log.d("recursive", "module type; " + classInfo);
+
+                scannedModule = true;       // boolean to ensure necessary information has been included before processing
 
 
             } else if (scanID == 2 && !scanFormat.equals("QR_CODE"))            // in the event the user does not scan a QR-Code
             {
 
+                // logcat to view app progress
+                Log.e("recursive", "incorrect data for module code scanned" + scanFormat);
+
+                // toast to notify user of error in scanning of information
                 Toast QRIncorrectFormat = Toast.makeText(getApplicationContext(),
-                        "Format incorrect, please try again..." + scanContent, Toast.LENGTH_LONG);
+                        "format incorrect, please try again..." + scanContent, Toast.LENGTH_LONG);
+
                 QRIncorrectFormat.show();
 
             } else if (scanID == 1 && scanFormat.equals("CODE_128"))            // "CODE_128" is a valid ID format
             {
 
+                // logcat to view app progress
+                Log.d("recursive", "scanned id details");
+
                 // code to perform device beep to confirm successful scan
                 try {
+
                     Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                     Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
@@ -208,11 +241,11 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
                 scannedID = true;               // must at least be set to true once to work
 
-                // shows details of last user scanned
+                // shows details of last user scanned - POSSIBLY CHANGE TO SHOW STUDENT NAME UPON SUCCESSFUL SCAN
                 String contents = intent.getStringExtra("SCAN_RESULT");
                 Toast.makeText(this, contents , Toast.LENGTH_SHORT).show();
 
-                Log.d("batch status","id scanned"); // allows programmer to follow progress for testing
+                Log.d("recursive","batch id; " + contents);         // allows programmer to follow progress for testing
 
                 // restarts activity for scanning qr code
                 IntentIntegrator repeatScan = new IntentIntegrator(this);
@@ -222,8 +255,11 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
             }else if (scanID == 1 && !scanFormat.equals("CODE_128"))            // to determine if scan is not in correct format
             {
 
+                // logcat to view app progress
+                Log.e("recursive", "incorrect data for student id scanned" + scanFormat);
+
                 Toast IDIncorrectFormat = Toast.makeText(getApplicationContext(),
-                        "Valid User ID not scanned, please try again..." + scanContent, Toast.LENGTH_LONG);
+                        "valid student ID not scanned, please try again..." + scanContent, Toast.LENGTH_LONG);
                 IDIncorrectFormat.show();
 
             } else {        // NOT NEEDED
@@ -231,7 +267,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 // if no data is returned, the scanner is closed
 
                 // Handle cancel
-                Log.d("batch status","scan finished");
+                Log.d("recursive","scan finished");
 
                 finish();
 
@@ -239,13 +275,12 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         } else {
 
             // Handle cancel
-            Log.d("batch status","scan finished");
+            Log.d("recursive","batch status; complete, returning to check in screen");
 
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "No scan data received!", Toast.LENGTH_SHORT);
-            toast.show();
+            /* Toast toast = Toast.makeText(getApplicationContext(),
+                    "returning to auto check in screen", Toast.LENGTH_SHORT);
+            toast.show(); */
         }// if-else to confirm scan data has been received
-
 
     }// onActivityResult
 
@@ -285,6 +320,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 String module_id = moduleInfo;
                 String type = classInfo;
 
+                // logcat to view progress of app
+                Log.d("recursive", "info sent to database; " + student_id + "," +  module_id + "," + type);
+
                 // parameters to be passed into PHP script on server side
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("student_id", student_id));
@@ -305,11 +343,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 }
 
                 // check log cat for response
-                Log.d("Create Response", json.toString());
+                Log.d("recursive", "database response" + json.toString());
 
-                // check for success tag
-
-            } // for loop for batch progressing
+            } // for loop for batch progressing multiple students
 
                 try
                 {
@@ -317,6 +353,8 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
                     if (success == 1)
                     {
+                        // check log cat for response
+                        Log.d("recursive", "database response; php success");
 
                         // returns user to home screen
                         Intent signInSuccess = new Intent(getApplicationContext(), MainScreenActivity.class);
@@ -327,8 +365,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
                     } else
                     {
-
                         // failed to sign-in
+                        Log.e("recursive", "database response; php error");
+
                         // error message needed for when sign in is not successful
                         dialogText = "an error has occurred, please try again...";
 

@@ -3,6 +3,7 @@ package com.coderwurst.student_attendance;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,10 +15,10 @@ import com.google.zxing.integration.android.IntentResult;
  * ***********************
  * Created by IntelliJ IDEA
  * User: andrew
- * Date: 14/07/2014
- * Time: 09:13
- * Version: V4.0
- * USER INTERFACE FOR STUDENTS
+ * Date: 21/07/2014
+ * Time: 11:54
+ * Version: V8.0
+ * SPRINT 6 - USER INTERFACE FOR STUDENTS TO ALLOW USER TO 'CHECK IN' TO A CLASS
  * ************************
  */
 public class StudentUI extends Activity implements View.OnClickListener
@@ -27,7 +28,7 @@ public class StudentUI extends Activity implements View.OnClickListener
     private Button btnScan;                     // button to initiate sign-in process
     private Button btnResetUsr;                 // button to reset sharedPref for testing purposes
 
-    // retrieves shared preferences to be changed
+    // retrieves shared preferences to be used in determining student ID
     public static final String USER_ID = "User ID File";
 
     private TextView formatTxt, contentTxt;     // text view to inform tester of data captured at this stage
@@ -43,7 +44,7 @@ public class StudentUI extends Activity implements View.OnClickListener
         btnScan = (Button) findViewById(R.id.scan_button);          // button to return all students
         btnResetUsr = (Button) findViewById(R.id.test_button);      // button to initiate scan
 
-        // TextViews for hold format and content info for testing purposes
+        // TextViews for hold format and content info FOR TESTING PURPOSES ONLY
         formatTxt = (TextView) findViewById(R.id.scan_format);
         contentTxt = (TextView) findViewById(R.id.scan_content);
 
@@ -58,19 +59,23 @@ public class StudentUI extends Activity implements View.OnClickListener
     {
         if(view.getId()==R.id.scan_button)      // determines what the user wishes to do, amends scanID accordingly
         {
+            Log.d("student ui", "student wishes to check into a class");
+            // to be used when scanning in QR-Code to register attendance
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();      // opens Zxing scanner
             scanID = 2;
 
         } else {
 
-            // calls scanner to register new details in system
+            Log.d("student ui", "user wishes to register as another user");
+            // calls scanner to register new details in system TO BE REMOVED FOR FINAL VERSION
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();      // opens Zxing scanner
             scanID = 1;
 
         }// if - else
     }// onClick
+
 
     // returns scanning results for futher computation
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
@@ -86,9 +91,11 @@ public class StudentUI extends Activity implements View.OnClickListener
             formatTxt.setText("FORMAT: " + scanFormat);
             contentTxt.setText("CONTENT: " + scanContent);
 
-            Toast toast = Toast.makeText(getApplicationContext(),
+            Log.d("student ui", "scan content: " + scanContent);
+
+            /*Toast toast = Toast.makeText(getApplicationContext(),
                     "FORMAT: " + scanFormat + "\nCONTENT: " + scanContent, Toast.LENGTH_LONG);
-            toast.show();
+            toast.show(); */
 
             /**
              * the following if-else block is implemented at this stage as it is
@@ -98,6 +105,9 @@ public class StudentUI extends Activity implements View.OnClickListener
 
                 if (scanID == 2 && scanFormat.equals("QR_CODE"))            // "QR_CODE" is only valid QR-Code format
                 {
+
+                    Log.d("student ui", "student wishes to check into a class");
+
                     // launching SignIn Activity
                     Intent openSignIn = new Intent(getApplicationContext(), SignIn.class);
 
@@ -112,12 +122,18 @@ public class StudentUI extends Activity implements View.OnClickListener
                 } else if (scanID == 2 && !scanFormat.equals("QR_CODE"))    // in the event the user does not scan a QR
                 {
 
+                    Log.e("student ui", "student has scanned wrong type of code");
+
+                    // informs user that the code recently scanned is not of correct type
                     Toast QRIncorrectFormat = Toast.makeText(getApplicationContext(),
-                            "Format incorrect, please try again..." + scanContent, Toast.LENGTH_LONG);
+                            "format incorrect, please try again..." + scanContent, Toast.LENGTH_LONG);
                     QRIncorrectFormat.show();
 
-                } else if (scanID == 1 && scanFormat.equals("CODE_128"))         // "CODE_128" is only valid ID format
+                } else if (scanID == 1 && scanFormat.equals("CODE_128"))         // FOR TESTING PURPOSES ONLY
                 {
+
+                    Log.d("student ui", "user wishes to register as another user");
+
                     // launching Registration Activity
                     Intent openReg = new Intent(getApplicationContext(), InitialReg.class);
 
@@ -132,14 +148,21 @@ public class StudentUI extends Activity implements View.OnClickListener
                 }else if (scanID == 1 && !scanFormat.equals("CODE_128"))          // scan is incorrect format
                 {
 
+                    Log.e("student ui", "student has scanned wrong type of code");   // log in java console to show error
+
+                    // user informed of error
                     Toast IDIncorrectFormat = Toast.makeText(getApplicationContext(),
-                            "Valid User ID not scanned, please try again..." + scanContent, Toast.LENGTH_LONG);
+                            "valid User ID not scanned, please try again...", Toast.LENGTH_LONG);
                     IDIncorrectFormat.show();
 
                 } // series of else - if statements
         } else {
+
+            Log.e("student ui", "check in failed");   // log in java console to show an error has occurred
+
+            // inform user of incompatible scan
             Toast toast = Toast.makeText(getApplicationContext(),
-                    "No scan data received!", Toast.LENGTH_SHORT);
+                    "no scan data received!", Toast.LENGTH_SHORT);
             toast.show();
         }// if-else to confirm scan data has been received
 

@@ -13,12 +13,16 @@
     <string name="register">register</string>
 
     <!-- Strings relating to the lecturer functions -->
-    <string name="lecturer_man_signin">manual sign-in</string>
-    <string name="lecturer_auto_signin">card sign-in</string>
+    <string name="lecturer_man_signin">manual check in</string>
+    <string name="lecturer_auto_signin">card check in</string>
+    <string name="retrieve_QRCode">retrieve QR</string>
+    <!-- Strings relating to batch processing -->
     <string name="lecturer_scan_QR">scan QR</string>
     <string name="lecturer_scan_ID">scan ID(s)</string>
-    <string name="retrieve_QRCode">retrieve QR</string>
+    <!-- Strings relating to QR-Codes -->
     <string name="title">default</string>
+    <string name="lecture_qr">lecture</string>
+    <string name="tutorial_qr">tutorial</string>
 
     <!-- Strings relating to student functions-->
     <string name="scan">check in</string>

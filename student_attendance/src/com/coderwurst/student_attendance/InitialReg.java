@@ -27,7 +27,7 @@ import java.util.List;
  * Date: 08/07/2014
  * Time: 12:10
  * Version: V2.0
- * CLASS TO ALLOW STUDENT OR LECTURER TO SIGN INTO DEVICE, DETAILS TO BE SAVED
+ * SPRINT 5 - CLASS TO ALLOW STUDENT OR LECTURER TO SIGN INTO DEVICE, DETAILS TO BE SAVED
  * ************************
  */
 public class InitialReg extends Activity
@@ -53,8 +53,8 @@ public class InitialReg extends Activity
     JSONParser jsonParser = new JSONParser();
 
     // url to authenticate user - separate PHP scripts for student and staff IDs
-    private static String url_student_auth = "http://192.168.1.119/xampp/student_attendance/auth_student.php";
-    private static String url_staff_auth = "http://192.168.1.119/xampp/student_attendance/auth_staff.php";
+    private static String url_student_auth = "http://172.17.1.113/xampp/student_attendance/auth_student.php";
+    private static String url_staff_auth = "http://172.17.1.113/xampp/student_attendance/auth_staff.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -70,12 +70,13 @@ public class InitialReg extends Activity
         scannedID = bundle.getString("Info");
 
         // user Authentication Check
-        Log.d(scannedID, "ID Auth");          // logcat tag to view string contents (testing purposes only)
+        Log.d("initial reg", "ID Auth" + scannedID);          // logcat tag to view string contents (testing purposes only)
 
 
         // assign the app student or staff user privileges
         if(scannedID.charAt(0) == 'E' || scannedID.charAt(0) == 'e')
         {
+            Log.d("initial reg", "user is a staff member");          // logcat tag to view string contents (testing purposes only)
 
             staffUser = true;       // boolean stored in shared preferences, automatically loaded on next start up
 
@@ -87,6 +88,8 @@ public class InitialReg extends Activity
         } else if (scannedID.charAt(0) == 'B' || scannedID.charAt(0) == 'b')
         {
 
+            Log.d("initial reg", "user is a student");          // logcat tag to view string contents (testing purposes only)
+
             studentUser = true;     // boolean stored in shared preferences, automatically loaded on next start up
 
             userType = (EditText) findViewById(R.id.user_type);
@@ -96,9 +99,12 @@ public class InitialReg extends Activity
 
         } else {
 
+
+            Log.e("initial reg", "scanned data incorrect");          // logcat tag to view string contents (testing purposes only)
+
             // in the event that neither an B or a E id has been scanned....
             Toast errorScan = Toast.makeText(getApplicationContext(),
-                    "ERROR: scanned data not in correct format...", Toast.LENGTH_LONG);
+                    "scanned data not in correct format...", Toast.LENGTH_LONG);
             errorScan.show();
 
             Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
@@ -126,6 +132,8 @@ public class InitialReg extends Activity
             {
 
                 new AuthenticateUser().execute();
+                Log.d("initial reg", "user wishes to register on device");          // logcat tag to view string contents (testing purposes only)
+
 
                 // previous position of sharedPreferences code
             }// onClick
@@ -155,142 +163,159 @@ public class InitialReg extends Activity
 
 
 
-/**
- * authenticating ID details that have been scanned into device
- * */
-    protected String doInBackground(String... args)
-    {
-
-        String user_id = scannedID;         // string to store the scanned information
-
-        JSONObject json = null;             // declare the JSON object
-
-        // parameters to be passed into PHP script on server side
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("user_id", user_id));
-
-        // getting JSON Object
-        // NB url accepts POST method
-
-        if (studentUser == true)
+        /**
+         * authenticating ID details that have been scanned into device
+         * */
+        protected String doInBackground(String... args)
         {
-            json = jsonParser.makeHttpRequest(url_student_auth,
-                    "POST", params);
 
-        } else if (staffUser == true)
-        {
-            json = jsonParser.makeHttpRequest(url_staff_auth,
-                    "POST", params);
+            String user_id = scannedID;         // string to store the scanned information
 
-        } else {
+            JSONObject json = null;             // declare the JSON object
 
-            // in the event that neither an B or a E id has been scanned....
-            Toast errorScan = Toast.makeText(getApplicationContext(),
-                    "scanned data not in correct format...", Toast.LENGTH_LONG);
-            errorScan.show();
+            // parameters to be passed into PHP script on server side
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("user_id", user_id));
 
-            Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
-            startActivity(openMainScreen);
+            // getting JSON Object
+            // NB url accepts POST method
 
-            // closing this screen
-            finish();
-
-        } // if - else - else
-
-        // check log cat for response
-        Log.d("Create Response", json.toString());
-
-
-        if (staffUser == true || studentUser == true)
-        {
-            // check for success tag as php script will have been run
-            try
+            if (studentUser == true)
             {
-                int success = json.getInt(TAG_SUCCESS);
+                Log.d("initial reg", "student user being authenticated");          // logcat tag to view string contents (testing purposes only)
 
-                if (success == 1)
+                json = jsonParser.makeHttpRequest(url_student_auth, "POST", params);
+
+            } else if (staffUser == true)
+            {
+                Log.d("initial reg", "staff user being authenticated");          // logcat tag to view string contents (testing purposes only)
+
+
+                json = jsonParser.makeHttpRequest(url_staff_auth, "POST", params);
+
+            } else {
+
+                Log.e("initial reg", "scanned details are not that of student or staff");          // logcat tag to view string contents (testing purposes only)
+
+
+                // in the event that neither an B or a E id has been scanned....
+                Toast errorScan = Toast.makeText(getApplicationContext(),
+                        "scanned data not in correct format...", Toast.LENGTH_LONG);
+                errorScan.show();
+
+                Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
+                startActivity(openMainScreen);
+
+                // closing this screen
+                finish();
+
+            } // if - else - else
+
+            // check log cat for response
+            Log.d("initial reg", " database response" + json.toString());
+
+
+            if (staffUser == true || studentUser == true)
+            {
+                // check for success tag as php script will have been run
+                try
                 {
+                    int success = json.getInt(TAG_SUCCESS);
 
-                    // successfully authenticated user must be saved to sharedPreferences
-                    userDetails = getSharedPreferences(PREFERENCES_FILE, 0); // create the shared preferences package
-
-                    SharedPreferences.Editor editor = userDetails.edit();           // edit the userID to the shared preference file
-                    editor.putString("user_ID", userID.getText().toString());
-
-                    if (staffUser == true)
+                    if (success == 1)
                     {
-                        editor.putInt("user_Type", 1);                                // stored in the preferences a staff user
+                        Log.d("initial reg", "user successfully authenticated");          // logcat tag to view string contents (testing purposes only)
 
-                    } else if (studentUser == true)
-                    {
-                        editor.putInt("user_Type", 2);                                // stored in the preferences a student user
 
+                        // successfully authenticated user must be saved to sharedPreferences
+                        userDetails = getSharedPreferences(PREFERENCES_FILE, 0); // create the shared preferences package
+
+                        SharedPreferences.Editor editor = userDetails.edit();           // edit the userID to the shared preference file
+                        editor.putString("user_ID", userID.getText().toString());
+
+                        if (staffUser == true)
+                        {
+                            Log.d("initial reg", "user type set to staff");             // logcat tag to view string contents (testing purposes only)
+
+                            editor.putInt("user_Type", 1);                                // stored in the preferences a staff user
+
+                        } else if (studentUser == true)
+                        {
+                            Log.d("initial reg", "user type set to student");           // logcat tag to view string contents (testing purposes only)
+
+                            editor.putInt("user_Type", 2);                                // stored in the preferences a student user
+
+                        } else
+                        {
+                            Log.d("initial reg", "user type not recognised");           // logcat tag to view string contents (testing purposes only)
+
+                            editor.putInt("user_Type", 0);                              // for testing purposes, allows Type to be reset
+
+                        } // if - else
+
+                        editor.commit();                                                // save changes
+
+                        Log.d("initial reg", "ID value; " + userID.getText().toString());          // logcat tag to view contents of string
+
+                        // once user has been saved, return to main screen - to determine which UI to be called
+                        Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
+                        startActivity(openMainScreen);
+
+                        // closing this screen
+                        finish();
                     } else
                     {
-                        editor.putInt("user_Type", 0);                              // for testing purposes, allows Type to be reset
 
-                    } // if - else
+                        Log.e("initial reg", "scanned details are incorrect");          // logcat tag to view string contents (testing purposes only)
 
-                    editor.commit();                                                // save changes
+                        dialogText = "oops! an error has occurred, please try again...";// inform user that an error has occurred
 
+                        // failed to authenticate user, returned to main screen to have option to register again
+                        Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
+                        startActivity(openMainScreen);
 
-                    Log.d(userID.getText().toString(), "initial ID value");          // logcat tag to view contents of string
+                        // closing this screen
+                        finish();
 
-                    // once user has been saved, return to main screen - to determine which UI to be called
-                    Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
-                    startActivity(openMainScreen);
+                    } // if - else in the event a valid ID has been scanned but doesn't match any database records
 
-                    // closing this screen
-                    finish();
-                } else
+                } catch (JSONException e)
                 {
-
-                    dialogText = "oops! an error has occurred, please try again...";// inform user that an error has occurred
-
-                    // failed to authenticate user, returned to main screen to have option to register again
-                    Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
-                    startActivity(openMainScreen);
-
-                    // closing this screen
-                    finish();
-
-                } // if - else in the event a valid ID has been scanned but doesn't match any database records
-
-            } catch (JSONException e)
-            {
-                e.printStackTrace();
-            } // try - catch to confirm JSON success after running of PHP script
+                    e.printStackTrace();
+                } // try - catch to confirm JSON success after running of PHP script
 
 
-        } else {
+            } else {
 
-            // in the event that neither an B or a E id has been scanned....
-            Toast errorScan = Toast.makeText(getApplicationContext(),
-                    "scanned data not in correct format...", Toast.LENGTH_LONG);
-            errorScan.show();
+                Log.e("initial reg", "scanned details are not that of student or staff");          // logcat tag to view string contents (testing purposes only)
 
-            Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
-            startActivity(openMainScreen);
+                // in the event that neither an B or a E id has been scanned....
+                Toast errorScan = Toast.makeText(getApplicationContext(),
+                        "scanned data not in correct format...", Toast.LENGTH_LONG);
+                errorScan.show();
 
-            // closing this screen
-            finish();
+                Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
+                startActivity(openMainScreen);
 
-        } // if else to determine if a student or staff number has been scanned
+                // closing this screen
+                finish();
 
-        return null;
-    }// doInBackground
+            } // if else to determine if a student or staff number has been scanned
 
-    /**
-     * after completing background task dismiss the progress dialog
-     * **/
-    protected void onPostExecute(String file_url)
-    {
-        pDialog.setMessage(dialogText);
-        // dismiss the dialog once done
-        pDialog.dismiss();
-    }// onPostExecute
+            return null;
+        }// doInBackground
 
-}// authenticateUser
+        /**
+         * after completing background task dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url)
+        {
+            pDialog.setMessage(dialogText);
+            // dismiss the dialog once done
+            pDialog.dismiss();
+        }// onPostExecute
+
+    }// authenticateUser
 
 
 

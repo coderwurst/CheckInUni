@@ -2,8 +2,8 @@ package com.coderwurst.student_attendance;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,8 +17,8 @@ import com.google.zxing.integration.android.IntentResult;
  * User: andrew
  * Date: 14/07/2014
  * Time: 08:36
- * Version: V6.0
- * USER INTERFACE FOR STAFF MEMBERS
+ * Version: V7.0
+ * SPRINT 6 - USER INTERFACE FOR STAFF MEMBERS TO OFFER AUTO, MANUAL SIGN-IN FUNCTIONS & QR-CODE RETRIEVAL
  * ************************
  */
 public class LecturerUI extends Activity implements View.OnClickListener
@@ -68,32 +68,35 @@ public class LecturerUI extends Activity implements View.OnClickListener
     {
         if(view.getId()==R.id.lec_man_signin)
         {
+            // logcat tag to view app progress
+            Log.d("lecturer ui", "manual check in");
+
             // opens up manual sign in activity with text input fields
             Intent openManSignin = new Intent(getApplicationContext(), AddStudentMan.class);
             startActivity(openManSignin);
 
-            // closing this screen
-            finish();
-
         } else if (view.getId()==R.id.lec_auto_signin) {
+
+            // logcat tag to view app progress
+            Log.d("lecturer ui", "auto check in");
 
             // opens up recursive sign in activity
             Intent openAutoSignin = new Intent(getApplicationContext(), RecursiveSignIn.class);
             startActivity(openAutoSignin);
 
-            // closing this screen
-            finish();
-
         }else if (view.getId()==R.id.getQRCode){
+
+            // logcat tag to view app progress
+            Log.d("lecturer ui", "retrieve QR");
 
             // code to retrieve QR-Image from database
             Intent openViewAllModules = new Intent(getApplicationContext(), ViewAllModules.class);
             startActivity(openViewAllModules);
 
-            // closing this screen
-            finish();
-
         } else{
+
+            // logcat tag to view app progress
+            Log.d("lecturer ui", "reset user");
 
             // temp test code to reset user ID
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
@@ -118,11 +121,13 @@ public class LecturerUI extends Activity implements View.OnClickListener
             formatTxt.setText("FORMAT: " + scanFormat);
             contentTxt.setText("CONTENT: " + scanContent);
 
-            Toast toast = Toast.makeText(getApplicationContext(),
+            /* Toast toast = Toast.makeText(getApplicationContext(),
                     "FORMAT: " + scanFormat + "\nCONTENT: " + scanContent, Toast.LENGTH_LONG);
-            toast.show();
+            toast.show(); */
 
-                // allows the user to re-register
+            Log.d("lecturer ui", "user wishes to register as another user");
+
+                    // allows the user to re-register
 
                     // launching Registration Activity
                     Intent i = new Intent(getApplicationContext(), InitialReg.class);
@@ -137,12 +142,13 @@ public class LecturerUI extends Activity implements View.OnClickListener
                     finish();
 
         } else {
+
+            Log.e("lecturer ui", "scan failed");
+
             Toast toast = Toast.makeText(getApplicationContext(),
-                    "No scan data received!", Toast.LENGTH_SHORT);
+                    "no scan data received!", Toast.LENGTH_SHORT);
             toast.show();
         }// if-else to confirm scan data has been received
 
     }// onActivityResult
-
-
 } // LectureUI
