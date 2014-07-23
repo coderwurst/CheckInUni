@@ -1,53 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" android:background="@color/UUJBlue">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:orientation = "vertical"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/UUJBlue" >
 
-    <Button android:id="@id/lec_scan_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lecturer_scan_ID"
-            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
-            android:layout_marginBottom="100dp" android:textSize="26dp" android:textStyle="bold"/>
 
-    <Button android:id="@id/lec_scan_mod"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lecturer_scan_QR"
-            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
-            android:layout_marginBottom="150dp" android:textSize="26dp" android:textStyle="bold"/>
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true" android:layout_margin="16dp">
 
-    <Button android:id="@id/add_student_auto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/scan"
-            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
-            android:layout_marginBottom="50dp" android:textSize="26dp" android:textStyle="bold"/>
 
-    <TextView
-            android:id="@+id/scan_format"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textIsSelectable="true"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/add_student_auto" />
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
 
-    <TextView
-            android:id="@+id/scan_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textIsSelectable="true"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/scan_format" />
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/UULogo"
+                    android:background="@drawable/artwork"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="@string/uuj_logo_att"/>
 
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/UULogo"
-            android:background="@drawable/uulogo"
-            android:layout_alignParentTop="true" android:layout_centerHorizontal="true"
-            android:layout_marginTop="110dp" android:contentDescription="@string/uuj_logo_att"/>
 
-</RelativeLayout>
+            <Button android:id="@id/lec_scan_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lecturer_scan_ID"
+                    android:layout_below="@id/lec_scan_mod"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="4dp"
+                    android:textSize="26dp"
+                    android:textStyle="bold"/>
+
+            <Button android:id="@id/lec_scan_mod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lecturer_scan_QR"
+                    android:layout_below="@+id/UULogo"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_margin="4dp"
+                    android:textSize="26dp"
+                    android:textStyle="bold"/>
+
+            <Button android:id="@id/add_student_auto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/scan"
+                    android:layout_below="@+id/lec_scan_id"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_margin="4dp"
+                    android:textSize="26dp"
+                    android:textStyle="bold"/>
+
+            <TextView
+                    android:id="@+id/scan_format"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/add_student_auto" />
+
+            <TextView
+                    android:id="@+id/scan_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/scan_format" />
+
+            </RelativeLayout>
+    </FrameLayout>
+</FrameLayout>

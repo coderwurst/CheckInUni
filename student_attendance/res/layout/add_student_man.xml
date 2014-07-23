@@ -1,66 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical" android:background="@color/UUJBlue">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/UUJBlue">
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true">
+
+
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/UULogo"
+            android:background="@drawable/artwork"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/uuj_logo_att"/>
+
 
     <!-- ID Label -->
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:text="Student I.D."
-              android:paddingLeft="10dip"
-              android:paddingRight="10dip"
-              android:paddingTop="10dip"
-              android:textSize="17dip"/>
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:textSize="17dp"
+              android:layout_below="@+id/UULogo"
+              android:id="@+id/sidTextView"/>
 
     <!-- Input Student ID -->
     <EditText android:id="@id/student_id"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:layout_margin="5dip"
-              android:layout_marginBottom="15dip"
-              android:singleLine="true"/>
+              android:layout_marginLeft="5dp"
+              android:layout_marginRight="5dp"
+              android:singleLine="true"
+              android:layout_below="@+id/sidTextView"/>
 
     <!-- Module Label -->
-    <TextView android:layout_width="fill_parent"
+    <TextView android:id="@+id/midTextView"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:text="Module I.D."
-              android:paddingLeft="10dip"
-              android:paddingRight="10dip"
-              android:paddingTop="10dip"
-              android:textSize="17dip"/>
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:textSize="17dp"
+              android:layout_below="@+id/student_id" />
 
     <!-- Input Module -->
     <EditText android:id="@id/module_id"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:layout_margin="5dip"
-              android:layout_marginBottom="15dip"
+              android:layout_marginLeft="5dp"
+              android:layout_marginRight="5dp"
               android:singleLine="true"
-              android:inputType="text"/>
+              android:inputType="text"
+              android:layout_below="@+id/midTextView"/>
 
     <!-- Type Label -->
-    <TextView android:layout_width="fill_parent"
+    <TextView android:id="@+id/typeTextView"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:text="Type"
-              android:paddingLeft="10dip"
-              android:paddingRight="10dip"
-              android:paddingTop="10dip"
-              android:textSize="17dip"/>
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:textSize="17dp"
+              android:layout_below="@+id/module_id"/>
 
     <!-- Input Type -->
     <EditText android:id="@id/type"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:layout_margin="5dip"
-              android:layout_marginBottom="15dip"
               android:singleLine="true"
-              android:gravity="top"/>
+              android:layout_marginLeft="5dp"
+              android:layout_marginRight="5dp"
+              android:gravity="top"
+              android:layout_alignParentLeft="true"
+              android:layout_below="@+id/typeTextView"/>
 
     <!-- Button Subimit -->
     <Button android:id="@id/add_student_man"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Confirm Details"/>
+            android:background="@drawable/checkin"
+            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"/>
 
-</LinearLayout>
+    </RelativeLayout>
+
+    </FrameLayout>
+</FrameLayout>

@@ -42,8 +42,8 @@ public class ViewAllModules extends ListActivity
 	ArrayList<HashMap<String, String>> moduleList;
 
 	// url to get all modules list
-    private static String url_all_modules = "http://172.17.1.113/xampp/student_attendance/get_all_modules.php";
-    private static String url_location = "http://172.17.1.113/module_codes/";
+    private static String url_all_modules = "http://172.17.7.132/xampp/student_attendance/get_all_modules.php";
+    private static String url_location = "http://172.17.7.132/module_codes/";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
