@@ -34,16 +34,18 @@
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lecture_qr"
+            android:background="@drawable/lecture"
             android:id="@id/lec_lecqr"
-            android:layout_alignParentBottom="true" android:layout_alignLeft="@+id/webView" android:textSize="24sp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/webView"
             android:layout_marginBottom="20dp"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tutorial_qr"
+            android:background="@drawable/tutorial"
             android:id="@id/lec_tutqr"
-            android:layout_alignParentBottom="true" android:layout_alignRight="@+id/webView" android:textSize="24sp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/webView"
             android:layout_marginBottom="20dp"/>
     <TextView
             android:layout_width="wrap_content"

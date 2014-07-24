@@ -54,9 +54,6 @@ public class MainScreenActivity extends Activity implements OnClickListener
         userDetails = getSharedPreferences(USER_ID, 0);
         int savedID = userDetails.getInt("user_Type", 0);
 
-        /* Toast toast = Toast.makeText(getApplicationContext(),
-                "USER: " + savedID, Toast.LENGTH_LONG);
-        toast.show(); */
 
         if (savedID == 2)        // if there are no savedPreferences then the app will allow user to register
         {
@@ -97,10 +94,10 @@ public class MainScreenActivity extends Activity implements OnClickListener
 
             Log.d("main screen", "user type not found");   // log in java console which type of user is registered with device
 
-            // Buttons
+            // button to register details
             btnReg = (Button) findViewById(R.id.reg_button);
 
-            // TextViews for hold format and content info for testing purposes
+            // textViews for hold format and content info for testing purposes
             formatTxt = (TextView) findViewById(R.id.scan_format);
             contentTxt = (TextView) findViewById(R.id.scan_content);
 
@@ -148,6 +145,8 @@ public class MainScreenActivity extends Activity implements OnClickListener
 
             // launching Registration Activity
             Intent register = new Intent(getApplicationContext(), InitialReg.class);
+
+
             // takes the scanned info and packs it into a bundle before sending it to the Registration class
             String scannedInfo = scanContent;
             register.putExtra("Info", scannedInfo);

@@ -20,9 +20,9 @@
             <Button android:id="@+id/reg_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/register"
+                    android:background="@drawable/registration"
                     android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="100dp" android:textSize="26dp" android:textStyle="bold"/>
+                    android:layout_marginBottom="100dp"/>
 
             <TextView
                     android:id="@+id/scan_format"

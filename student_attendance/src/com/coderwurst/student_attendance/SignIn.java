@@ -57,7 +57,7 @@ public class SignIn extends Activity
 	EditText inputType;
 
 	// url to create new product, NB I.P. address not static and needs to be changed depending on IP address of server
-	private static String url_sign_in = "http://172.17.7.132/xampp/student_attendance/sign_in.php";
+	private static String url_sign_in = "http://172.17.10.187/xampp/student_attendance/sign_in.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";

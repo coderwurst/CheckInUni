@@ -82,4 +82,7 @@
     <!--  Internet Permissions necessary to access database -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Device Permissions to retrieve unique information -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
 </manifest>

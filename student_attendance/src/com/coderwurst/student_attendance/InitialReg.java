@@ -2,10 +2,13 @@ package com.coderwurst.student_attendance;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.provider.Settings.Secure;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -53,11 +56,14 @@ public class InitialReg extends Activity
     JSONParser jsonParser = new JSONParser();
 
     // url to authenticate user - separate PHP scripts for student and staff IDs
-    private static String url_student_auth = "http://172.17.7.132/xampp/student_attendance/auth_student.php";
-    private static String url_staff_auth = "http://172.17.7.132/xampp/student_attendance/auth_staff.php";
+    private static String url_student_auth = "http://172.17.10.187/xampp/student_attendance/auth_student.php";
+    private static String url_staff_auth = "http://172.17.10.187/xampp/student_attendance/auth_staff.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
+
+    // code to retrieve device specific details
+    private String deviceID;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -69,9 +75,11 @@ public class InitialReg extends Activity
         Bundle bundle = getIntent().getExtras();
         scannedID = bundle.getString("Info");
 
-        // user Authentication Check
-        Log.d("initial reg", "ID Auth" + scannedID);          // logcat tag to view string contents (testing purposes only)
+        deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
 
+        // user Authentication Check
+        Log.d("initial reg", "ID Auth " + scannedID);          // logcat tag to view string contents (testing purposes only)
+        Log.d("initial reg", "Device ID " + deviceID);
 
         // assign the app student or staff user privileges
         if(scannedID.charAt(0) == 'E' || scannedID.charAt(0) == 'e')
@@ -95,7 +103,7 @@ public class InitialReg extends Activity
             userType = (EditText) findViewById(R.id.user_type);
             userType.setText("student");
 
-            // code to authenticate student ID with Database
+            // code to authenticate student ID with Database found in PHP scripts
 
         } else {
 
@@ -170,12 +178,14 @@ public class InitialReg extends Activity
         {
 
             String user_id = scannedID;         // string to store the scanned information
-
+            String device_id = deviceID;
             JSONObject json = null;             // declare the JSON object
 
             // parameters to be passed into PHP script on server side
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("user_id", user_id));
+            params.add(new BasicNameValuePair("user_id", user_id));         // user ID
+            params.add(new BasicNameValuePair("device_id", device_id));  // unique device number
+
 
             // getting JSON Object
             // NB url accepts POST method

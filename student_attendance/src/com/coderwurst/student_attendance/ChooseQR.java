@@ -69,7 +69,7 @@ public class ChooseQR extends Activity implements View.OnClickListener
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
         // load the url, formatted using html
-        webview.loadData("<html><head><style type='text/css'>body{margin:auto auto;text-align:center;} img{width:100%;} </style></head><body><img src='" + lectureUrl + "'/></body></html>" ,"text/html",  "UTF-8");
+        webview.loadData("<html><head><style type='text/css'>body{margin:auto auto;text-align:center;} img{width:90%;} </style></head><body><img src='" + lectureUrl + "'/></body></html>" ,"text/html",  "UTF-8");
 
         // set textview default contents to lecture
         qrID = (TextView)findViewById(R.id.qr_id);
@@ -89,13 +89,13 @@ public class ChooseQR extends Activity implements View.OnClickListener
     {
         if(view.getId()==R.id.lec_tutqr)
         {
-            ChooseQR.this.webview.loadData("<html><head><style type='text/css'>body{margin:auto auto;text-align:center;} img{width:100%;} </style></head><body><img src='" + tutorialUrl + "'/></body></html>" ,"text/html",  "UTF-8");
+            ChooseQR.this.webview.loadData("<html><head><style type='text/css'>body{margin:auto auto;text-align:center;} img{width:90%;} </style></head><body><img src='" + tutorialUrl + "'/></body></html>" ,"text/html",  "UTF-8");
             // set textview default contents to lecture
             qrID.setText("tutorial");
 
         } else {
 
-            ChooseQR.this.webview.loadData("<html><head><style type='text/css'>body{margin:auto auto;text-align:center;} img{width:100%;} </style></head><body><img src='" + lectureUrl + "'/></body></html>" ,"text/html",  "UTF-8");
+            ChooseQR.this.webview.loadData("<html><head><style type='text/css'>body{margin:auto auto;text-align:center;} img{width:90%;} </style></head><body><img src='" + lectureUrl + "'/></body></html>" ,"text/html",  "UTF-8");
             // set textview default contents to lecture
             qrID.setText("lecture");
 

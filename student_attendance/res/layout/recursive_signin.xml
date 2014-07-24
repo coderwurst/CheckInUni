@@ -31,34 +31,31 @@
             <Button android:id="@id/lec_scan_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/lecturer_scan_ID"
+                    android:background="@drawable/scanid"
                     android:layout_below="@id/lec_scan_mod"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="4dp"
-                    android:textSize="26dp"
-                    android:textStyle="bold"/>
+                    />
 
             <Button android:id="@id/lec_scan_mod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/lecturer_scan_QR"
+                    android:background="@drawable/scanmod"
                     android:layout_below="@+id/UULogo"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:layout_margin="4dp"
-                    android:textSize="26dp"
-                    android:textStyle="bold"/>
+                    />
 
             <Button android:id="@id/add_student_auto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/scan"
+                    android:background="@drawable/checkin"
                     android:layout_below="@+id/lec_scan_id"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:layout_margin="4dp"
-                    android:textSize="26dp"
-                    android:textStyle="bold"/>
+                    />
 
             <TextView
                     android:id="@+id/scan_format"
