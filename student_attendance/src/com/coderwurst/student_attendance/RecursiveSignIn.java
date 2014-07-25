@@ -57,7 +57,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private String classInfo = null;
 
     // url to create new product
-    private static String url_sign_in = "http://172.17.10.187/xampp/student_attendance/sign_in.php";
+    private static String url_sign_in = "http://172.17.1.223/xampp/student_attendance/sign_in.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -208,7 +208,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
                 // toast to notify user of error in scanning of information
                 Toast QRIncorrectFormat = Toast.makeText(getApplicationContext(),
-                        "format incorrect, please try again..." + scanContent, Toast.LENGTH_LONG);
+                        "format incorrect, please try again...(" + scanFormat + ")", Toast.LENGTH_LONG);
 
                 QRIncorrectFormat.show();
 
@@ -259,7 +259,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 Log.e("recursive", "incorrect data for student id scanned" + scanFormat);
 
                 Toast IDIncorrectFormat = Toast.makeText(getApplicationContext(),
-                        "valid student ID not scanned, please try again..." + scanContent, Toast.LENGTH_LONG);
+                        "format incorrect, please try again...(" + scanFormat + ")", Toast.LENGTH_LONG);
                 IDIncorrectFormat.show();
 
             } else {        // NOT NEEDED
@@ -277,9 +277,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
             // Handle cancel
             Log.d("recursive","batch status; complete, returning to check in screen");
 
-            /* Toast toast = Toast.makeText(getApplicationContext(),
-                    "returning to auto check in screen", Toast.LENGTH_SHORT);
-            toast.show(); */
         }// if-else to confirm scan data has been received
 
     }// onActivityResult

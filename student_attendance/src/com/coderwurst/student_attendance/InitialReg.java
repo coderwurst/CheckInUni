@@ -2,12 +2,10 @@ package com.coderwurst.student_attendance;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +40,9 @@ public class InitialReg extends Activity
     boolean studentUser = false;
     boolean staffUser = false;
 
+    // further booleans used in user authentication
+    boolean deviceOK = true;
+
     // opens the sharedPref file to allow user id to be stored
     public static final String PREFERENCES_FILE = "User ID File";
     static SharedPreferences userDetails;
@@ -56,8 +57,9 @@ public class InitialReg extends Activity
     JSONParser jsonParser = new JSONParser();
 
     // url to authenticate user - separate PHP scripts for student and staff IDs
-    private static String url_student_auth = "http://172.17.10.187/xampp/student_attendance/auth_student.php";
-    private static String url_staff_auth = "http://172.17.10.187/xampp/student_attendance/auth_staff.php";
+    private static String url_student_auth = "http://172.17.1.223/xampp/student_attendance/auth_student.php";
+    private static String url_staff_auth = "http://172.17.1.223/xampp/student_attendance/auth_staff.php";
+    private static String url_device_auth = "http://172.17.1.223/xampp/student_attendance/auth_device.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -167,6 +169,7 @@ public class InitialReg extends Activity
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
+
         } // onPreExecute
 
 
@@ -179,31 +182,45 @@ public class InitialReg extends Activity
 
             String user_id = scannedID;         // string to store the scanned information
             String device_id = deviceID;
-            JSONObject json = null;             // declare the JSON object
+            JSONObject jsonUser = null;             // declare the JSON object to auth user details
+            JSONObject jsonDevice = null;           // declare the JSON object to auth device details
 
             // parameters to be passed into PHP script on server side
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("user_id", user_id));         // user ID
-            params.add(new BasicNameValuePair("device_id", device_id));  // unique device number
 
 
-            // getting JSON Object
-            // NB url accepts POST method
+            // NB both parameters cannot be passed to the same PHP script as this leads to Mysql Injection
+            // parameters to be passed into PHP script on server side
+            List<NameValuePair> deviceParams = new ArrayList<NameValuePair>();
+            deviceParams.add(new BasicNameValuePair("user_id", user_id));         // user ID
+            deviceParams.add(new BasicNameValuePair("device_id", device_id));     // unique device number
+
+
+            /**
+             * Following if-else block determines which PHP calls to make, determined by the type of ID that is scanned
+             * in; only student users will be device checked
+             */
 
             if (studentUser == true)
             {
                 Log.d("initial reg", "student user being authenticated");          // logcat tag to view string contents (testing purposes only)
 
-                json = jsonParser.makeHttpRequest(url_student_auth, "POST", params);
+                jsonUser = jsonParser.makeHttpRequest(url_student_auth, "POST", params);
+
+                Log.d("initial reg", "device ID being authenticated");
+                jsonDevice = jsonParser.makeHttpRequest(url_device_auth, "POST", deviceParams);
+
 
             } else if (staffUser == true)
             {
                 Log.d("initial reg", "staff user being authenticated");          // logcat tag to view string contents (testing purposes only)
 
 
-                json = jsonParser.makeHttpRequest(url_staff_auth, "POST", params);
+                jsonUser = jsonParser.makeHttpRequest(url_staff_auth, "POST", params);
 
-            } else {
+            } else
+            {
 
                 Log.e("initial reg", "scanned details are not that of student or staff");          // logcat tag to view string contents (testing purposes only)
 
@@ -219,18 +236,51 @@ public class InitialReg extends Activity
                 // closing this screen
                 finish();
 
-            } // if - else - else
-
-            // check log cat for response
-            Log.d("initial reg", " database response" + json.toString());
+            } // if - else - else to determine if user should be checked with staff or student parameters
 
 
-            if (staffUser == true || studentUser == true)
+
+            /**
+             * Following if-else block determines if the Log cat should be checked for a second response from the
+             * Database (ie only when student user has been determined)
+             */
+            // check log cat for response (if user in database)
+            Log.d("initial reg", " user ID response" + jsonUser.toString());
+
+            // check log cat for response (if user is student and device id ok)
+            if(studentUser == true)
+            {
+                Log.d("initial reg", " device ID response" + jsonDevice.toString());
+                try
+                {
+                    int devicecheck = jsonDevice.getInt(TAG_SUCCESS);
+
+                    if (devicecheck == 1)       // device registration has been successful
+                    {
+                        deviceOK = true;
+                    } else                      // user is registered on another device
+                    {
+                        deviceOK = false;
+                    } // if else to determine is device
+
+                } catch (JSONException e)
+                {
+                    e.printStackTrace();
+                } // try catch for device ID check
+
+            } // check for device ID if user is student
+
+            /**
+             * Third if - else block used to determine which procedure the app should follow, dependant on a number
+             * of situations resulting from the checks found in code above
+             */
+
+            if (staffUser == true || studentUser == true && deviceOK == true)
             {
                 // check for success tag as php script will have been run
                 try
                 {
-                    int success = json.getInt(TAG_SUCCESS);
+                    int success = jsonUser.getInt(TAG_SUCCESS);
 
                     if (success == 1)
                     {
@@ -273,10 +323,10 @@ public class InitialReg extends Activity
 
                         // closing this screen
                         finish();
-                    } else
+                    } else                                                              // the database has returned an error
                     {
 
-                        Log.e("initial reg", "scanned details are incorrect");          // logcat tag to view string contents (testing purposes only)
+                        Log.e("initial reg", "scanned details are incorrect");          // tag to view error
 
                         dialogText = "oops! an error has occurred, please try again...";// inform user that an error has occurred
 
@@ -289,21 +339,21 @@ public class InitialReg extends Activity
 
                     } // if - else in the event a valid ID has been scanned but doesn't match any database records
 
+
+
                 } catch (JSONException e)
                 {
                     e.printStackTrace();
                 } // try - catch to confirm JSON success after running of PHP script
 
 
-            } else {
+            } else if (studentUser == true && deviceOK == false)
+            {
+                Log.e("initial reg", "student already registered on another device");          // tag to view error
 
-                Log.e("initial reg", "scanned details are not that of student or staff");          // logcat tag to view string contents (testing purposes only)
+                dialogText = "oops! an error has occurred, please try again...";                // inform user that they are already registered
 
-                // in the event that neither an B or a E id has been scanned....
-                Toast errorScan = Toast.makeText(getApplicationContext(),
-                        "scanned data not in correct format...", Toast.LENGTH_LONG);
-                errorScan.show();
-
+                // failed to authenticate user, returned to main screen to have option to register again
                 Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
                 startActivity(openMainScreen);
 
@@ -320,13 +370,19 @@ public class InitialReg extends Activity
          * **/
         protected void onPostExecute(String file_url)
         {
+
+            if (!deviceOK)
+            {
+                Toast deviceError = Toast.makeText(getApplicationContext(),
+                        "user already registered on another device, please contact your administrator...", Toast.LENGTH_LONG);
+                deviceError.show();
+            } // if to inform user that the device is already registered
+
             pDialog.setMessage(dialogText);
             // dismiss the dialog once done
             pDialog.dismiss();
         }// onPostExecute
 
     }// authenticateUser
-
-
 
 } // InitialReg
