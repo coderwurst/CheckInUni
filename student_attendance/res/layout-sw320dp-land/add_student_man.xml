@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent" android:background="@color/UUJBlue">
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true" android:layout_margin="5dp">
+
+
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+            <!-- ID Label -->
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:text="Student I.D."
+                      android:paddingLeft="20dp"
+                      android:paddingRight="20dp"
+                      android:textSize="12sp"
+                      android:layout_alignParentTop="true"
+                      android:layout_marginTop="40dp"
+                      android:id="@+id/sidTextView"/>
+
+            <!-- Input Student ID -->
+            <EditText android:id="@id/student_id"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="2dp"
+                      android:layout_marginLeft="20dp"
+                      android:layout_marginRight="20dp"
+                      android:singleLine="true"
+                      android:layout_below="@+id/sidTextView"/>
+
+            <!-- Module Label -->
+            <TextView android:id="@+id/midTextView"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:text="Module I.D."
+                      android:paddingLeft="20dp"
+                      android:paddingRight="20dp"
+                      android:textSize="12sp"
+                      android:layout_below="@+id/student_id" />
+
+            <!-- Input Module -->
+            <EditText android:id="@id/module_id"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="2dp"
+                      android:layout_marginLeft="20dp"
+                      android:layout_marginRight="20dp"
+                      android:singleLine="true"
+                      android:inputType="text"
+                      android:layout_below="@+id/midTextView"/>
+
+            <!-- Type Label -->
+            <TextView android:id="@+id/typeTextView"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:text="Type"
+                      android:paddingLeft="20dp"
+                      android:paddingRight="20dp"
+                      android:textSize="12sp"
+                      android:layout_below="@+id/module_id"/>
+
+            <!-- Input Type -->
+            <EditText android:id="@id/type"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="2dp"
+                      android:layout_marginLeft="20dp"
+                      android:layout_marginRight="20dp"
+                      android:singleLine="true"
+                      android:gravity="top"
+                      android:layout_alignParentLeft="true"
+                      android:layout_below="@+id/typeTextView"/>
+
+            <!-- Button Subimit -->
+            <Button android:id="@id/add_student_man"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/lecturercheckinhoriz"
+                    android:layout_alignParentTop="true" android:layout_alignRight="@id/student_id"/>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</FrameLayout>

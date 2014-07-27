@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent" android:background="@color/UUJBlue">
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true" android:layout_margin="20dp">
+
+
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/UULogo"
+                    android:background="@drawable/uulogo"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:contentDescription="@string/uuj_logo_att"/>
+
+            <!-- ID Label -->
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:text="Student I.D."
+                      android:textSize="12sp"
+                      android:layout_below="@+id/UULogo"
+                      android:layout_marginTop="40dp"
+                      android:layout_alignLeft="@+id/UULogo"
+                      android:id="@+id/sidTextView"/>
+
+            <!-- Input Student ID -->
+            <EditText android:id="@id/student_id"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="2dp"
+                      android:layout_alignLeft="@+id/UULogo"
+                      android:layout_alignRight="@+id/UULogo"
+                      android:singleLine="true"
+                      android:layout_below="@+id/sidTextView"/>
+
+            <!-- Module Label -->
+            <TextView android:id="@+id/midTextView"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:text="Module I.D."
+                      android:layout_alignLeft="@+id/UULogo"
+                      android:layout_alignRight="@+id/UULogo"
+                      android:textSize="12sp"
+                      android:layout_below="@+id/student_id" />
+
+            <!-- Input Module -->
+            <EditText android:id="@id/module_id"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="2dp"
+                      android:layout_alignLeft="@+id/UULogo"
+                      android:layout_alignRight="@+id/UULogo"
+                      android:singleLine="true"
+                      android:inputType="text"
+                      android:layout_below="@+id/midTextView"/>
+
+            <!-- Type Label -->
+            <TextView android:id="@+id/typeTextView"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:text="Type"
+                      android:layout_alignLeft="@+id/UULogo"
+                      android:layout_alignRight="@+id/UULogo"
+                      android:textSize="12sp"
+                      android:layout_below="@+id/module_id"/>
+
+            <!-- Input Type -->
+            <EditText android:id="@id/type"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="2dp"
+                      android:layout_alignLeft="@+id/UULogo"
+                      android:layout_alignRight="@+id/UULogo"
+                      android:singleLine="true"
+                      android:gravity="top"
+                      android:layout_below="@+id/typeTextView"/>
+
+            <!-- Button Subimit -->
+            <Button android:id="@id/add_student_man"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/lecturercheckinhoriz"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</FrameLayout>

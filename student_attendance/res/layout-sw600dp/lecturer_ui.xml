@@ -19,7 +19,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/UULogo"
-                    android:background="@drawable/artwork"
+                    android:background="@drawable/uulogo"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="110dp"
@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/mancheckin"
-                    android:layout_below="@+id/UULogo"
+                    android:layout_above="@+id/lec_auto_signin"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="32dp"
                     android:layout_margin="16dp"/>
@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/autocheckin"
-                    android:layout_below="@id/lec_man_signin"
+                    android:layout_above="@id/getQRCode"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="16dp"/>
 
@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/findqr"
-                    android:layout_below="@id/lec_auto_signin"
+                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="16dp"/>
 

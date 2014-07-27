@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:background="@color/UUJBlue">
+
+    <!-- User ID Label -->
+    <TextView android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="User I.D."
+              android:layout_marginTop="80dp"
+              android:textSize="17dip"/>
+
+        <!-- user ID Input -->
+    <EditText android:id="@id/user_id"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:singleLine="true"
+          android:inputType="text" android:layout_marginTop="10dp"/>
+
+    <!-- User ID type -->
+    <TextView android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="User Type"
+              android:layout_marginTop="80dp"
+              android:textSize="17dip"/>
+
+    <!-- user ID Input -->
+    <EditText android:id="@id/user_type"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:singleLine="true"
+              android:inputType="text" android:layout_marginTop="10dp"/>
+
+    <!-- Button Submit -->
+    <Button android:id="@id/confirm_reg_details"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm Details"/>
+
+</LinearLayout>

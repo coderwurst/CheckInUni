@@ -29,30 +29,34 @@
             android:scaleType="centerInside"
             android:layout_width="450dp"
             android:layout_height="400dp"
-            android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+            android:layout_marginTop="50dp"
+            android:layout_below="@+id/module_number"
+            android:layout_centerHorizontal="true"/>
 
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/lecture"
             android:id="@id/lec_lecqr"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/lec_tutqr"
             android:layout_alignLeft="@+id/webView"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginTop="20dp"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/tutorial"
             android:id="@id/lec_tutqr"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/webView"
             android:layout_alignRight="@+id/webView"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginTop="20dp"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="default"
             android:textSize="16sp"
-            android:id="@id/qr_id" android:layout_above="@+id/webView" android:layout_alignRight="@+id/webView"/>
+            android:id="@id/qr_id"
+            android:layout_above="@+id/webView"
+            android:layout_alignRight="@+id/webView"/>
 
 
         </RelativeLayout>

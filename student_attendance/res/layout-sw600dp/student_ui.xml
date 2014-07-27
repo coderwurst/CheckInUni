@@ -17,31 +17,27 @@
             android:layout_alignParentLeft="true" android:layout_margin="100dp">
         <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-            <Button android:id="@+id/test_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="reset"
-                    android:textSize="26dp"
-                    android:textStyle="bold"
-                    android:layout_alignParentBottom="true" android:layout_alignParentRight="true"/>
+                android:layout_height="fill_parent"
+                >
 
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:id="@+id/UULogo"
-                    android:background="@drawable/artwork"
+                    android:background="@drawable/uulogo"
                     android:contentDescription="@string/uuj_logo_att"
-                    android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
+                    android:layout_marginTop="250dp"
+                    android:layout_centerHorizontal="true"/>
 
             <Button android:id="@+id/scan_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@drawable/checkin"
-                    android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"/>
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/UULogo"
+                    android:layout_marginTop="75dp"/>
 
             <TextView
                     android:id="@+id/scan_format"
@@ -58,6 +54,16 @@
                     android:textIsSelectable="true"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/scan_format" />
+
+            <Button android:id="@+id/test_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="reset"
+                    android:textSize="26dp"
+                    android:textStyle="bold"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"/>
+
         </RelativeLayout>
     </FrameLayout>
 

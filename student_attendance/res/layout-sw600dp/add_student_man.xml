@@ -17,7 +17,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/UULogo"
-                    android:background="@drawable/artwork"
+                    android:background="@drawable/uulogo"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
@@ -33,6 +33,7 @@
                       android:paddingTop="20dp"
                       android:textSize="24sp"
                       android:layout_below="@+id/UULogo"
+                      android:layout_marginTop="50dp"
                       android:id="@+id/sidTextView"/>
 
             <!-- Input Student ID -->
@@ -94,7 +95,7 @@
                     android:background="@drawable/checkin"
                     android:layout_below="@+id/type"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="20dp"/>
+                    android:layout_marginTop="50dp"/>
 
         </RelativeLayout>
 

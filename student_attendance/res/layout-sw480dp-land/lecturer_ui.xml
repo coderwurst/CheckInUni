@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/UUJBlue">
+
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            >
+
+
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/UULogo"
+                    android:background="@drawable/uulogo"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/uuj_logo_att"/>
+
+            <Button android:id="@id/lec_man_signin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/mancheckin"
+                    android:layout_below="@+id/UULogo"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"/>
+
+            <Button android:id="@id/lec_auto_signin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/autocheckin"
+                    android:layout_below="@id/lec_man_signin"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"/>
+
+            <Button android:id="@id/getQRCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/findqr"
+                    android:layout_below="@id/lec_auto_signin"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"/>
+
+            <Button android:id="@id/reset_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="reset"
+                    android:textSize="26dp"
+                    android:textStyle="bold" android:layout_alignBaseline="@id/getQRCode"
+                    android:layout_alignBottom="@id/getQRCode" android:layout_alignParentLeft="true"/>
+
+            <TextView
+                    android:id="@+id/scan_format"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/reset_user" />
+
+            <TextView
+                    android:id="@+id/scan_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/scan_format" />
+
+        </RelativeLayout>
+    </FrameLayout>
+</FrameLayout>

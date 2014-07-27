@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:orientation = "vertical"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/UUJBlue" >
+
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true">
+
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+
+            <Button android:id="@+id/reg_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/registration"
+                    android:layout_below="@+id/UULogo"
+                    android:layout_marginTop="75dp"
+                    android:layout_centerHorizontal="true"
+                    />
+
+            <TextView
+                    android:id="@+id/scan_format"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/reg_button" />
+
+            <TextView
+                    android:id="@+id/scan_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/scan_format" />
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/UULogo"
+                    android:background="@drawable/uulogo"
+                    android:layout_marginTop="250dp"
+                    android:contentDescription="@string/uuj_logo_att"
+                    android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+    </FrameLayout>
+
+</FrameLayout>
