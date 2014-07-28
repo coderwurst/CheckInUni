@@ -85,4 +85,8 @@
     <!-- Device Permissions to retrieve unique information -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+    <!-- Wifi Permissions to retrieve SSIDs of networks in range -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
 </manifest>

@@ -1,17 +1,5 @@
 package com.coderwurst.student_attendance;  // Sprint 4 - Sign into Database
 
-
-/**
- * ***********************
- * Created by IntelliJ IDEA
- * User: andrew
- * Date: 21/07/2014
- * Time: 11:52
- * Version: V8.0
- * SPRINT 4 - MAIN SCREEN TO ALLOW INITIAL REGISTRATION ON DEVICE AND UPON NEXT START UP DETERMINE APP INTERFACE
- * ************************
- */
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +16,16 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 
+/**
+ * ***********************
+ * Created by IntelliJ IDEA
+ * User: andrew
+ * Date: 21/07/2014
+ * Time: 11:52
+ * Version: V8.0
+ * SPRINT 4 - MAIN SCREEN TO ALLOW INITIAL REGISTRATION ON DEVICE AND UPON NEXT START UP DETERMINE APP INTERFACE
+ * ************************
+ */
 
 
 public class MainScreenActivity extends Activity implements OnClickListener
@@ -50,10 +48,13 @@ public class MainScreenActivity extends Activity implements OnClickListener
     {
 		super.onCreate(savedInstanceState);
 
-        // returns the stored sharedPrefs for the app and stores the usee type
+        // returns the stored sharedPrefs for the app and stores the user type
         userDetails = getSharedPreferences(USER_ID, 0);
         int savedID = userDetails.getInt("user_Type", 0);
 
+        /** if to determine if there is any outstanding check in info from a previous session
+         * to be sent to the database before continuing
+         */
 
         if (savedID == 2)        // if there are no savedPreferences then the app will allow user to register
         {
