@@ -46,8 +46,8 @@ public class InitialReg extends Activity
     // opens the sharedPref file to allow user id to be stored
     public static final String PREFERENCES_FILE = "User ID File";
     static SharedPreferences userDetails;
-    EditText userID;
-    EditText userType;
+    // EditText userID;
+    // EditText userType;
 
     // progress dialog to inform user
     private ProgressDialog pDialog;
@@ -57,9 +57,9 @@ public class InitialReg extends Activity
     JSONParser jsonParser = new JSONParser();
 
     // url to authenticate user - separate PHP scripts for student and staff IDs
-    private static String url_student_auth = "http://172.17.5.207/xampp/student_attendance/auth_student.php";
-    private static String url_staff_auth = "http://172.17.5.207/xampp/student_attendance/auth_staff.php";
-    private static String url_device_auth = "http://172.17.5.207/xampp/student_attendance/auth_device.php";
+    private static String url_student_auth = "http://172.17.8.80/xampp/student_attendance/auth_student.php";
+    private static String url_staff_auth = "http://172.17.8.80/xampp/student_attendance/auth_staff.php";
+    private static String url_device_auth = "http://172.17.8.80/xampp/student_attendance/auth_device.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -71,7 +71,7 @@ public class InitialReg extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.initial_reg);
+        // setContentView(R.layout.initial_reg);
 
         // unpack the data scanned into the activity
         Bundle bundle = getIntent().getExtras();
@@ -90,8 +90,8 @@ public class InitialReg extends Activity
 
             staffUser = true;       // boolean stored in shared preferences, automatically loaded on next start up
 
-            userType = (EditText) findViewById(R.id.user_type);
-            userType.setText("staff");
+            // userType = (EditText) findViewById(R.id.user_type);
+            // userType.setText("staff");
 
             // code to authenticate staff ID with Database
 
@@ -102,8 +102,8 @@ public class InitialReg extends Activity
 
             studentUser = true;     // boolean stored in shared preferences, automatically loaded on next start up
 
-            userType = (EditText) findViewById(R.id.user_type);
-            userType.setText("student");
+            // userType = (EditText) findViewById(R.id.user_type);
+            // userType.setText("student");
 
             // code to authenticate student ID with Database found in PHP scripts
 
@@ -127,11 +127,11 @@ public class InitialReg extends Activity
         } // if - else - if
 
         // text set to scanned information for confirmation (testing purposes only)
-        userID = (EditText) findViewById(R.id.user_id);
-        userID.setText(scannedID);
+        // userID = (EditText) findViewById(R.id.user_id);
+        // userID.setText(scannedID);
 
 
-        // button to confirm input and send to database
+        /* button to confirm input and send to database
         Button btnSubmitID = (Button) findViewById(R.id.confirm_reg_details);
 
         // button click event
@@ -147,7 +147,10 @@ public class InitialReg extends Activity
 
                 // previous position of sharedPreferences code
             }// onClick
-        });
+        }); */
+
+        new AuthenticateUser().execute();
+        Log.d("initial reg", "user wishes to register on device");          // logcat tag to view string contents (testing purposes only)
 
     }// OnCreate
 
@@ -291,7 +294,7 @@ public class InitialReg extends Activity
                         userDetails = getSharedPreferences(PREFERENCES_FILE, 0); // create the shared preferences package
 
                         SharedPreferences.Editor editor = userDetails.edit();           // edit the userID to the shared preference file
-                        editor.putString("user_ID", userID.getText().toString());
+                        editor.putString("user_ID", user_id);                           // ******userID.getText().toString()******
 
                         if (staffUser == true)
                         {
@@ -315,7 +318,7 @@ public class InitialReg extends Activity
 
                         editor.commit();                                                // save changes
 
-                        Log.d("initial reg", "ID value; " + userID.getText().toString());          // logcat tag to view contents of string
+                        Log.d("initial reg", "ID value; " + user_id);          // logcat tag to view contents of string
 
                         // once user has been saved, return to main screen - to determine which UI to be called
                         Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);

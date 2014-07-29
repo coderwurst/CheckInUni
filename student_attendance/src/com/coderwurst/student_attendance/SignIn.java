@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -51,13 +52,13 @@ public class SignIn extends Activity
     // creates the JSONParser object
 	JSONParser jsonParser = new JSONParser();
 
-    // fields to store data - for testing purposes only
+    /* fields to store data - for testing purposes only
 	EditText inputStudentID;
 	EditText inputModuleID;
-	EditText inputType;
+	EditText inputType; */
 
 	// url to create new product, NB I.P. address not static and needs to be changed depending on IP address of server
-	private static String url_sign_in = "http://172.17.5.207/xampp/student_attendance/sign_in.php";
+	private static String url_sign_in = "http://172.17.8.80/xampp/student_attendance/sign_in.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
@@ -71,7 +72,7 @@ public class SignIn extends Activity
 
         // opens up sign-in confirmation screen
         super.onCreate(savedInstanceState);
-		setContentView(R.layout.sign_in);
+		// setContentView(R.layout.sign_in);        // TESTING PURPOSES ONLY
 
         // unpack the data scanned into the app
         Bundle bundle = getIntent().getExtras();
@@ -86,31 +87,35 @@ public class SignIn extends Activity
         moduleInfo = allInfo.substring(allInfo.indexOf("{") + 1, allInfo.indexOf("}"));
         classInfo = allInfo.substring(allInfo.indexOf("[") + 1, allInfo.indexOf("]"));
 
-        // edit text in input boxes for comparison before being sent    FOR TESTING PURPOSES ONLY, TO BE REMOVED
+        /* edit text in input boxes for comparison before being sent    FOR TESTING PURPOSES ONLY, TO BE REMOVED
 		inputStudentID = (EditText) findViewById(R.id.student_id);
         inputStudentID.setText(userID);
 		inputModuleID = (EditText) findViewById(R.id.module_id);
         inputModuleID.setText(moduleInfo);
 		inputType = (EditText) findViewById(R.id.type);
-        inputType.setText(classInfo);
+        inputType.setText(classInfo); */
 
         // logcat tag to view contents of string at this stage (testing purposes only)
         Log.d("check in", "module ID info; " + moduleInfo);
         Log.d("check in", "class type; " + classInfo);
 
 		// button to confirm input and send to database
-		Button btnCreateProduct = (Button) findViewById(R.id.btnCreateProduct);
+		// Button btnCreateProduct = (Button) findViewById(R.id.btnCreateProduct);
 
 		// button click event
-		btnCreateProduct.setOnClickListener(new View.OnClickListener() {
+		// btnCreateProduct.setOnClickListener(new View.OnClickListener() {
 
-			@Override
+
+        // creating new product in background thread
+        new SignIntoClass().execute();
+
+			/*@Override
 			public void onClick(View view)
             {
 				// creating new product in background thread
 				new SignIntoClass().execute();
 			}// onClick
-		});
+		});*/
 
 	}// onCreate
 
@@ -141,10 +146,14 @@ public class SignIn extends Activity
 		protected String doInBackground(String... args)
         {
 
-			// Strings to take contents of TextViews, to be changed when implementing automatic transition
+			/* Strings to take contents of TextViews, to be changed when implementing automatic transition
             String student_id = inputStudentID.getText().toString();
 			String module_id = inputModuleID.getText().toString();
-			String type = inputType.getText().toString();
+			String type = inputType.getText().toString(); */
+
+            String student_id = userID;
+            String module_id = moduleInfo;
+            String type = classInfo;
 
 			// parameters to be passed into PHP script on server side
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -207,6 +216,10 @@ public class SignIn extends Activity
             pDialog.setMessage(dialogText);
 			// dismiss the dialog once done
 			pDialog.dismiss();
+
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "check in: " + TAG_SUCCESS, Toast.LENGTH_LONG);
+            toast.show();
 
 		}// onPostExecute
 

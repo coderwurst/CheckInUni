@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -44,7 +43,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private Button btnGetMod;               // button to initiate scanning to store QR-Code information
     private Button btnSignIn;               // button to send information on to server
 
-    private TextView formatTxt, contentTxt;     // text view to inform tester of data captured at this stage
+    // private TextView formatTxt, contentTxt;     // text view to inform tester of data captured at this stage TESTING ONLY
     private int scanID = 0;                     // int to store the type of scan
 
     // boolean values to ensure the lecturer scans both ID and class codes before attempting to check student in
@@ -54,13 +53,17 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     // private Strings initiated to null so as information reset upon calling Activity
     private String studentNo = null;
     private String moduleInfo = null;
+    private String moduleName = null;
     private String classInfo = null;
 
     // url to create new product
-    private static String url_sign_in = "http://172.17.5.207/xampp/student_attendance/sign_in.php";
+    private static String url_sign_in = "http://172.17.8.80/xampp/student_attendance/sign_in.php";
+    private static String url_return_forename = "http://172.17.8.80/xampp/student_attendance/return_forename.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
+    private static final String TAG_MESSAGE = "message";
+
 
     // progress dialog to inform user
     private ProgressDialog pDialog;
@@ -72,6 +75,10 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     // linkedList to store multiple students for batch processing
     private LinkedList <String> studentBatch = new LinkedList<String>();
     private int count;
+
+    // String to store student number to be used in retrieving student forename
+    private String scannedStuNo;
+    private int scanCount = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -85,8 +92,8 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         btnSignIn = (Button) findViewById(R.id.add_student_auto);
 
         // TextViews for hold format and content info for testing purposes
-        formatTxt = (TextView) findViewById(R.id.scan_format);
-        contentTxt = (TextView) findViewById(R.id.scan_content);
+        // formatTxt = (TextView) findViewById(R.id.scan_format);
+        // contentTxt = (TextView) findViewById(R.id.scan_content);
 
         btnGetStudentID.setOnClickListener(this);
         btnGetMod.setOnClickListener(this);
@@ -94,10 +101,14 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
     } // onCreate
 
+    /**
+     * if - else block in onClick method to ensure that the lecturer enters all the information necessary
+     */
+
     @Override
     public void onClick (View view)
     {
-        if(view.getId()==R.id.lec_scan_id)
+        if(view.getId()==R.id.lec_scan_id )     // && scannedModule == true
         {
             // logcat tag to view app progress
             Log.d("recursive", "user wants to scan student id");
@@ -106,7 +117,18 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
             scanIntegrator.initiateScan();
             scanID = 1;
 
-        } else if (view.getId()==R.id.lec_scan_mod){
+        }
+        // code removed to allow lecturer more flexibility in what information is scanned first
+        /*else if (view.getId()==R.id.lec_scan_id && scannedModule == true)
+        {
+            Log.e("recursive", "user wants to scan student id without scanning module first");
+
+            Toast moduleError = Toast.makeText(getApplicationContext(),
+                    "please ensure the Module Code has been scanned before scanning student IDs...", Toast.LENGTH_LONG);
+            moduleError.show();
+
+
+        } */else if (view.getId()==R.id.lec_scan_mod){
 
             // logcat to view app progress
             Log.d("recursive", "user wants to scan module code");
@@ -154,17 +176,13 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
-            formatTxt.setText("FORMAT: " + scanFormat);
-            contentTxt.setText("CONTENT: " + scanContent);
+            //formatTxt.setText("FORMAT: " + scanFormat);                   // Testing Purposes only
+            //contentTxt.setText("CONTENT: " + scanContent);
 
             // logcat to view app progress
             Log.d("recursive", "scanned details; " + scanContent);
 
-            /* Toast toast = Toast.makeText(getApplicationContext(),
-                    "FORMAT: " + scanFormat + "\nCONTENT: " + scanContent, Toast.LENGTH_LONG);
-            toast.show();   */
-
-            /**
+             /**
              * the following if-else block is implemented at this stage as it is
              * important to determine if the user has scanned in the right type
              * of data for the function he or she has chosen
@@ -182,16 +200,15 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 /** extract the necessary information out of this string to be used using special chars {} for module and []
                  * for class type */
                 moduleInfo = scannedQRInfo.substring(scannedQRInfo.indexOf("{") + 1, scannedQRInfo.indexOf("}"));
-
+                int findModName = moduleInfo.indexOf('-');                  // searches the scanned data for module title tag
+                moduleName = moduleInfo.substring(findModName + 2);         // determines the start of the module name
                 classInfo = scannedQRInfo.substring(scannedQRInfo.indexOf("[") + 1, scannedQRInfo.indexOf("]"));
 
                 // toast to notify user of error in scanning of information
                 Toast QRCorrectFormat = Toast.makeText(getApplicationContext(),
-                        "module Code: " + moduleInfo + ", class type: " + classInfo, Toast.LENGTH_LONG);
+                        moduleName + ", " + classInfo, Toast.LENGTH_LONG);
 
                 QRCorrectFormat.show();
-
-
 
                 // logcat to view app progress
                 Log.d("recursive", "module info; " + moduleInfo);
@@ -239,11 +256,14 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
                 studentBatch.add(studentNo);
 
+                scannedStuNo = scannedIDInfo;
+
                 scannedID = true;               // must at least be set to true once to work
 
-                // shows details of last user scanned - POSSIBLY CHANGE TO SHOW STUDENT NAME UPON SUCCESSFUL SCAN
+                // shows details of last user scanned & keeps a count of number of student ids
                 String contents = intent.getStringExtra("SCAN_RESULT");
-                Toast.makeText(this, contents , Toast.LENGTH_SHORT).show();
+
+                new returnForename().execute();          // runs background task to retrieve student forename
 
                 Log.d("recursive","batch id; " + contents);         // allows programmer to follow progress for testing
 
@@ -262,11 +282,11 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                         "format incorrect, please try again...(" + scanFormat + ")", Toast.LENGTH_LONG);
                 IDIncorrectFormat.show();
 
-            } else {        // NOT NEEDED
+            } else {
 
                 // if no data is returned, the scanner is closed
 
-                // Handle cancel
+                // handle cancel
                 Log.d("recursive","scan finished");
 
                 finish();
@@ -274,7 +294,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
             } // series of else - if statements
         } else {
 
-            // Handle cancel
+            // handle cancel
             Log.d("recursive","batch status; complete, returning to check in screen");
 
         }// if-else to confirm scan data has been received
@@ -327,9 +347,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 params.add(new BasicNameValuePair("type", type));
 
                 // getting JSON Object
-                // NB url accepts POST method
-                json = jsonParser.makeHttpRequest(url_sign_in,
-                        "POST", params);
+                json = jsonParser.makeHttpRequest(url_sign_in, "POST", params);
 
                 try
                 {
@@ -391,8 +409,106 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         {
             // dialog to inform user sign in result
             pDialog.setMessage(dialogText);
+
             // dismiss the dialog once done
             pDialog.dismiss();
+
+        }// onPostExecute
+
+    }// LecturerSignIntoClass
+
+
+
+
+
+    /**
+     * Background Async Task to retrieve student forename
+     */
+    class returnForename extends AsyncTask<String, String, String>
+    {
+
+        String forename = null;
+
+        /**
+         * shows user a progress dialog box
+         * */
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+
+        } // onPreExecute
+
+        /**
+         * sending the student ID to database to return student name
+         * */
+        protected String doInBackground(String... args)
+        {
+
+                JSONObject jsonForename = null;
+
+                // logcat to view progress of app
+                Log.d("recursive", "info sent to database; " + scannedStuNo);
+
+                // parameters to be passed into PHP script on server side
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
+                params.add(new BasicNameValuePair("student_id", scannedStuNo));
+
+
+                // getting JSON Object
+                // NB url accepts POST method
+                jsonForename = jsonParser.makeHttpRequest(url_return_forename,
+                        "POST", params);
+
+                // check log cat for response
+                Log.d("recursive", "database response" + jsonForename.toString());
+
+            try
+            {
+                int success = jsonForename.getInt(TAG_SUCCESS);
+                forename = jsonForename.getString(TAG_MESSAGE);
+
+                if (success == 1)
+                {
+                    // check log cat for response
+                    Log.d("recursive", "database response; " + forename);
+
+                } else
+                {
+                    // failed to find name
+                    Log.e("recursive", "database response; php error");
+
+                    // error message needed for when sign in is not successful
+                    dialogText = "an error has occurred, please try again...";
+
+                    // returns user to home screen
+                    Intent signInError = new Intent(getApplicationContext(), MainScreenActivity.class);
+                    startActivity(signInError);
+
+                    // finish this activity
+                    finish();
+
+                } // if - else
+            } catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+
+            return null;
+        }// doInBackground
+
+
+        /**
+         * after completing background task dismiss the progress dialog and confirm the student name to the lecturer
+         * **/
+        protected void onPostExecute(String file_url)
+        {
+
+            Toast studentName = Toast.makeText(getApplicationContext(),
+                    "scan "+ scanCount + ", " + forename, Toast.LENGTH_SHORT);
+            studentName.show();
+
+            scanCount++;
 
         }// onPostExecute
 

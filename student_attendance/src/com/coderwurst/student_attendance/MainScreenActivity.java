@@ -130,7 +130,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
     {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
-        if (scanningResult != null)
+        if (scanningResult != null && resultCode == RESULT_OK)
         {
 
             String scanContent = scanningResult.getContents();
@@ -159,7 +159,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
 
         } else {
 
-            Log.e("main screen", "failed registration");   // log in java console to show an error has occurred
+            Log.e("main screen", "cancelled registration");   // log in java console to show an error has occurred
 
             // inform user of incompatible scan
             Toast toast = Toast.makeText(getApplicationContext(),
