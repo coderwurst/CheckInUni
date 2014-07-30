@@ -41,14 +41,19 @@ public class StudentUI extends Activity implements View.OnClickListener
     private int scanID = 0;                     // int to store type of scan
 
     WifiManager wifi;                           // wifi manager
-    private boolean oneNetwork = false;         // boolean to determine if student is on campus
+    private boolean firstNetwork = false;         // boolean to determine if student is on campus
     private boolean secondNetwork = false;
+    private boolean thirdNetwork = false;
+    private boolean fourthNetwork = false;
+
+
+    private int wifiInRange = 0;
 
     private boolean onCampus = false;           // boolean to determine if 2 Uni wifi SSIDs are in range
 
     // opens the sharedPref file to allow any previously saved checkins to be used
-    public static final String USER_ID = "User ID File";
-    static SharedPreferences userDetails;
+    // public static final String USER_ID = "User ID File";
+    // static SharedPreferences userDetails;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -68,8 +73,6 @@ public class StudentUI extends Activity implements View.OnClickListener
         // sets onCLick listeners for both buttons
         btnScan.setOnClickListener(this);
         btnResetUsr.setOnClickListener(this);       // button to allow user type to be reset (testing purposes only)
-
-        checkWifi();                                // method called to check if wifi connection is available
 
     } // onCreate
 
@@ -103,76 +106,67 @@ public class StudentUI extends Activity implements View.OnClickListener
         {
             if (mScanResult.SSID.toString().equals("eduroam"))  // check to see if eduroam network is in range
             {
-                oneNetwork = true;
-            } else if (mScanResult.SSID.toString().equals("Student"))   // check to see if Student network is in range
+                firstNetwork = true;
+                // wifiInRange ++;
+            } else if (mScanResult.SSID.toString().equals("Student"))   // check to see if Student network is in range Student
             {
                 secondNetwork = true;
-            } // if - else - if
+                //wifiInRange ++;
+            } else if (mScanResult.SSID.toString().equals("eng_j")){        // eng_j
 
-            Log.d("wifi check", "network in range: " + mScanResult.SSID.toString());
+                thirdNetwork = true;
+                //wifiInRange ++;
+
+            }else if (mScanResult.SSID.toString().equals("Staff")){         // Staff
+
+                fourthNetwork = true;
+
+            } // if else block to determine how many networks are in range of device
+
+
+
+        Log.d("wifi check", "networks in range: " + mScanResult.SSID.toString());
 
         } // for
 
-        if (oneNetwork == true && secondNetwork == true)            // only if these 2 networks are present is the
-                                                                    // cleared as being onCampus
+
+        // series of if statements to determine how many networks are in range
+
+        if (firstNetwork)
+        {
+            wifiInRange ++;
+        }
+        if (secondNetwork)
+        {
+            wifiInRange ++;
+        }
+        if (thirdNetwork)
+        {
+            wifiInRange ++;
+        }
+        if (fourthNetwork)
+        {
+            wifiInRange ++;
+        }
+
+        Log.d("wifi check", "networks in range: " + wifiInRange);
+
+
+        if (wifiInRange >= 5)                   // only if at least 2 of these networks present is device on Campus
+
         {
             onCampus = true;
             Log.d("wifi check", "student on campus: " + onCampus);
 
-            // returns the stored information for previously unsuccessful checkins
-            userDetails = getSharedPreferences(USER_ID, 0);
-            String prevSavedCheckIn = userDetails.getString("prev_checkin", null);
-
-            if (prevSavedCheckIn != null)
-            {
-                Log.d("student ui", "previous checkin info found: " + prevSavedCheckIn);
-
-                sendPrevCheckinDetails(prevSavedCheckIn);           // takes the previously saved info, passes into method
-
-            } // if
-
             return true;
         } else
 
+            onCampus = false;
             Log.d("wifi check", "student not on campus, offline mode initiated");
 
         return false;
 
     } // checkWifi
-
-
-
-    /**
-     * The following method is to check if there are any previously existing files containing check in data that can
-     * be sent to the database now there is internet connection available
-     */
-
-    private void sendPrevCheckinDetails (String pAllInfo)
-    {
-
-        String allInfo = pAllInfo;
-
-        Log.d("student ui", "Data to be sent to Database: " + allInfo);
-
-        // launching SignIn Activity
-        Intent openSignIn = new Intent(getApplicationContext(), SignIn.class);    // creates a new intent
-
-        // takes the previously scanned info and packs it into a bundle before sending it to the SignIn class
-        String scannedInfo = allInfo;                        // creates a copy of the info passed into method
-        openSignIn.putExtra("Info", scannedInfo);            // puts the scanned info into a bundle
-        startActivity(openSignIn);                           // starts the sign in activity
-
-        // after which shared preference to be removed
-        SharedPreferences.Editor editor = userDetails.edit();               // edit the userID to the shared preference file
-        editor.remove("prev_checkin");                                      // adds info to shared preferences
-        editor.commit();                                                    // commits the changes
-
-        // closing this screen
-        finish();
-
-    } // sendPrevCheckinDetails
-
-
 
 
     @Override
@@ -201,14 +195,19 @@ public class StudentUI extends Activity implements View.OnClickListener
     // returns scanning results for futher computation
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
+        checkWifi();                                // method called to check if wifi connection is available
+
         scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
         if(scanningResult != null && resultCode == RESULT_OK)
         {
-            Log.d("student ui", "student is on campus");
+            Log.d("student ui", "scan ok!");
+
 
             if (onCampus)                     // to determine if the scan was successful
             {
+
+                Log.d("student ui", "student is on campus");
 
                 // Toast contents used to follow data flow through app, confirm input
                 String scanContent = scanningResult.getContents();
@@ -227,7 +226,7 @@ public class StudentUI extends Activity implements View.OnClickListener
                 if (scanID == 2 && scanFormat.equals("QR_CODE"))            // "QR_CODE" is only valid QR-Code format
                 {
 
-                    Log.d("student ui", "student wishes to check into a class");
+                    Log.d("student ui", "student to check in");
 
                     // launching SignIn Activity
                     Intent openSignIn = new Intent(getApplicationContext(), SignIn.class);
@@ -280,7 +279,12 @@ public class StudentUI extends Activity implements View.OnClickListener
             } else          // student not on campus and data to be stored
             {
                 Log.d("student ui", "student not on campus");
-                storeCheckIn();
+                // inform user of incompatible scan
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "error 101; please contact class lecturer", Toast.LENGTH_LONG);
+                toast.show();
+
+                // storeCheckIn();
 
             }// if-else to confirm scan data has been received
         } else {
@@ -296,56 +300,5 @@ public class StudentUI extends Activity implements View.OnClickListener
 
         }// if else to determine if student is on campus
     }// onActivityResult
-
-
-    // method called when student wifi is not available, to be sent to database upon next successful sign in
-
-    private void storeCheckIn ()     // scanned details need to be stored and sent to database later
-    {
-        // Toast contents used to follow data flow through app, confirm input
-        String scanContent = scanningResult.getContents();
-        String scanFormat = scanningResult.getFormatName();
-        // formatTxt.setText("FORMAT: " + scanFormat);
-        // contentTxt.setText("CONTENT: " + scanContent);
-
-        Log.d("student ui", "scan content: " + scanContent);
-
-        if (scanID == 2 && scanFormat.equals("QR_CODE"))            // "QR_CODE" is only valid QR-Code format
-        {
-
-            Log.d("student ui", "device to store data, to be sent to database later");
-
-            // system time-stamp will be sent
-            new java.util.Date();
-            String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-            Log.d("student ui", "current system time: " + timeStamp);
-
-            userDetails = getSharedPreferences(USER_ID, 0);                     // get the userDetails file for editing
-            SharedPreferences.Editor editor = userDetails.edit();               // edit the userID to the shared preference file
-            editor.remove("prev_checkin");                                      // removes any previously stored checkin information
-            editor.putString("prev_checkin", scanContent);                      // adds info to shared preferences
-            editor.commit();                                                    // commits the changes
-
-            // editor.putLong("student_ui", "time millis: " + timeStamp);
-
-
-            String savedInfo = userDetails.getString("prev_checkin", "default");     // Logs the data for Testing purposes
-            Log.d("student ui", "saved info" + savedInfo);
-
-
-
-        } else if (scanID == 2 && !scanFormat.equals("QR_CODE"))    // in the event the user does not scan a QR
-        {
-
-            Log.e("student ui", "student has scanned wrong type of code");
-
-            // informs user that the code recently scanned is not of correct type
-            Toast QRIncorrectFormat = Toast.makeText(getApplicationContext(),
-                    "format incorrect, please try again..." + scanContent, Toast.LENGTH_LONG);
-            QRIncorrectFormat.show();
-
-        } // if else to determine that the student has scanned in the correct data
-
-    } // storeCheckIn
 
 } // StudentUI

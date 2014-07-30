@@ -48,7 +48,7 @@ public class AddStudentMan extends Activity
 	JSONParser jsonParser = new JSONParser();
 
 	// single product url
-	private static final String url_man_signin = "http://172.17.8.80/xampp/student_attendance/sign_in.php";
+	private static final String url_man_signin = "http://172.17.10.237/xampp/student_attendance/sign_in.php";
 
 
 	// JSON Node names
@@ -88,22 +88,22 @@ public class AddStudentMan extends Activity
 
 
 	/**
-	 * Background Async Task to  Save product Details
-	 * */
-	class SignStudentIn extends AsyncTask<String, String, String> {
+    * Background Async Task to Add a student manually
+    * */
+    class SignStudentIn extends AsyncTask<String, String, String> {
 
-		/**
-		 * Before starting background thread Show Progress Dialog
-		 * */
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			pDialog = new ProgressDialog(AddStudentMan.this);
-			pDialog.setMessage("submitting Details...");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(true);
-			pDialog.show();
-		} // onPreExecute
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(AddStudentMan.this);
+            pDialog.setMessage("submitting Details...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        } // onPreExecute
 
         /**
          * registering the student as present
@@ -174,17 +174,17 @@ public class AddStudentMan extends Activity
         }// doInBackground
 
 
-		/**
-		 * After completing background task Dismiss the progress dialog
-		 * **/
-		protected void onPostExecute(String file_url) {
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
 
             // dialog to inform user sign in result
             pDialog.setMessage(dialogText);
-			// dismiss the dialog once product updated
-			pDialog.dismiss();
-		} // onPostExecute
-	} // SignInStudent
+            // dismiss the dialog once product updated
+            pDialog.dismiss();
+        } // onPostExecute
+    } // SignInStudent
 
 
 } // AddStudentMan
