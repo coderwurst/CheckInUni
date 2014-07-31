@@ -2,7 +2,6 @@ package com.coderwurst.student_attendance;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -60,13 +59,12 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private String classInfo = null;
 
     // url to create new product
-    private static String url_sign_in = "http://172.17.10.237/xampp/student_attendance/sign_in.php";
-    private static String url_return_forename = "http://172.17.10.237/xampp/student_attendance/return_forename.php";
+    private static String url_sign_in = "http://172.17.14.146/xampp/student_attendance/sign_in.php";
+    private static String url_return_forename = "http://172.17.14.146/xampp/student_attendance/return_forename.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
-
 
     // progress dialog to inform user
     private ProgressDialog pDialog;
@@ -89,13 +87,15 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recursive_signin);
 
-        // will check for previously stored check in files and if found send to database
+        // studentBatch.clear();               // clears the LinkedList  of any previously saved data
+
+        /* will check for previously stored check in files and if found send to database
         if(LecturerUI.serverAvailable)
         {
             checkForStoredData();           // calls method to check for saved data
             Log.d("recursive", "checking for stored data");
         } // if
-
+        */
         // look at setting buttons to grey if no server connection available
 
         // Buttons
@@ -132,19 +132,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 scanIntegrator.initiateScan();
                 scanID = 1;
 
-            }
-            // code removed to allow lecturer more flexibility in what information is scanned first
-        /*else if (view.getId()==R.id.lec_scan_id && scannedModule == true)
-        {
-            Log.e("recursive", "user wants to scan student id without scanning module first");
-
-            Toast moduleError = Toast.makeText(getApplicationContext(),
-                    "please ensure the Module Code has been scanned before scanning student IDs...", Toast.LENGTH_LONG);
-            moduleError.show();
-
-
-        } */
-            else if (view.getId() == R.id.lec_scan_mod)
+            } else if (view.getId() == R.id.lec_scan_mod)
             {
 
                 // logcat to view app progress
@@ -430,84 +418,80 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     } // StoreScannedInfo
 
 
-
+/*
     private void loadStoredData (String pFilename)
     {
 
-        studentBatch.clear();
-        // loading the data back into the app
-        String dataToRead = "<";               // string to store characters being read
-        int charRead;                           // int to store the number of characters being read
-        char[] inputBuffer = new char[100];     // buffer to store characters being read from file
-        FileInputStream inputStream;
+            // loading the data back into the app
+            String dataToRead = "<";               // string to store characters being read
+            int charRead;                           // int to store the number of characters being read
+            char[] inputBuffer = new char[100];     // buffer to store characters being read from file
+            FileInputStream inputStream;
 
-        try {
-            inputStream = openFileInput(pFilename);
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            inputStreamReader.read();
+            try
+            {
+                inputStream = openFileInput(pFilename);
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                inputStreamReader.read();
 
-            while ((charRead = inputStreamReader.read(inputBuffer)) > 0) {
-                String readString = String.copyValueOf(inputBuffer, 0,
-                        charRead);
+                while ((charRead = inputStreamReader.read(inputBuffer)) > 0)
+                {
+                    String readString = String.copyValueOf(inputBuffer, 0,
+                            charRead);
 
-                dataToRead += readString;
+                    dataToRead += readString;
 
-                inputBuffer = new char[100];
-            }
+                    inputBuffer = new char[100];
+                }
 
-            inputStream.close();
+                inputStream.close();
 
-        } catch (Exception e) {
+            } catch (Exception e)
+            {
 
-            e.printStackTrace();
-        } // try - catch
+                e.printStackTrace();
+            } // try - catch
 
-        Log.d("recursive offline", "read data: " + dataToRead);
+            Log.d("recursive offline", "read data: " + dataToRead);
 
-        // success message
-        Toast.makeText(getBaseContext(), "file loaded successfully", Toast.LENGTH_SHORT).show();
+            // success message
+            Toast.makeText(getBaseContext(), "file loaded successfully", Toast.LENGTH_SHORT).show();
 
-        // METHOD TO BREAK DOWN CODE AND SEND TO SERVER
-        // <COM808 - Operating Systems>{tutorial}[B00652181|B00652356|]
-        /** extract the necessary information out of this string to be used using special chars {} for module and []
-         * for class type. Values taken from index position +1 as indexes begin at position 0 */
-        moduleInfo = dataToRead.substring(dataToRead.indexOf("<") + 1, dataToRead.indexOf(">"));
-        Log.d("recursive offline", "module code: " + moduleInfo);
+            // method to break down code and send to server
+            /** extract the necessary information out of this string to be used using special chars {} for module and []
+             * for class type. Values taken from index position +1 as indexes begin at position 0
+            moduleInfo = dataToRead.substring(dataToRead.indexOf("<") + 1, dataToRead.indexOf(">"));
+            Log.d("recursive offline", "module code: " + moduleInfo);
 
-        classInfo = dataToRead.substring(dataToRead.indexOf("{") + 1, dataToRead.indexOf("}"));
-        Log.d("recursive offline", "class type: " + classInfo);
+            classInfo = dataToRead.substring(dataToRead.indexOf("{") + 1, dataToRead.indexOf("}"));
+            Log.d("recursive offline", "class type: " + classInfo);
 
-        String allIDs = dataToRead.substring(dataToRead.indexOf("[") + 1, dataToRead.indexOf("]"));
-        Log.d("recursive offline", "all ids: " + allIDs);
+            String allIDs = dataToRead.substring(dataToRead.indexOf("[") + 1, dataToRead.indexOf("]"));
+            Log.d("recursive offline", "all ids: " + allIDs);
 
-        String thisID ; // to store the contents of the current id being removed from the list
+            String thisID; // to store the contents of the current id being removed from the list
 
-        do
-        {
-            thisID = allIDs.substring(allIDs.indexOf("£") + 1, allIDs.indexOf("$"));
+            do
+            {
+                thisID = allIDs.substring(allIDs.indexOf("£") + 1, allIDs.indexOf("$"));
 
-            studentBatch.add(thisID);               // id added to the LinkedList for further processing
+                studentBatch.add(thisID);               // id added to the LinkedList for further processing
 
-            String readID = "£" + thisID + "$";     // re-inserts the StudentID identifiers
+                String readID = "£" + thisID + "$";     // re-inserts the StudentID identifiers
 
-            Log.d("recursive offline", "read ID: " + readID);
+                Log.d("recursive offline", "read ID: " + readID);
 
-            allIDs = allIDs.replace(readID, "");    // removes the ID last added to studentBatch from the remaining list
+                allIDs = allIDs.replace(readID, "");    // removes the ID last added to studentBatch from the remaining list
 
-            Log.d("recursive offline", "remaining: " + allIDs);
-
-
-        } while (!allIDs.isEmpty());                // do - while loop to continue until no text remains
+                Log.d("recursive offline", "remaining: " + allIDs);
 
 
-        deleteFile(pFilename);                      // removes the file stored in internal memory after info copied
+            } while (!allIDs.isEmpty());                // do - while loop to continue until no text remains
 
-        // logcat to view app progress
-        Log.d("recursive", "stored details to be sent to database");
+            deleteFile(pFilename);                      // removes the file stored in internal memory after info copied
 
-        new LecturerSignStudentIn().execute();          // code to submit details to the database
+            new LecturerSignStudentIn().execute();          // code to submit details to the database
 
-        checkForStoredData();                           // check for remaining stored files
 
     } // loadStoredData
 
@@ -530,10 +514,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
             loadStoredData(filename);
 
-        } // if to determine if any files are present
+        } // if to load stored files into studentBatch LinkedList
 
-
-    } // checkForStoredData
+    } // checkForStoredData */
 
 
     /**
@@ -632,6 +615,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                     e.printStackTrace();
                 }
 
+
                 return null;
         }// doInBackground
 
@@ -645,6 +629,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
             // dismiss the dialog once done
             pDialog.dismiss();
+
+            finish();                   // closes this activity after data has been sent, returns user to home UI
+
 
         }// onPostExecute
 
@@ -748,104 +735,3 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     }// signIntoClass
 
 } // RecursiveSignIn
-
-/* this if to come after determined if internet connection is established
-    returns the stored information for previously unsuccessful checkins
-            userDetails = getSharedPreferences(USER_ID, 0);
-            String prevSavedCheckIn = userDetails.getString("prev_checkin", null);
-
-            if (prevSavedCheckIn != null)
-            {
-                Log.d("student ui", "previous checkin info found: " + prevSavedCheckIn);
-
-                sendPrevCheckinDetails(prevSavedCheckIn);           // takes the previously saved info, passes into method
-
-            } // if */
-
-
-
-// method called when student wifi is not available, to be sent to database upon next successful sign in
-
-    /*
-    private void storeCheckIn ()     // scanned details need to be stored and sent to database later
-    {
-        // Toast contents used to follow data flow through app, confirm input
-        String scanContent = scanningResult.getContents();
-        String scanFormat = scanningResult.getFormatName();
-        // formatTxt.setText("FORMAT: " + scanFormat);
-        // contentTxt.setText("CONTENT: " + scanContent);
-
-        Log.d("student ui", "scan content: " + scanContent);
-
-        if (scanID == 2 && scanFormat.equals("QR_CODE"))            // "QR_CODE" is only valid QR-Code format
-        {
-
-            Log.d("student ui", "device to store data, to be sent to database later");
-
-            // system time-stamp will be sent
-            new java.util.Date();
-            String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-            Log.d("student ui", "current system time: " + timeStamp);
-
-            userDetails = getSharedPreferences(USER_ID, 0);                     // get the userDetails file for editing
-            SharedPreferences.Editor editor = userDetails.edit();               // edit the userID to the shared preference file
-            editor.remove("prev_checkin");                                      // removes any previously stored checkin information
-            editor.putString("prev_checkin", scanContent);                      // adds info to shared preferences
-            editor.commit();                                                    // commits the changes
-
-            // editor.putLong("student_ui", "time millis: " + timeStamp);
-
-
-            String savedInfo = userDetails.getString("prev_checkin", "default");     // Logs the data for Testing purposes
-            Log.d("student ui", "saved info" + savedInfo);
-
-
-
-        } else if (scanID == 2 && !scanFormat.equals("QR_CODE"))    // in the event the user does not scan a QR
-        {
-
-            Log.e("student ui", "student has scanned wrong type of code");
-
-            // informs user that the code recently scanned is not of correct type
-            Toast QRIncorrectFormat = Toast.makeText(getApplicationContext(),
-                    "format incorrect, please try again..." + scanContent, Toast.LENGTH_LONG);
-            QRIncorrectFormat.show();
-
-        } // if else to determine that the student has scanned in the correct data
-
-    } // storeCheckIn
-    */
-
-    /*
-
-    /**
-     * The following method is to check if there are any previously existing files containing check in data that can
-     * be sent to the database now there is internet connection available
-
-
-    private void sendPrevCheckinDetails (String pAllInfo)
-    {
-
-        String allInfo = pAllInfo;
-
-        Log.d("student ui", "Data to be sent to Database: " + allInfo);
-
-        // launching SignIn Activity
-        Intent openSignIn = new Intent(getApplicationContext(), SignIn.class);    // creates a new intent
-
-        // takes the previously scanned info and packs it into a bundle before sending it to the SignIn class
-        String scannedInfo = allInfo;                        // creates a copy of the info passed into method
-        openSignIn.putExtra("Info", scannedInfo);            // puts the scanned info into a bundle
-        startActivity(openSignIn);                           // starts the sign in activity
-
-        // after which shared preference to be removed
-        SharedPreferences.Editor editor = userDetails.edit();               // edit the userID to the shared preference file
-        editor.remove("prev_checkin");                                      // adds info to shared preferences
-        editor.commit();                                                    // commits the changes
-
-        // closing this screen
-        finish();
-
-    } // sendPrevCheckinDetails
-
-    */

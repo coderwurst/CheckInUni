@@ -20,4 +20,6 @@
     <item name="lec_tutqr" type="id"/>
     <item name="lec_lecqr" type="id"/>
     <item name="qr_id" type="id"/>
+    <item name="lec_recall_checkin" type="id">lec_recall_checkin</item>
+    <item name="lec_recall" type="id"/>
 </resources>

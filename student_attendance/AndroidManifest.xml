@@ -77,6 +77,12 @@
                 android:name="com.coderwurst.student_attendance.ChooseQR"
                 android:label="@string/app_name" >
         </activity>
+
+        <!-- Activity to upload previous saved check in files to database -->
+        <activity
+                android:name="com.coderwurst.student_attendance.LoadStoredInfo"
+                android:label="@string/app_name" >
+        </activity>
     </application>
 
     <!--  Internet Permissions necessary to access database -->
