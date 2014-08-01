@@ -23,7 +23,7 @@
                     android:id="@id/file_id"
                     android:layout_gravity="center_horizontal"
                     android:textSize="50sp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginTop="30dp"
                     android:layout_alignParentTop="true"
                     android:layout_cent="true"
                     android:layout_marginLeft="20dp"/>

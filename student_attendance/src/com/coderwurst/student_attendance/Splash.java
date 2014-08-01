@@ -1,9 +1,13 @@
 package com.coderwurst.student_attendance;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 
 /**
  * ***********************
@@ -18,7 +22,9 @@ import android.os.Handler;
 public class Splash extends Activity
 
 {
-    private final int SPLASH_DISPLAY_LENGTH = 4000;     // int to determine the length of time the splash screen appears
+    private final int SPLASH_DISPLAY_LENGTH = 5000;     // int to determine the length of time the splash screen appears
+    WifiManager wifi;                           // wifi manager
+
 
     // called when the activity is first created
     @Override
@@ -38,8 +44,14 @@ public class Splash extends Activity
                 Intent mainIntent = new Intent(Splash.this,MainScreenActivity.class);   // creates an Intent
                 Splash.this.startActivity(mainIntent);                                  // runs new activity
                 Splash.this.finish();                                                   // closes splash activity
+
             }
         }, SPLASH_DISPLAY_LENGTH);
+
+        Log.d("wifi", "check if wifi is on");
+
+
+
     }// onCreate
 
 } // Splash

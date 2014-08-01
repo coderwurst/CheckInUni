@@ -26,7 +26,7 @@
                     android:layout_marginTop="80dp"
                     android:layout_alignParentTop="true"
                     android:layout_cent="true"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_marginLeft="200dp"/>
 
             <Button
                     android:layout_width="wrap_content"

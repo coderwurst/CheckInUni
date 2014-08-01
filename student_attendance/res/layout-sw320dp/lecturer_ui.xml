@@ -21,12 +21,22 @@
             <ImageView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:id="@+id/UULogo"
                     android:background="@drawable/uulogo"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:contentDescription="@string/uuj_logo_att"
                     android:layout_marginTop="75dp"/>
+
+            <Button android:id="@id/lec_recall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/savedFiles"
+                    android:layout_below="@+id/UULogo"
+                    android:layout_alignRight="@+id/UULogo"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="invisible"/>
 
 
             <Button android:id="@id/lec_man_signin"
@@ -35,7 +45,7 @@
                     android:background="@drawable/mancheckin"
                     android:layout_below="@+id/UULogo"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="100dp"
                     />
 
             <Button android:id="@id/lec_auto_signin"

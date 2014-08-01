@@ -24,15 +24,25 @@
                     android:background="@drawable/uulogo"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="120dp"
                     android:contentDescription="@string/uuj_logo_att"/>
+
+            <Button android:id="@id/lec_recall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/savedFiles"
+                    android:layout_above="@+id/lec_man_signin"
+                    android:layout_toRightOf="@id/UULogo"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="invisible"/>
 
             <Button android:id="@id/lec_man_signin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/mancheckin"
                     android:layout_below="@+id/UULogo"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="120dp"
                     android:layout_centerHorizontal="true"/>
 
             <Button android:id="@id/lec_auto_signin"

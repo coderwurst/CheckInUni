@@ -25,7 +25,7 @@
             android:id="@id/qr_id"
             android:layout_gravity="center_horizontal"
             android:textSize="30sp"
-            android:layout_marginTop="81dp" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+            android:layout_marginTop="80dp" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
             android:layout_marginLeft="200dp"/>
 
             <WebView

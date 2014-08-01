@@ -38,10 +38,11 @@
             <Button android:id="@id/lec_recall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="OUTSTANDING CHECKINS"
-                    android:layout_above="@+id/lec_man_signin"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="16dp"/>
+                    android:background="@drawable/savedFiles"
+                    android:layout_below="@+id/UULogo"
+                    android:layout_alignRight="@+id/UULogo"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="invisible"/>
 
             <Button android:id="@id/lec_auto_signin"
                     android:layout_width="wrap_content"

@@ -42,8 +42,8 @@ public class ViewAllModules extends ListActivity
 	ArrayList<HashMap<String, String>> moduleList;
 
 	// url to get all modules list
-    private static String url_all_modules = "http://172.17.14.146/xampp/student_attendance/get_all_modules.php";
-    private static String url_location = "http://172.17.14.146/module_codes/";
+    private static String url_all_modules = "http://172.17.16.225/xampp/student_attendance/get_all_modules.php";
+    private static String url_location = "http://172.17.16.225/module_codes/";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
@@ -65,14 +65,13 @@ public class ViewAllModules extends ListActivity
 		// Hashmap for ListView
 		moduleList = new ArrayList<HashMap<String, String>>();
 
-		// Loading products in Background Thread
+		// loading all modules in background thread
 		new LoadAllModules().execute();
 
-		// Get listview
+		// get listview
 		ListView lv = getListView();
 
-		// on seleting single product
-		// launching Edit Product Screen
+		// on click, user will be taken to chosen module QR-Codes
 		lv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

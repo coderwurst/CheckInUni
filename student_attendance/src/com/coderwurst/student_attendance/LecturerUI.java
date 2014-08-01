@@ -58,7 +58,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
     // components for checking internet connection
     WifiManager wifi;                           // wifi manager
-    private String url_test_connection = "http://172.17.14.146/xampp/student_attendance/test_connection.php";     // can be changed to server address
+    private String url_test_connection = "http://172.17.16.225/xampp/student_attendance/test_connection.php";     // can be changed to server address
     protected static boolean serverAvailable;          // boolean to be used in addStudentManually and RecursiveSignIn to determine if internet connection is available
 
     // JSON Node names
@@ -97,12 +97,21 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
         btnReset.setOnClickListener(this);
 
+        // check for previously stored files, if found, set button visability to on
+
+        filesFound();
+
+        if(filesFound())
+        {
+            View b = findViewById(R.id.lec_recall);
+            b.setVisibility(View.VISIBLE);
+        } // check for saved files
 
     } // onCreate
 
 
     // method to be used to determine if recall data button shown on screen or not!!! (Button to be beside logo, wifi icon)
-    private boolean checkForStoredData()
+    private boolean filesFound()
     {
 
         File file = this.getFilesDir();          // returns storage location
@@ -208,7 +217,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
             if (view.getId() == R.id.lec_man_signin)
             {
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        "offline mode, data will be stored on device, please upload ASAP", Toast.LENGTH_LONG);
+                        "manual check in not available at this time", Toast.LENGTH_LONG);
                 toast.show();
 
                 // logcat tag to view app progress
@@ -220,10 +229,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
             } else if (view.getId() == R.id.lec_auto_signin)
             {
-
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "offline mode, data will be stored on device, please upload ASAP", Toast.LENGTH_LONG);
-                toast.show();
 
                 // logcat tag to view app progress
                 Log.e("lecturer ui", "auto check in - server not available");

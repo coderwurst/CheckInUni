@@ -3,17 +3,11 @@ package com.coderwurst.student_attendance;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+import android.widget.*;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -26,6 +20,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+
 /**
  * ***********************
  * Created by IntelliJ IDEA
@@ -33,7 +34,7 @@ import java.util.List;
  * Date: 16/07/2014
  * Time: 12:37
  * Version: V7.0
- * SPRINT 7 - ACTIVITY TO ALLOW LECTURER TO SCAN IN A STUDENT ID AND MODULE QR-CODE IN ORDER TO CHECK A STUDENT IN
+ * SPRINT 10 - ACTIVITY TO SEARCH AND LOAD ANY PREVIOUSLY SAVED CHECKINS BEFORE SENDING TO DATABASE
  * ************************
  */
 
@@ -43,17 +44,15 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
 
 
     // private Strings initiated to null so as information reset upon calling Activity
-    private String studentNo = null;
     private String moduleInfo = null;
-    private String moduleName = null;
     private String classInfo = null;
+    private String filename = null;
 
     // url to create new product
-    private static String url_sign_in = "http://172.17.14.146/xampp/student_attendance/sign_in.php";
+    private static String url_sign_in = "http://172.17.16.225/xampp/student_attendance/sign_in.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MESSAGE = "message";
 
     // progress dialog to inform user
     private ProgressDialog pDialog;
@@ -66,7 +65,12 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
     private LinkedList <String> studentBatch = new LinkedList<String>();
     private int count;
 
-    Button btnTest;
+    Button btnConfirm;
+    Button btnDelete;
+
+    private ListView lv;
+    private TextView title;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -75,23 +79,58 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
         setContentView(R.layout.load_info);
 
         // Buttons
-        btnTest = (Button) findViewById(R.id.button);
+        btnConfirm = (Button) findViewById(R.id.lec_confirm);
+        btnDelete = (Button) findViewById(R.id.lec_delete);
 
-        btnTest.setOnClickListener(this);
+        // onClick listeners
+        btnConfirm.setOnClickListener(this);
+        btnDelete.setOnClickListener(this);
+
+        title = (TextView) findViewById(R.id.file_id);
+
+        // fill ListView with last stored data
+        lv = (ListView) findViewById(R.id.checkin_list);
+        // loadList();
+
+        checkForStoredData();
 
     } // onCreate
 
+
     public void onClick (View view)
     {
-            if (view.getId() == R.id.button)     // && scannedModule == true
-            {
-                // logcat tag to view app progress
-                Log.d("load", "user wishes to load previous files");
-                checkForStoredData();
+        if (view.getId() == R.id.lec_confirm)     // && scannedModule == true
+        {
+            // logcat tag to view app progress
+            Log.d("load", "user wishes to load previous file");
 
-            } // if
+            new LecturerSignStudentIn().execute();          // code to submit details to the database
+
+            // finish();
+
+        } else
+        {
+
+            deleteFile(filename);                       // removes the file stored in internal memory
+            Log.d("load", filename + " deleted");       // logcat tag to view app progress
+
+            finish();
+        }// if - else
 
     } // onClick
+
+    private void loadList ()
+    {
+
+        // uses an array adapter to load the information stored into the listview
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                studentBatch);
+
+        lv.setAdapter(arrayAdapter);
+    } // loadList
+
 
         private void checkForStoredData()
     {
@@ -120,6 +159,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
     private void loadStoredData (String pFilename)
     {
 
+        filename = pFilename;
         // loading the data back into the app
         String dataToRead = "<";               // string to store characters being read
         int charRead;                           // int to store the number of characters being read
@@ -160,6 +200,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
          * for class type. Values taken from index position +1 as indexes begin at position 0 */
         moduleInfo = dataToRead.substring(dataToRead.indexOf("<") + 1, dataToRead.indexOf(">"));
         Log.d("load", "module code: " + moduleInfo);
+        title.setText(moduleInfo);
 
         classInfo = dataToRead.substring(dataToRead.indexOf("{") + 1, dataToRead.indexOf("}"));
         Log.d("load", "class type: " + classInfo);
@@ -183,12 +224,12 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
 
             Log.d("load", "remaining: " + allIDs);
 
+            // NB this code to replace the last read ID with "" IE also eliminates duplicates
+
 
         } while (!allIDs.isEmpty());                // do - while loop to continue until no text remains
 
-        deleteFile(pFilename);                      // removes the file stored in internal memory after info copied
-
-        new LecturerSignStudentIn().execute();          // code to submit details to the database
+        loadList();
 
 
     } // loadStoredData
@@ -213,6 +254,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
+
         } // onPreExecute
 
         /**
@@ -268,7 +310,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
                     startActivity(signInSuccess);
 
                     // finish this activity
-                    finish();
+                    // finish();
 
                 } else
                 {
@@ -283,7 +325,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
                     startActivity(signInError);
 
                     // finish this activity
-                    finish();
+                    // finish();
 
                 } // if - else
             } catch (JSONException e)

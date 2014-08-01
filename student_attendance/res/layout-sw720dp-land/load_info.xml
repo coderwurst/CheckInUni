@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/UUJBlue">
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:background="@color/UUJBlue">
 
-    <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="20dp">
+        <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="20dp">
 
         <RelativeLayout
                 android:layout_width="fill_parent"
@@ -23,9 +23,9 @@
                     android:id="@id/file_id"
                     android:layout_gravity="center_horizontal"
                     android:textSize="50sp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginTop="150dp"
                     android:layout_alignParentTop="true"
-                    android:layout_cent="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginLeft="20dp"/>
 
             <Button
@@ -35,7 +35,7 @@
                     android:id="@id/lec_confirm"
                     android:layout_below="@+id/file_id"
                     android:layout_alignLeft="@+id/file_id"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_marginTop="75dp"/>
             <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -43,18 +43,19 @@
                     android:id="@id/lec_delete"
                     android:layout_below="@+id/lec_confirm"
                     android:layout_alignLeft="@+id/lec_confirm"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_marginTop="75dp"/>
 
             <!-- List view to show contents retrieved from Database   -->
             <ListView
                     android:id="@id/checkin_list"
+                    android:layout_toRightOf="@+id/file_id"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="50dp"
                     android:paddingRight="50dp"
-                    android:layout_alignLeft="@+id/lec_delete"
-                    android:layout_below="@+id/lec_delete"
-                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="350dp"
+                    android:layout_alignTop="@+id/file_id"
+                    android:layout_alignBottom="@+id/lec_delete"
                     />
 
 

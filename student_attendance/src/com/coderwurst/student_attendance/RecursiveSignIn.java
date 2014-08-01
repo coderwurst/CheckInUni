@@ -59,8 +59,8 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private String classInfo = null;
 
     // url to create new product
-    private static String url_sign_in = "http://172.17.14.146/xampp/student_attendance/sign_in.php";
-    private static String url_return_forename = "http://172.17.14.146/xampp/student_attendance/return_forename.php";
+    private static String url_sign_in = "http://172.17.16.225/xampp/student_attendance/sign_in.php";
+    private static String url_return_forename = "http://172.17.16.225/xampp/student_attendance/return_forename.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -86,17 +86,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recursive_signin);
-
-        // studentBatch.clear();               // clears the LinkedList  of any previously saved data
-
-        /* will check for previously stored check in files and if found send to database
-        if(LecturerUI.serverAvailable)
-        {
-            checkForStoredData();           // calls method to check for saved data
-            Log.d("recursive", "checking for stored data");
-        } // if
-        */
-        // look at setting buttons to grey if no server connection available
 
         // Buttons
         btnGetStudentID = (Button) findViewById(R.id.lec_scan_id);
@@ -329,9 +318,24 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 // shows details of last user scanned & keeps a count of number of student ids
                 String contents = intent.getStringExtra("SCAN_RESULT");
 
-                new returnForename().execute();          // runs background task to retrieve student forename
+                if(LecturerUI.serverAvailable)
+                {
+                    // if internet is available, return forename
+                    Log.d("recursive","batch id; " + contents);         // allows programmer to follow progress for testing
+                    new returnForename().execute();          // runs background task to retrieve student forename
 
-                Log.d("recursive","batch id; " + contents);         // allows programmer to follow progress for testing
+                } else{
+
+
+                    Toast confirmScan = Toast.makeText(getApplicationContext(),
+                            "scan " + scanCount, Toast.LENGTH_SHORT);
+
+                    confirmScan.show();
+
+                    scanCount++;
+
+                } // toast to notify user of error in scanning of information
+
 
                 // restarts activity for scanning qr code
                 IntentIntegrator repeatScan = new IntentIntegrator(this);
@@ -416,107 +420,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         Toast.makeText(getBaseContext(), "file saved successfully",Toast.LENGTH_SHORT).show();
 
     } // StoreScannedInfo
-
-
-/*
-    private void loadStoredData (String pFilename)
-    {
-
-            // loading the data back into the app
-            String dataToRead = "<";               // string to store characters being read
-            int charRead;                           // int to store the number of characters being read
-            char[] inputBuffer = new char[100];     // buffer to store characters being read from file
-            FileInputStream inputStream;
-
-            try
-            {
-                inputStream = openFileInput(pFilename);
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                inputStreamReader.read();
-
-                while ((charRead = inputStreamReader.read(inputBuffer)) > 0)
-                {
-                    String readString = String.copyValueOf(inputBuffer, 0,
-                            charRead);
-
-                    dataToRead += readString;
-
-                    inputBuffer = new char[100];
-                }
-
-                inputStream.close();
-
-            } catch (Exception e)
-            {
-
-                e.printStackTrace();
-            } // try - catch
-
-            Log.d("recursive offline", "read data: " + dataToRead);
-
-            // success message
-            Toast.makeText(getBaseContext(), "file loaded successfully", Toast.LENGTH_SHORT).show();
-
-            // method to break down code and send to server
-            /** extract the necessary information out of this string to be used using special chars {} for module and []
-             * for class type. Values taken from index position +1 as indexes begin at position 0
-            moduleInfo = dataToRead.substring(dataToRead.indexOf("<") + 1, dataToRead.indexOf(">"));
-            Log.d("recursive offline", "module code: " + moduleInfo);
-
-            classInfo = dataToRead.substring(dataToRead.indexOf("{") + 1, dataToRead.indexOf("}"));
-            Log.d("recursive offline", "class type: " + classInfo);
-
-            String allIDs = dataToRead.substring(dataToRead.indexOf("[") + 1, dataToRead.indexOf("]"));
-            Log.d("recursive offline", "all ids: " + allIDs);
-
-            String thisID; // to store the contents of the current id being removed from the list
-
-            do
-            {
-                thisID = allIDs.substring(allIDs.indexOf("£") + 1, allIDs.indexOf("$"));
-
-                studentBatch.add(thisID);               // id added to the LinkedList for further processing
-
-                String readID = "£" + thisID + "$";     // re-inserts the StudentID identifiers
-
-                Log.d("recursive offline", "read ID: " + readID);
-
-                allIDs = allIDs.replace(readID, "");    // removes the ID last added to studentBatch from the remaining list
-
-                Log.d("recursive offline", "remaining: " + allIDs);
-
-
-            } while (!allIDs.isEmpty());                // do - while loop to continue until no text remains
-
-            deleteFile(pFilename);                      // removes the file stored in internal memory after info copied
-
-            new LecturerSignStudentIn().execute();          // code to submit details to the database
-
-
-    } // loadStoredData
-
-    private void checkForStoredData()
-    {
-
-        File file = this.getFilesDir();          // returns storage location
-
-        Log.d("recursive offline", file.toString());
-
-        ArrayList<String> names = new ArrayList<String>(Arrays.asList(file.list()));
-        String filename;
-
-        Log.d("recursive offline", names.size() + " stored files: " + names);
-
-        if (names.size() >= 2)                  // currently always a scanfile.txt also stored in this directory - INVESTIGATE
-        {
-            filename = names.get(names.size() - 1);
-            Log.d("recursive offline", "file to be read: " + filename);
-
-            loadStoredData(filename);
-
-        } // if to load stored files into studentBatch LinkedList
-
-    } // checkForStoredData */
 
 
     /**

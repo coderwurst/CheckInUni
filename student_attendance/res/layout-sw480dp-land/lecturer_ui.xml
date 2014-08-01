@@ -26,6 +26,15 @@
                     android:layout_centerHorizontal="true"
                     android:contentDescription="@string/uuj_logo_att"/>
 
+            <Button android:id="@id/lec_recall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/savedFiles"
+                    android:layout_above="@+id/lec_man_signin"
+                    android:layout_toRightOf="@id/UULogo"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="invisible"/>
+
             <Button android:id="@id/lec_man_signin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

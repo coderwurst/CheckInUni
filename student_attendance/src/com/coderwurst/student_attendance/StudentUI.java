@@ -62,6 +62,7 @@ public class StudentUI extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_ui);
 
+
         // Buttons
         btnScan = (Button) findViewById(R.id.scan_button);          // button to return all students
         btnResetUsr = (Button) findViewById(R.id.test_button);      // button to initiate scan
@@ -89,15 +90,18 @@ public class StudentUI extends Activity implements View.OnClickListener
         // check to see if wifi is enabled, and if not, activate
         wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
-        if (wifi.isWifiEnabled() == false)
-        {
-            Toast wifiToast = Toast.makeText(getApplicationContext(),
-                    "wifi is currently disabled...activating", Toast.LENGTH_LONG);
-            wifiToast.show();
-            wifi.setWifiEnabled(true);
-            Log.d("student ui", "wifi activated");
 
-        } // if
+        // causes APP crash - fix
+        /*if (wifi.isWifiEnabled() == false)
+        {
+            //Toast wifiToast = Toast.makeText(getApplicationContext(),
+            //        "wifi is currently disabled...activating", Toast.LENGTH_LONG);
+            //wifiToast.show();
+            wifi.setWifiEnabled(true);
+            Log.d("wifi", "wifi activated");
+
+        } // if */
+
 
         // list to store the scan results
         List<ScanResult> results = wifi.getScanResults();      // to get a list of current wifi networks
@@ -107,15 +111,12 @@ public class StudentUI extends Activity implements View.OnClickListener
             if (mScanResult.SSID.toString().equals("eduroam"))  // check to see if eduroam network is in range
             {
                 firstNetwork = true;
-                // wifiInRange ++;
-            } else if (mScanResult.SSID.toString().equals("Student"))   // check to see if Student network is in range Student
+            } else if (mScanResult.SSID.toString().equals("Student"))   // check to see if Student network is in range
             {
                 secondNetwork = true;
-                //wifiInRange ++;
             } else if (mScanResult.SSID.toString().equals("eng_j")){        // eng_j
 
                 thirdNetwork = true;
-                //wifiInRange ++;
 
             }else if (mScanResult.SSID.toString().equals("Staff")){         // Staff
 
@@ -152,7 +153,7 @@ public class StudentUI extends Activity implements View.OnClickListener
         Log.d("wifi check", "networks in range: " + wifiInRange);
 
 
-        if (wifiInRange >= 5)                   // only if at least 2 of these networks present is device on Campus
+        if (wifiInRange >= 2)                   // only if at least 2 of these networks present is device on Campus (for test can be set to 5)
 
         {
             onCampus = true;
@@ -195,9 +196,12 @@ public class StudentUI extends Activity implements View.OnClickListener
     // returns scanning results for futher computation
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
-        checkWifi();                                // method called to check if wifi connection is available
+
+        checkWifi();
 
         scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+
+        // checkWifi();                                // method called to check if wifi connection is available
 
         if(scanningResult != null && resultCode == RESULT_OK)
         {
