@@ -1,9 +1,11 @@
 package com.coderwurst.student_attendance;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.*;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -51,9 +53,9 @@ public class StudentUI extends Activity implements View.OnClickListener
 
     private boolean onCampus = false;           // boolean to determine if 2 Uni wifi SSIDs are in range
 
-    // opens the sharedPref file to allow any previously saved checkins to be used
-    // public static final String USER_ID = "User ID File";
-    // static SharedPreferences userDetails;
+    // progress dialog to inform user of events
+    private ProgressDialog pDialog;
+    private String dialogText;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -75,6 +77,9 @@ public class StudentUI extends Activity implements View.OnClickListener
         btnScan.setOnClickListener(this);
         btnResetUsr.setOnClickListener(this);       // button to allow user type to be reset (testing purposes only)
 
+        // method call to check if uni netorks are in range
+        checkNet();
+
     } // onCreate
 
 
@@ -84,52 +89,58 @@ public class StudentUI extends Activity implements View.OnClickListener
      * networks in range to determine if the student is on campus
      */
 
-    private boolean checkWifi ()
+    private boolean checkNet ()
     {
 
         // check to see if wifi is enabled, and if not, activate
         wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
-
-        // causes APP crash - fix
-        /*if (wifi.isWifiEnabled() == false)
+        long timeIn = System.nanoTime();
+        List<ScanResult> results = null;
+        int count = 0;
+            // list to store the scan results
+        while(results == null)
         {
-            //Toast wifiToast = Toast.makeText(getApplicationContext(),
-            //        "wifi is currently disabled...activating", Toast.LENGTH_LONG);
-            //wifiToast.show();
-            wifi.setWifiEnabled(true);
-            Log.d("wifi", "wifi activated");
+            results = wifi.getScanResults();      // to get a list of current wifi networks
+            count ++;
+        }
 
-        } // if */
+        // time stamp
+        long timeOut = System.nanoTime();
 
+        long duration = timeOut - timeIn;
 
-        // list to store the scan results
-        List<ScanResult> results = wifi.getScanResults();      // to get a list of current wifi networks
+        double seconds = (double)duration / 1000000000.0;
 
-        for (ScanResult mScanResult : results)                  // for loop to be preformed for number of results
-        {
-            if (mScanResult.SSID.toString().equals("eduroam"))  // check to see if eduroam network is in range
+        Log.d("wifi", "scan time taken: " + seconds + " (" +count + ")");
+
+            for (ScanResult mScanResult : results)                  // for loop to be preformed for number of results
             {
-                firstNetwork = true;
-            } else if (mScanResult.SSID.toString().equals("Student"))   // check to see if Student network is in range
-            {
-                secondNetwork = true;
-            } else if (mScanResult.SSID.toString().equals("eng_j")){        // eng_j
 
-                thirdNetwork = true;
+                Log.d("wifi", "scanning results");
 
-            }else if (mScanResult.SSID.toString().equals("Staff")){         // Staff
+                if (mScanResult.SSID.toString().equals("eduroam"))  // check to see if eduroam network is in range
+                {
+                    firstNetwork = true;
+                } else if (mScanResult.SSID.toString().equals("Student"))   // check to see if Student network is in range
+                {
+                    secondNetwork = true;
+                } else if (mScanResult.SSID.toString().equals("eng_j"))
+                {        // eng_j
 
-                fourthNetwork = true;
+                    thirdNetwork = true;
 
-            } // if else block to determine how many networks are in range of device
+                } else if (mScanResult.SSID.toString().equals("Staff"))
+                {         // Staff
+
+                    fourthNetwork = true;
+
+                } // if else block to determine how many networks are in range of device
 
 
+                Log.d("wifi check", "networks in range: " + mScanResult.SSID.toString());
 
-        Log.d("wifi check", "networks in range: " + mScanResult.SSID.toString());
-
-        } // for
-
+            } // for
 
         // series of if statements to determine how many networks are in range
 
@@ -181,6 +192,8 @@ public class StudentUI extends Activity implements View.OnClickListener
             scanIntegrator.initiateScan();      // opens Zxing scanner
             scanID = 2;
 
+            // checkWifi();
+
         } else {
 
             Log.d("student ui", "user wishes to register as another user");
@@ -193,15 +206,13 @@ public class StudentUI extends Activity implements View.OnClickListener
     }// onClick
 
 
-    // returns scanning results for futher computation
+    // returns scanning results for further computation
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
 
-        checkWifi();
+        // checkWifi();
 
         scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-
-        // checkWifi();                                // method called to check if wifi connection is available
 
         if(scanningResult != null && resultCode == RESULT_OK)
         {

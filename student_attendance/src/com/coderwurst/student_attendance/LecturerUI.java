@@ -58,7 +58,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
     // components for checking internet connection
     WifiManager wifi;                           // wifi manager
-    private String url_test_connection = "http://172.17.16.225/xampp/student_attendance/test_connection.php";     // can be changed to server address
+    private String url_test_connection = "http://172.17.21.36/xampp/student_attendance/test_connection.php";     // can be changed to server address
     protected static boolean serverAvailable;          // boolean to be used in addStudentManually and RecursiveSignIn to determine if internet connection is available
 
     // JSON Node names

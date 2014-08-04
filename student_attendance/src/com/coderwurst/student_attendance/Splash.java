@@ -9,6 +9,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * ***********************
  * Created by IntelliJ IDEA
@@ -23,8 +26,6 @@ public class Splash extends Activity
 
 {
     private final int SPLASH_DISPLAY_LENGTH = 5000;     // int to determine the length of time the splash screen appears
-    WifiManager wifi;                           // wifi manager
-
 
     // called when the activity is first created
     @Override
@@ -33,6 +34,10 @@ public class Splash extends Activity
         super.onCreate(icicle);
 
         setContentView(R.layout.splash);                // opens up the splash XML file
+        Log.d("splash", "starting");
+
+
+        // code to be inserted here to turn on wifi (if deactivated) and check available networks
 
         // handler to start the MainScreenActivity and close this Splash-Screen after specified time (1000 sec)
 
@@ -44,13 +49,10 @@ public class Splash extends Activity
                 Intent mainIntent = new Intent(Splash.this,MainScreenActivity.class);   // creates an Intent
                 Splash.this.startActivity(mainIntent);                                  // runs new activity
                 Splash.this.finish();                                                   // closes splash activity
+                Log.d("splash", "leaving");
 
             }
         }, SPLASH_DISPLAY_LENGTH);
-
-        Log.d("wifi", "check if wifi is on");
-
-
 
     }// onCreate
 

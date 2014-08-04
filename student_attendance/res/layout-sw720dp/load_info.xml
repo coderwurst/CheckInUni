@@ -25,7 +25,6 @@
                     android:textSize="50sp"
                     android:layout_marginTop="80dp"
                     android:layout_alignParentTop="true"
-                    android:layout_cent="true"
                     android:layout_marginLeft="200dp"/>
 
             <Button

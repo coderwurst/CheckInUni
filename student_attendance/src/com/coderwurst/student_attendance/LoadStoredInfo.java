@@ -49,7 +49,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
     private String filename = null;
 
     // url to create new product
-    private static String url_sign_in = "http://172.17.16.225/xampp/student_attendance/sign_in.php";
+    private static String url_sign_in = "http://172.17.21.36/xampp/student_attendance/sign_in.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";

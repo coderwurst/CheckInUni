@@ -30,7 +30,7 @@
             <Button android:id="@id/lec_recall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/savedFiles"
+                    android:background="@drawable/savedfiles"
                     android:layout_above="@+id/lec_man_signin"
                     android:layout_toRightOf="@id/UULogo"
                     android:layout_marginLeft="50dp"
