@@ -57,9 +57,9 @@ public class InitialReg extends Activity
     JSONParser jsonParser = new JSONParser();
 
     // url to authenticate user - separate PHP scripts for student and staff IDs
-    private static String url_student_auth = "http://172.17.21.36/xampp/student_attendance/auth_student.php";
-    private static String url_staff_auth = "http://172.17.21.36/xampp/student_attendance/auth_staff.php";
-    private static String url_device_auth = "http://172.17.21.36/xampp/student_attendance/auth_device.php";
+    private static String url_student_auth = "http://172.17.23.80/xampp/student_attendance/auth_student.php";
+    private static String url_staff_auth = "http://172.17.23.80/xampp/student_attendance/auth_staff.php";
+    private static String url_device_auth = "http://172.17.23.80/xampp/student_attendance/auth_device.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";

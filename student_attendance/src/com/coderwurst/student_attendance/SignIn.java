@@ -58,7 +58,7 @@ public class SignIn extends Activity
 	EditText inputType; */
 
 	// url to create new product, NB I.P. address not static and needs to be changed depending on IP address of server
-	private static String url_sign_in = "http://172.17.21.36/xampp/student_attendance/sign_in.php";
+	private static String url_sign_in = "http://172.17.23.80/xampp/student_attendance/sign_in.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
@@ -208,8 +208,9 @@ public class SignIn extends Activity
 		}// doInBackground
 
 		/**
-		 * after completing background task dismiss the progress dialog
-		 * **/
+		 * after completing background task dismiss the progress dialog and inform the user that sign-in has been
+         * a success or failure depending on the database response...
+		 **/
 		protected void onPostExecute(String file_url)
         {
             // dialog to inform user sign in result

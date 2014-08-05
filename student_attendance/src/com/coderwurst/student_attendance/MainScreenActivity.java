@@ -45,8 +45,6 @@ public class MainScreenActivity extends Activity implements OnClickListener
     static SharedPreferences userDetails;
 
 
-    WifiManager wifi;                           // wifi manager
-
 
     /* format to be used at a later stage, to determine what data is to be. For example, if a register uses recursive
      * mode to read a Barcode, the app should send the student ID as well as the module ID and class type. If the
@@ -62,7 +60,6 @@ public class MainScreenActivity extends Activity implements OnClickListener
         int savedID = userDetails.getInt("user_Type", 0);
 
         Log.d("wifi", "check if wifi is on");
-        checkWifi();
 
         /** if to determine if there is any outstanding check in info from a previous session
          * to be sent to the database before continuing
@@ -135,51 +132,6 @@ public class MainScreenActivity extends Activity implements OnClickListener
                 }// if
 
             }// onClick
-
-
-    private void checkWifi ()
-    {
-
-        // check to see if wifi is enabled, and if not, activate
-        wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-
-        // causes APP crash - fix
-        if (wifi.isWifiEnabled() == false)
-        {
-            Toast wifiToast = Toast.makeText(getApplicationContext(),
-                    "wifi is currently disabled...activating", Toast.LENGTH_LONG);
-            wifiToast.show();
-            wifi.setWifiEnabled(true);
-            Log.d("wifi", "wifi activated");
-
-        } // if
-
-
-        long timeIn = System.nanoTime();
-        int state = -1;
-
-        while (wifi.isWifiEnabled() == false)
-        {
-            state = wifi.getWifiState();
-            Log.d("wifi", "current state: " + state);
-            // wait
-        } // while
-
-        state = wifi.getWifiState();
-        Log.d("wifi", "final state: " + state);
-
-
-        // time stamp
-        long timeOut = System.nanoTime();
-
-        long duration = timeOut - timeIn;
-
-        double seconds = (double)duration / 1000000000.0;
-
-        Log.d("wifi", "time taken: " + seconds);
-
-    } // check wifi
-
 
 
     // Returns scanning results to the main screen - testing purposes TO BE REMOVED FOR FINAL

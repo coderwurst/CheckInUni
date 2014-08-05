@@ -58,7 +58,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
     // components for checking internet connection
     WifiManager wifi;                           // wifi manager
-    private String url_test_connection = "http://172.17.21.36/xampp/student_attendance/test_connection.php";     // can be changed to server address
+    private String url_test_connection = "http://172.17.23.80/xampp/student_attendance/test_connection.php";     // can be changed to server address
     protected static boolean serverAvailable;          // boolean to be used in addStudentManually and RecursiveSignIn to determine if internet connection is available
 
     // JSON Node names
@@ -116,7 +116,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
         File file = this.getFilesDir();          // returns storage location
 
-        Log.d("recursive offline", file.toString());
+        Log.d("storage location", file.toString());
 
         ArrayList<String> names = new ArrayList<String>(Arrays.asList(file.list()));
         String filename;
@@ -142,6 +142,8 @@ public class LecturerUI extends Activity implements View.OnClickListener
         // check to see if wifi is enabled, and if not, activate
         wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
+
+        // this is now performed in splash screen NO LONGER NEEDED?? (Test)
         if (wifi.isWifiEnabled() == false)
         {
             Toast wifiToast = Toast.makeText(getApplicationContext(),
@@ -197,11 +199,11 @@ public class LecturerUI extends Activity implements View.OnClickListener
             } else if (view.getId() == R.id.lec_recall)
             {
                 // logcat tag to view app progress
-                Log.d("lecturer ui", "reset user");
+                Log.d("lecturer ui", "send previously stored files");
 
-                // test code to retrieve previously saved data
-                Intent test = new Intent(getApplicationContext(), LoadStoredInfo.class);
-                startActivity(test);
+                // to retrieve previously saved data
+                Intent viewStoredData = new Intent(getApplicationContext(), LoadStoredInfo.class);
+                startActivityForResult(viewStoredData,99);
 
             } else {
 
@@ -231,7 +233,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
             {
 
                 // logcat tag to view app progress
-                Log.e("lecturer ui", "auto check in - server not available");
+                Log.e("lecturer ui", "auto check in - data to be stored on device");
 
                 // opens up recursive sign in activity
                 Intent openAutoSignin = new Intent(getApplicationContext(), RecursiveSignIn.class);
@@ -259,7 +261,22 @@ public class LecturerUI extends Activity implements View.OnClickListener
         // takes the scanned in data & prepares for use within this method
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
-        if (scanningResult != null)             // as long as something has been scanned
+        if(requestCode == 99)
+        {
+            View b = findViewById(R.id.lec_recall);
+            filesFound();
+
+            if(filesFound())
+            {
+                b.setVisibility(View.VISIBLE);
+            } else
+
+                b.setVisibility(View.INVISIBLE);
+
+        } // check for saved files
+
+
+        else if (scanningResult != null)             // as long as something has been scanned
         {
             // toast for unit testing to show tester scan contents
             String scanContent = scanningResult.getContents();
@@ -299,6 +316,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
     }// onActivityResult
 
 
+
     /**
      * Background Async Task to establish if a connection to the server is available
      * */
@@ -320,18 +338,19 @@ public class LecturerUI extends Activity implements View.OnClickListener
         protected String doInBackground(String... args)
         {
 
+            JSONObject json = null;
+
             // parameters to be passed into PHP script on server side
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             // no parameters to be added
 
             // getting JSON Object
             // NB url accepts POST method
-            JSONObject json = jsonParser.makeHttpRequest(url_test_connection,
+            json = jsonParser.makeHttpRequest(url_test_connection,
                     "POST", params);
 
             // check log cat for response
-            // check log cat for response
-            Log.d("lecturer ui", "database response; " + json.toString());
+            Log.d("lecturer ui", "test server response; " + json.toString());
 
             // check for success tag
             try {

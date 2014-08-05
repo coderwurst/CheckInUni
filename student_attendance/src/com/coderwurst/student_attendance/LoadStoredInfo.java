@@ -49,7 +49,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
     private String filename = null;
 
     // url to create new product
-    private static String url_sign_in = "http://172.17.21.36/xampp/student_attendance/sign_in.php";
+    private static String url_sign_in = "http://172.17.23.80/xampp/student_attendance/sign_in.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -105,8 +105,6 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
             Log.d("load", "user wishes to load previous file");
 
             new LecturerSignStudentIn().execute();          // code to submit details to the database
-
-            // finish();
 
         } else
         {
@@ -305,12 +303,12 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
                     // check log cat for response
                     Log.d("load", "database response; php success");
 
-                    // returns user to home screen
-                    Intent signInSuccess = new Intent(getApplicationContext(), MainScreenActivity.class);
-                    startActivity(signInSuccess);
+                    deleteFile(filename);
 
-                    // finish this activity
-                    // finish();
+                    // returns user to home screen
+                    // Intent signInSuccess = new Intent(getApplicationContext(), LecturerUI.class);
+                    // startActivity(signInSuccess);
+
 
                 } else
                 {
@@ -321,8 +319,8 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
                     dialogText = "an error has occurred, please try again...";
 
                     // returns user to home screen
-                    Intent signInError = new Intent(getApplicationContext(), MainScreenActivity.class);
-                    startActivity(signInError);
+                    // Intent signInError = new Intent(getApplicationContext(), LecturerUI.class);
+                    // startActivity(signInError);
 
                     // finish this activity
                     // finish();
@@ -331,7 +329,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
             } catch (JSONException e)
             {
                 e.printStackTrace();
-            }
+            } // try - catch
 
 
             return null;

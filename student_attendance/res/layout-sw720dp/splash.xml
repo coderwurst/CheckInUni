@@ -11,5 +11,20 @@
                android:src="@drawable/uulogo"
                android:layout_gravity="center" android:contentDescription="@string/uuj_logo_att"
                android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
-
+    <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_below="@+id/splashscreen"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:textSize="32dp"
+            android:id="@+id/textView"
+            android:layout_below="@+id/progressBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
 </RelativeLayout>

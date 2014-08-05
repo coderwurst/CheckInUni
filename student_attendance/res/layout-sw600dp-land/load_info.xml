@@ -26,7 +26,8 @@
                     android:layout_marginTop="30dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_marginLeft="20dp"
+                    />
 
             <Button
                     android:layout_width="wrap_content"
@@ -48,13 +49,12 @@
             <!-- List view to show contents retrieved from Database   -->
             <ListView
                     android:id="@id/checkin_list"
-                    android:layout_toRightOf="@+id/file_id"
+                    android:layout_toRightOf="@+id/lec_confirm"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="50dp"
-                    android:paddingRight="50dp"
-                    android:layout_marginLeft="350dp"
-                    android:layout_alignTop="@+id/file_id"
+                    android:paddingLeft="100dp"
+                    android:paddingRight="250dp"
+                    android:layout_alignTop="@+id/lec_confirm"
                     android:layout_alignBottom="@+id/lec_delete"
                     />
 

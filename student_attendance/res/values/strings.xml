@@ -8,6 +8,7 @@
     <string name="uuj_logo_att">main UUJ Logo</string>
     <string name="splash_welcome">main UUJ Logo</string>
     <string name="app_name">student attendance</string>
+    <string name="loading">loading...</string>
 
     <!-- Strings relating to registration function-->
     <string name="register">register</string>

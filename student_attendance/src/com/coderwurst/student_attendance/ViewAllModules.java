@@ -39,13 +39,14 @@ public class ViewAllModules extends ListActivity
 	// Creating JSON Parser object
 	JSONParser jParser = new JSONParser();
 
-	ArrayList<HashMap<String, String>> moduleList;
+	// array list to store the modules as they are being returned from database
+    ArrayList<HashMap<String, String>> moduleList;
 
 	// url to get all modules list
-    private static String url_all_modules = "http://172.17.21.36/xampp/student_attendance/get_all_modules.php";
-    private static String url_location = "http://172.17.21.36/module_codes/";
+    private static String url_all_modules = "http://172.17.23.80/xampp/student_attendance/get_all_modules.php";
+    private static String url_location = "http://172.17.23.80/module_codes/";
 
-	// JSON Node names
+	// JSON Node names used in sending and receiving the JSON object
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_MODULES = "modules";
 	private static final String TAG_ID = "id";
@@ -68,7 +69,7 @@ public class ViewAllModules extends ListActivity
 		// loading all modules in background thread
 		new LoadAllModules().execute();
 
-		// get listview
+		// get listview from xml file
 		ListView lv = getListView();
 
 		// on click, user will be taken to chosen module QR-Codes
@@ -78,8 +79,6 @@ public class ViewAllModules extends ListActivity
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
-                // code to return image to App and display on screen
-
 				// getting values from selected ListItem
 				String pid = ((TextView) view.findViewById(R.id.pid)).getText()
                         .toString();
@@ -88,25 +87,28 @@ public class ViewAllModules extends ListActivity
                 String tutorialFile = ((TextView) view.findViewById(R.id.tutorial_url)).getText()
                         .toString();
 
+                // log app progress for testing purposes
                 Log.d("view modules", "stored address; " + pid + "," + lectureFile + tutorialFile);
 
+                // concatenates server address with location on server (returned from database)
                 String lectureUrl = url_location + lectureFile;
                 String tutorialUrl = url_location + tutorialFile;
 
+                // log app progress for testing purposes
                 Log.d("view modules", "actual address; " + lectureUrl + "," + tutorialUrl);
 
 				// Starting new intent
-				Intent in = new Intent(getApplicationContext(),	ChooseQR.class);
+				Intent viewQR = new Intent(getApplicationContext(),	ChooseQR.class);
 
 				// sending pid to next activity
-				in.putExtra(TAG_ID, pid);
-                in.putExtra(TAG_LECTURE, lectureUrl);
-                in.putExtra(TAG_TUTORIAL, tutorialUrl);
+				viewQR.putExtra(TAG_ID, pid);
+                viewQR.putExtra(TAG_LECTURE, lectureUrl);
+                viewQR.putExtra(TAG_TUTORIAL, tutorialUrl);
 				
 				// starting new activity and expecting some response back
-				startActivityForResult(in, 100);
-			}
-		});
+				startActivityForResult(viewQR, 100);
+			} // onItemClick
+		}); // onItemClickListener
 
 	}// onCreate
 
@@ -115,62 +117,74 @@ public class ViewAllModules extends ListActivity
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
 		super.onActivityResult(requestCode, resultCode, data);
-		// if result code 100
 
-		if (resultCode == 100) {
-			// if result code 100 is received 
-			// means user edited/deleted product
-			// reload this screen again
-			Intent intent = getIntent();
-			finish();
-			startActivity(intent);
-		}
+        /**
+         * the activity was started with the identifier 100, the program waits for the result of this activity (ie the
+         * ChooseQR.java to be returned to this screen, after which the intent is executed; preventing unused
+         * app windows from remaining active and open in the background
+         **/
+
+		if (resultCode == 100)              // if result code 100
+        {
+			Intent intent = getIntent();    // gets the current intent (ViewAllModules.java)
+			finish();                       // finishes ChooseQR.java
+			startActivity(intent);          // restarts ViewAllModules
+		} // if
 
 	}// onActivityResult
 
 	/**
-	 * Background Async Task to Load all product by making HTTP Request
+	 * background async task to load all modules as stored in database
 	 * */
 	class LoadAllModules extends AsyncTask<String, String, String>
     {
 
 		/**
-		 * Before starting background thread Show Progress Dialog
-		 * */
+		 * before starting background thread, show Progress Dialog
+		 * this provides the user with some information whilst the app
+         * is performing background tasks. The purpose of this dialog
+         * is to prevent the user from thinking that the app has crashed
+         * or become unresponsive
+         * */
 		@Override
-		protected void onPreExecute() {
+		protected void onPreExecute()
+        {
 			super.onPreExecute();
 			pDialog = new ProgressDialog(ViewAllModules.this);
 			pDialog.setMessage("Loading modules. Please wait...");
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(false);
 			pDialog.show();
-		}
+		} // onPreExecute
 
 		/**
-		 * getting All modules from url
+		 * once the user has been infromed, the process begins to get all modules from the server url,
+         * during which time the dialog box remains open
 		 * */
-		protected String doInBackground(String... args) {
-			// Building Parameters
+		protected String doInBackground(String... args)
+        {
+			// build Parameters
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
+
 			// getting JSON string from URL
 			JSONObject json = jParser.makeHttpRequest(url_all_modules, "GET", params);
 
 			
-			// Check your log cat for JSON reponse
+			// log checked for JSON response
 			Log.d("view modules", "all modules; " + json.toString());
 
 			try {
 				// Checking for SUCCESS TAG
 				int success = json.getInt(TAG_SUCCESS);
 
-				if (success == 1) {
-					// modules found
-					// Getting Array of Products
+				if (success == 1)               // modules found
+                {
+					// get array of modules
 					modules = json.getJSONArray(TAG_MODULES);
 
-					// looping through All Products
-					for (int i = 0; i < modules.length(); i++) {
+					// looping through all returned modules
+					for (int i = 0; i < modules.length(); i++)
+                    {
 						JSONObject c = modules.getJSONObject(i);
 
 						// Storing each json item in variable
@@ -178,7 +192,6 @@ public class ViewAllModules extends ListActivity
                         String lecture = c.getString(TAG_LECTURE);
                         String tutorial = c.getString(TAG_TUTORIAL);
                         String name = c.getString(TAG_NAME);
-
 
 						// creating new HashMap
 						HashMap<String, String> map = new HashMap<String, String>();
@@ -192,26 +205,28 @@ public class ViewAllModules extends ListActivity
 						// adding HashList to ArrayList
 						moduleList.add(map);
 					}
-				} else {
-					// no modules found
-					// Launch Add New product Activity
-					Intent i = new Intent(getApplicationContext(),
-							SignIn.class);
-					// Closing all previous activities
-					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					startActivity(i);
-				}
+				} else {                // no modules found
+
+					// no modules have been returned
+                    // ?????????????????????????????????? ERROR HANDLING ????????????????????????????????????
+
+				} // if - else
 			} catch (JSONException e) {
 				e.printStackTrace();
-			}
+			} // try - catch
 
 			return null;
 		}// doInBackground
 
 		/**
-		 * After completing background task Dismiss the progress dialog
-		 * **/
-		protected void onPostExecute(String file_url)
+		 * after completing background task onPostExecute dismisses the progress dialog and assigns the respective
+         * information to the matching values in the module list. At this stage, all details have been retrieved from
+         * the database, however are not all viewable by the user. Upon clicking a module in the list, the data for
+         * the location of the QR images are passed over into the Choose QR class - meaning that the same PHP script
+         * does not need to be run twice in both classes to retrieve the storage location of the QR images
+		 * */
+
+ 		protected void onPostExecute(String file_url)
         {
 			// dismiss the dialog after getting all modules
 			pDialog.dismiss();
@@ -234,5 +249,5 @@ public class ViewAllModules extends ListActivity
 
 		}// onPostExecute
 
-	}// LoadAllProducts
-}// AllProductsActivity
+	}// LoadAllModules
+}// ViewAllModules
