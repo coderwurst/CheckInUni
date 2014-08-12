@@ -1,15 +1,5 @@
 package com.google.zxing.integration.android;
 
-/**
- * ***********************
- * Created by IntelliJ IDEA
- * User: andrew
- * Date: 23/06/2014
- * Time: 14:54
- * Version: V1.0
- * ADD CLASS INFORMATION HERE
- * ************************
- */
 /*
  * Copyright 2009 ZXing authors
  *

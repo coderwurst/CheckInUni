@@ -27,7 +27,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * Date: 26/06/2014
  * Time: 14:57
  * Version: V1.0
- * ADD CLASS INFORMATION HERE
+ * SPRINT 7 - CLASS TO ACCESS ALL MODULES IN DATABASE AND LOAD INTO LIST
  * ************************
  */
 public class ViewAllModules extends ListActivity
@@ -43,8 +43,8 @@ public class ViewAllModules extends ListActivity
     ArrayList<HashMap<String, String>> moduleList;
 
 	// url to get all modules list
-    private static String url_all_modules = "http://172.17.23.80/xampp/student_attendance/get_all_modules.php";
-    private static String url_location = "http://172.17.23.80/module_codes/";
+    private static String url_all_modules = "http://192.168.1.116/xampp/student_attendance/get_all_modules.php";
+    private static String url_location = "http://192.168.1.116/module_codes/";
 
 	// JSON Node names used in sending and receiving the JSON object
 	private static final String TAG_SUCCESS = "success";

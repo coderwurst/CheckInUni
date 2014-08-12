@@ -15,19 +15,12 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -58,7 +51,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
     // components for checking internet connection
     WifiManager wifi;                           // wifi manager
-    private String url_test_connection = "http://172.17.23.80/xampp/student_attendance/test_connection.php";     // can be changed to server address
+    private String url_test_connection = "http://192.168.1.116/xampp/student_attendance/test_connection.php";     // can be changed to server address
     protected static boolean serverAvailable;          // boolean to be used in addStudentManually and RecursiveSignIn to determine if internet connection is available
 
     // JSON Node names
@@ -74,9 +67,12 @@ public class LecturerUI extends Activity implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lecturer_ui);                           // opens up corresponding XML file
+        setContentView(R.layout.lecturer_ui);                               // opens up corresponding XML file
 
-        checkWifi();
+        // checkWifi();
+
+        // check to see if connection to University Server is available
+        new TestConnection().execute();
 
         // Buttons
         btnManSignin = (Button) findViewById(R.id.lec_man_signin);          // to enter student & class details manually
@@ -97,16 +93,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
         btnReset.setOnClickListener(this);
 
-        // check for previously stored files, if found, set button visability to on
-
-        filesFound();
-
-        if(filesFound())
-        {
-            View b = findViewById(R.id.lec_recall);
-            b.setVisibility(View.VISIBLE);
-        } // check for saved files
-
     } // onCreate
 
 
@@ -119,11 +105,17 @@ public class LecturerUI extends Activity implements View.OnClickListener
         Log.d("storage location", file.toString());
 
         ArrayList<String> names = new ArrayList<String>(Arrays.asList(file.list()));
-        String filename;
+        String filename = null;
 
         Log.d("lecturer ui", names.size() + " stored files: " + names);
 
-        if (names.size() >= 2)                  // currently always a scanfile.txt also stored in this directory - INVESTIGATE
+        // first if statement to determine if there are any files stored on the device
+        if (names.size() >= 1)
+        {
+            filename = names.get(names.size() - 1);
+        } // if
+
+        if (filename != "scanfile.txt" && filename != null)     // may be a file scanfile.txt also stored on device
         {
             filename = names.get(names.size() - 1);
             Log.d("lecturer ui", "file to be read: " + filename);
@@ -137,21 +129,28 @@ public class LecturerUI extends Activity implements View.OnClickListener
     } // checkForStoredData
 
 
+    /**
+     * the process of activating the wifi is performed in Splash.java, however
+     * the app can progress to the lecturer UI quick enough to cause a crash
+     * as the transmitter is still being activated. Therefore the app waits in
+     * a while loop in this method for the confirmation to come through, before
+     * progressing to check server connectivity in the TestConnection async
+     * background task
+     **/
     public void checkWifi()
     {
         // check to see if wifi is enabled, and if not, activate
         wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
 
-        // this is now performed in splash screen NO LONGER NEEDED?? (Test)
-        if (wifi.isWifiEnabled() == false)
+        /* if (!wifi.isWifiEnabled())
         {
             Toast wifiToast = Toast.makeText(getApplicationContext(),
                     "activating wifi on device", Toast.LENGTH_LONG);
             wifiToast.show();
-            wifi.setWifiEnabled(true);
+            // wifi.setWifiEnabled(true);
             Log.d("lecturer ui", "wifi activated");
-        } // if
+        } // if */
 
         if(wifi.isWifiEnabled())
         {
@@ -225,9 +224,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 // logcat tag to view app progress
                 Log.e("lecturer ui", "manual check in - server not available");
 
-                // opens up manual sign in activity with text input fields
-                Intent openManSignin = new Intent(getApplicationContext(), AddStudentMan.class);
-                startActivity(openManSignin);
 
             } else if (view.getId() == R.id.lec_auto_signin)
             {
@@ -284,10 +280,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
             formatTxt.setText("FORMAT: " + scanFormat);
             contentTxt.setText("CONTENT: " + scanContent);
 
-            /* Toast toast = Toast.makeText(getApplicationContext(),
-                    "FORMAT: " + scanFormat + "\nCONTENT: " + scanContent, Toast.LENGTH_LONG);
-            toast.show(); */
-
             Log.d("lecturer ui", "user wishes to register as another user");
 
                     // allows the user to re-register
@@ -330,10 +322,11 @@ public class LecturerUI extends Activity implements View.OnClickListener
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
         } // onPreExecute
 
         /**
-         * registering the student as present
+         * send request to server to return success confirmation
          * */
         protected String doInBackground(String... args)
         {
@@ -378,10 +371,22 @@ public class LecturerUI extends Activity implements View.OnClickListener
         }// doInBackground
 
 
+
         /**
          * After completing background task Dismiss the progress dialog
          * **/
         protected void onPostExecute(String file_url) {
+
+
+            // check for previously stored files, if found, set button visability to on
+            filesFound();
+
+            // the server must also be available before files can be sent!
+            if(filesFound() && serverAvailable)
+            {
+                View b = findViewById(R.id.lec_recall);
+                b.setVisibility(View.VISIBLE);
+            } // check for saved files
 
             Toast toast = Toast.makeText(getApplicationContext(),
                     serverResponse, Toast.LENGTH_LONG);

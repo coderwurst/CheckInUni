@@ -116,27 +116,22 @@ public class StudentUI extends Activity implements View.OnClickListener
 
             for (ScanResult mScanResult : results)                  // for loop to be preformed for number of results
             {
-
                 Log.d("wifi", "scanning results");
-
-                if (mScanResult.SSID.toString().equals("eduroam"))  // check to see if eduroam network is in range
+                if (mScanResult.SSID.toString().equals("LittleLion"))  // check to see if eduroam network is in range
                 {
                     firstNetwork = true;
-                } else if (mScanResult.SSID.toString().equals("Student"))   // check to see if Student network is in range
+                } else if (mScanResult.SSID.toString().equals("LittleLion-guest"))   // check to see if Student network is in range
                 {
                     secondNetwork = true;
-                } else if (mScanResult.SSID.toString().equals("eng_j"))
+                } else if (mScanResult.SSID.toString().equals("eng_j"))         // check to see if eng_j network is in range
                 {        // eng_j
 
                     thirdNetwork = true;
-
-                } else if (mScanResult.SSID.toString().equals("Staff"))
+                } else if (mScanResult.SSID.toString().equals("Staff"))         // check to see if Staff network is in range
                 {         // Staff
 
                     fourthNetwork = true;
-
                 } // if else block to determine how many networks are in range of device
-
 
                 Log.d("wifi check", "networks in range: " + mScanResult.SSID.toString());
 
@@ -264,7 +259,7 @@ public class StudentUI extends Activity implements View.OnClickListener
                             "format incorrect, please try again..." + scanContent, Toast.LENGTH_LONG);
                     QRIncorrectFormat.show();
 
-                } else if (scanID == 1 && scanFormat.equals("CODE_128"))         // FOR TESTING PURPOSES ONLY
+                } else if (scanID == 1 && scanFormat.equals("CODE_128"))         // to ensure scanned image is correct
                 {
 
                     Log.d("student ui", "user wishes to register as another user");

@@ -1,10 +1,8 @@
 package com.coderwurst.student_attendance;  // Sprint 4 - Sign into Database
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,9 +14,6 @@ import android.view.View.OnClickListener;
 // import Zxing Files for Barcode Scanner
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 /**

@@ -58,7 +58,7 @@ public class SignIn extends Activity
 	EditText inputType; */
 
 	// url to create new product, NB I.P. address not static and needs to be changed depending on IP address of server
-	private static String url_sign_in = "http://172.17.23.80/xampp/student_attendance/sign_in.php";
+	private static String url_sign_in = "http://192.168.1.116/xampp/student_attendance/sign_in.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
@@ -78,7 +78,7 @@ public class SignIn extends Activity
         Bundle bundle = getIntent().getExtras();
         allInfo = bundle.getString("Info");
 
-        // logcat tag to view contents of string at this stage (testing purposes only)
+        // logcat tag to view contents of string at this stage (testing)
         Log.d("check in", "user ID value; " + userID);
         Log.d("check in", "module ID value; " + allInfo);
 
@@ -146,6 +146,8 @@ public class SignIn extends Activity
 		protected String doInBackground(String... args)
         {
 
+            JSONObject json = null;
+
 			/* Strings to take contents of TextViews, to be changed when implementing automatic transition
             String student_id = inputStudentID.getText().toString();
 			String module_id = inputModuleID.getText().toString();
@@ -162,7 +164,7 @@ public class SignIn extends Activity
 			params.add(new BasicNameValuePair("type", type));
 
 			// getting JSON Object NB url accepts POST method
-			JSONObject json = jsonParser.makeHttpRequest(url_sign_in,
+			json = jsonParser.makeHttpRequest(url_sign_in,
 					"POST", params);
 
 			// check log cat for response

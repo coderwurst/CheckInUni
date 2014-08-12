@@ -21,7 +21,6 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -59,8 +58,8 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private String classInfo = null;
 
     // url to create new product
-    private static String url_sign_in = "http://172.17.23.80/xampp/student_attendance/sign_in.php";
-    private static String url_return_forename = "http://172.17.23.80/xampp/student_attendance/return_forename.php";
+    private static String url_sign_in = "http://192.168.1.116/xampp/student_attendance/sign_in.php";
+    private static String url_return_forename = "http://192.168.1.116/xampp/student_attendance/return_forename.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";

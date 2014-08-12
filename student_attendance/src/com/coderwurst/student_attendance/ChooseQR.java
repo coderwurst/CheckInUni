@@ -1,11 +1,9 @@
 package com.coderwurst.student_attendance;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -48,10 +46,10 @@ public class ChooseQR extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choose_qr);
 
-        // getting product details from intent
+        // getting module details from intent
         Intent i = getIntent();
 
-        // getting product id (pid) from intent
+        // getting module from the view all modules intent
         pid = i.getStringExtra(TAG_ID);
         lectureUrl = i.getStringExtra(TAG_LECTURE);
         tutorialUrl = i.getStringExtra(TAG_TUTORIAL);
@@ -69,7 +67,8 @@ public class ChooseQR extends Activity implements View.OnClickListener
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
         // load the url, formatted using html
-        webview.loadData("<html><head><style type='text/css'>body{margin:auto auto;text-align:center;} img{width:90%;} </style></head><body><img src='" + lectureUrl + "'/></body></html>" ,"text/html",  "UTF-8");
+        webview.loadData("<html><head><style type='text/css'>body{margin:auto auto;text-align:center;}" +
+                "img{width:90%;} </style></head><body><img src='" + lectureUrl + "'/></body></html>" ,"text/html",  "UTF-8");
 
         // set textview default contents to lecture
         qrID = (TextView)findViewById(R.id.qr_id);

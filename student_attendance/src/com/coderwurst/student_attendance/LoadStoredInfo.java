@@ -49,7 +49,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
     private String filename = null;
 
     // url to create new product
-    private static String url_sign_in = "http://172.17.23.80/xampp/student_attendance/sign_in.php";
+    private static String url_sign_in = "http://192.168.1.116/xampp/student_attendance/sign_in.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -138,13 +138,12 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
         Log.d("load", file.toString());
 
         ArrayList<String> names = new ArrayList<String>(Arrays.asList(file.list()));
-        String filename;
+        String filename = names.get(names.size() - 1);;
 
         Log.d("load", names.size() + " stored files: " + names);
 
-        if (names.size() >= 2)                  // currently always a scanfile.txt also stored in this directory - INVESTIGATE
+        if (names.size() >= 1 && filename != "scanfile.txt")                  // currently always a scanfile.txt also stored in this directory - INVESTIGATE
         {
-            filename = names.get(names.size() - 1);
             Log.d("load", "file to be read: " + filename);
 
             loadStoredData(filename);
