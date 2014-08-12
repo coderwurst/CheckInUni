@@ -119,7 +119,7 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="lecturer" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="add studnet" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.coderwurst.student_attendance" />
   </component>
   <component name="ChangeListManager">
@@ -145,24 +145,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="LecturerUI.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="LecturerUI.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/LecturerUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="5.5036674" vertical-offset="3149" max-vertical-offset="6060">
-              <caret line="360" column="63" selection-start-line="360" selection-start-column="38" selection-end-line="360" selection-end-column="63" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6300">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoadStoredInfo.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/LoadStoredInfo.java">
+      <file leaf-file-name="RecursiveSignIn.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/RecursiveSignIn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1546" max-vertical-offset="5055">
-              <caret line="147" column="0" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+            <state vertical-scroll-proportion="2.3504274" vertical-offset="6105" max-vertical-offset="9435">
+              <caret line="539" column="25" selection-start-line="539" selection-start-column="25" selection-end-line="539" selection-end-column="25" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainScreenActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/MainScreenActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="2760">
+              <caret line="41" column="21" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -212,7 +222,6 @@
         <option value="$PROJECT_DIR$/res/layout-sw600dp-land/load_info.xml" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/ChooseQR.java" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/JSONParser.java" />
-        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/MainScreenActivity.java" />
         <option value="$PROJECT_DIR$/src/com/google/zxing/integration/android/IntentIntegrator.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/StudentUI.java" />
@@ -220,14 +229,15 @@
         <option value="$PROJECT_DIR$/res/layout-sw600dp-land/student_ui.xml" />
         <option value="$PROJECT_DIR$/res/layout-sw600dp-land/lecturer_ui.xml" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/Splash.java" />
+        <option value="$PROJECT_DIR$/res/layout-sw600dp/lecturer_ui.xml" />
+        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/MainScreenActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/SignIn.java" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/InitialReg.java" />
+        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/LoadStoredInfo.java" />
+        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/ViewAllModules.java" />
+        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/LecturerUI.java" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/AddStudentMan.java" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/RecursiveSignIn.java" />
-        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/ViewAllModules.java" />
-        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/SignIn.java" />
-        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/LoadStoredInfo.java" />
-        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/LecturerUI.java" />
-        <option value="$PROJECT_DIR$/res/layout-sw600dp/lecturer_ui.xml" />
       </list>
     </option>
   </component>
@@ -634,7 +644,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3219178" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3479452" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3479452" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -715,14 +725,8 @@
           <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/LecturerUI.java</url>
-          <line>333</line>
-          <properties />
-          <option name="timeStamp" value="63" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/SignIn.java</url>
-          <line>166</line>
+          <line>171</line>
           <properties />
           <option name="timeStamp" value="64" />
         </line-breakpoint>
@@ -1115,86 +1119,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/AddStudentMan.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56719816" vertical-offset="261" max-vertical-offset="2640">
-          <caret line="50" column="70" selection-start-line="50" selection-start-column="70" selection-end-line="50" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/ChooseQR.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1545">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/JSONParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.0501139" vertical-offset="656" max-vertical-offset="1530">
           <caret line="32" column="3" selection-start-line="32" selection-start-column="3" selection-end-line="32" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/MainScreenActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.34168565" vertical-offset="600" max-vertical-offset="2730">
-          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/RecursiveSignIn.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39635536" vertical-offset="411" max-vertical-offset="9330">
-          <caret line="61" column="69" selection-start-line="61" selection-start-column="69" selection-end-line="61" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/Splash.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33257404" vertical-offset="154" max-vertical-offset="1560">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/ViewAllModules.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.546697" vertical-offset="195" max-vertical-offset="3510">
-          <caret line="46" column="62" selection-start-line="46" selection-start-column="62" selection-end-line="46" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/SignIn.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.01937046" vertical-offset="1972" max-vertical-offset="3315">
-          <caret line="149" column="0" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/InitialReg.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08708273" vertical-offset="585" max-vertical-offset="5685">
-          <caret line="61" column="65" selection-start-line="61" selection-start-column="65" selection-end-line="61" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/StudentUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4957265" vertical-offset="630" max-vertical-offset="4530">
-          <caret line="129" column="104" selection-start-line="129" selection-start-column="104" selection-end-line="129" selection-end-column="104" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/LoadStoredInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1546" max-vertical-offset="5055">
-          <caret line="147" column="0" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1220,13 +1148,97 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/LecturerUI.java">
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/ChooseQR.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.5036674" vertical-offset="3149" max-vertical-offset="6060">
-          <caret line="360" column="63" selection-start-line="360" selection-start-column="38" selection-end-line="360" selection-end-column="63" />
+        <state vertical-scroll-proportion="-2.0689654" vertical-offset="1110" max-vertical-offset="1545">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/InitialReg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37931034" vertical-offset="525" max-vertical-offset="5730">
+          <caret line="64" column="73" selection-start-line="64" selection-start-column="73" selection-end-line="64" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/LoadStoredInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="5100">
+          <caret line="51" column="70" selection-start-line="51" selection-start-column="70" selection-end-line="51" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/StudentUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.0" vertical-offset="375" max-vertical-offset="4530">
+          <caret line="129" column="104" selection-start-line="129" selection-start-column="104" selection-end-line="129" selection-end-column="104" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/Splash.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1112" max-vertical-offset="1560">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/ViewAllModules.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.50223213" vertical-offset="195" max-vertical-offset="3555">
+          <caret line="45" column="70" selection-start-line="45" selection-start-column="70" selection-end-line="45" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/MainScreenActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="2760">
+          <caret line="41" column="21" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/LecturerUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6300">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/AddStudentMan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2507" max-vertical-offset="3030">
+          <caret line="191" column="12" selection-start-line="191" selection-start-column="12" selection-end-line="193" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/SignIn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3638393" vertical-offset="2942" max-vertical-offset="3390">
+          <caret line="224" column="43" selection-start-line="224" selection-start-column="43" selection-end-line="224" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/RecursiveSignIn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.3504274" vertical-offset="6105" max-vertical-offset="9435">
+          <caret line="539" column="25" selection-start-line="539" selection-start-column="25" selection-end-line="539" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>

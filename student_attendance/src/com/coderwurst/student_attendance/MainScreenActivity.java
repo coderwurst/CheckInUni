@@ -39,6 +39,8 @@ public class MainScreenActivity extends Activity implements OnClickListener
     public static final String USER_ID = "User ID File";
     static SharedPreferences userDetails;
 
+    protected static String serverIP = "192.168.1.116";
+
 
 
     /* format to be used at a later stage, to determine what data is to be. For example, if a register uses recursive

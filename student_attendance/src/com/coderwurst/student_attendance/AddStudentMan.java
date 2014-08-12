@@ -3,6 +3,7 @@ package com.coderwurst.student_attendance;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.widget.Toast;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -13,6 +14,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -47,15 +49,17 @@ public class AddStudentMan extends Activity
 	// JSON parser class
 	JSONParser jsonParser = new JSONParser();
 
+	// server IP address
+    private static String serverAddress = MainScreenActivity.serverIP;
+
 	// single product url
-	private static final String url_man_signin = "http://192.168.1.116/xampp/student_attendance/sign_in.php";
+	private static final String url_man_signin = "http://" + serverAddress + "/xampp/student_attendance/sign_in.php";
 
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
 
-
-	@Override
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_student_man);
@@ -96,13 +100,15 @@ public class AddStudentMan extends Activity
          * Before starting background thread Show Progress Dialog
          * */
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             pDialog = new ProgressDialog(AddStudentMan.this);
             pDialog.setMessage("submitting Details...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
+
         } // onPreExecute
 
         /**
@@ -181,8 +187,12 @@ public class AddStudentMan extends Activity
 
             // dialog to inform user sign in result
             pDialog.setMessage(dialogText);
-            // dismiss the dialog once product updated
             pDialog.dismiss();
+
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "check in: " + dialogText, Toast.LENGTH_LONG);
+            toast.show();
+
         } // onPostExecute
     } // SignInStudent
 

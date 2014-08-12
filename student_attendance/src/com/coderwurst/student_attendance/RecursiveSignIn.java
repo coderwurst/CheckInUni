@@ -57,9 +57,12 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private String moduleName = null;
     private String classInfo = null;
 
+    // server IP address
+    private static String serverAddress = MainScreenActivity.serverIP;
+
     // url to create new product
-    private static String url_sign_in = "http://192.168.1.116/xampp/student_attendance/sign_in.php";
-    private static String url_return_forename = "http://192.168.1.116/xampp/student_attendance/return_forename.php";
+    private static String url_sign_in = "http://" + serverAddress + "/xampp/student_attendance/sign_in.php";
+    private static String url_return_forename = "http://" + serverAddress + "/xampp/student_attendance/return_forename.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -531,6 +534,10 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
             // dismiss the dialog once done
             pDialog.dismiss();
+
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "check in: " + dialogText, Toast.LENGTH_LONG);
+            toast.show();
 
             finish();                   // closes this activity after data has been sent, returns user to home UI
 

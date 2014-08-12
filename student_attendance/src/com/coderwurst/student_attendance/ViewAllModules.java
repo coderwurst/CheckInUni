@@ -42,9 +42,12 @@ public class ViewAllModules extends ListActivity
 	// array list to store the modules as they are being returned from database
     ArrayList<HashMap<String, String>> moduleList;
 
+    // server IP address
+    private static String serverAddress = MainScreenActivity.serverIP;
+
 	// url to get all modules list
-    private static String url_all_modules = "http://192.168.1.116/xampp/student_attendance/get_all_modules.php";
-    private static String url_location = "http://192.168.1.116/module_codes/";
+    private static String url_all_modules = "http://" + serverAddress + "/xampp/student_attendance/get_all_modules.php";
+    private static String url_location = "http://" + serverAddress + "/module_codes/";
 
 	// JSON Node names used in sending and receiving the JSON object
 	private static final String TAG_SUCCESS = "success";

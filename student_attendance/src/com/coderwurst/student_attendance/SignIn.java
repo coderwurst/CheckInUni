@@ -57,11 +57,16 @@ public class SignIn extends Activity
 	EditText inputModuleID;
 	EditText inputType; */
 
+    // server IP address
+    private static String serverAddress = MainScreenActivity.serverIP;
+
 	// url to create new product, NB I.P. address not static and needs to be changed depending on IP address of server
-	private static String url_sign_in = "http://192.168.1.116/xampp/student_attendance/sign_in.php";
+	private static String url_sign_in = "http://" + serverAddress + "/xampp/student_attendance/sign_in.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
+
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)

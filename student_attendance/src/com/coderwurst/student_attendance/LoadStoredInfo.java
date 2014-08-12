@@ -48,8 +48,11 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
     private String classInfo = null;
     private String filename = null;
 
+    // server IP address
+    private static String serverAddress = MainScreenActivity.serverIP;
+
     // url to create new product
-    private static String url_sign_in = "http://192.168.1.116/xampp/student_attendance/sign_in.php";
+    private static String url_sign_in = "http://" + serverAddress + "/xampp/student_attendance/sign_in.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";

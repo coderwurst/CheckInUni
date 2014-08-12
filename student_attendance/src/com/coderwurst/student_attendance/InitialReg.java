@@ -56,10 +56,13 @@ public class InitialReg extends Activity
     // creates the JSONParser object
     JSONParser jsonParser = new JSONParser();
 
+    // server IP address
+    private static String serverAddress = MainScreenActivity.serverIP;
+
     // url to authenticate user - separate PHP scripts for student and staff IDs
-    private static String url_student_auth = "http://192.168.1.116/xampp/student_attendance/auth_student.php";
-    private static String url_staff_auth = "http://192.168.1.116/xampp/student_attendance/auth_staff.php";
-    private static String url_device_auth = "http://192.168.1.116/xampp/student_attendance/auth_device.php";
+    private static String url_student_auth = "http://" + serverAddress + "/xampp/student_attendance/auth_student.php";
+    private static String url_staff_auth = "http://" + serverAddress + "/xampp/student_attendance/auth_staff.php";
+    private static String url_device_auth = "http://" + serverAddress + "/xampp/student_attendance/auth_device.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";

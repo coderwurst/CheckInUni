@@ -1,7 +1,6 @@
 package com.coderwurst.student_attendance;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
@@ -51,7 +50,11 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
     // components for checking internet connection
     WifiManager wifi;                           // wifi manager
-    private String url_test_connection = "http://192.168.1.116/xampp/student_attendance/test_connection.php";     // can be changed to server address
+
+    // server IP address
+    private static String serverAddress = MainScreenActivity.serverIP;
+
+    private String url_test_connection = "http://" + serverAddress + "/xampp/student_attendance/test_connection.php";     // can be changed to server address
     protected static boolean serverAvailable;          // boolean to be used in addStudentManually and RecursiveSignIn to determine if internet connection is available
 
     // JSON Node names
@@ -175,6 +178,8 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 Intent openManSignin = new Intent(getApplicationContext(), AddStudentMan.class);
                 startActivity(openManSignin);
 
+                finish();
+
             } else if (view.getId() == R.id.lec_auto_signin)
             {
 
@@ -184,6 +189,8 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 // opens up recursive sign in activity
                 Intent openAutoSignin = new Intent(getApplicationContext(), RecursiveSignIn.class);
                 startActivity(openAutoSignin);
+
+                finish();
 
             } else if (view.getId() == R.id.getQRCode)
             {
@@ -195,6 +202,9 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 Intent openViewAllModules = new Intent(getApplicationContext(), ViewAllModules.class);
                 startActivity(openViewAllModules);
 
+                finish();
+
+
             } else if (view.getId() == R.id.lec_recall)
             {
                 // logcat tag to view app progress
@@ -203,6 +213,9 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 // to retrieve previously saved data
                 Intent viewStoredData = new Intent(getApplicationContext(), LoadStoredInfo.class);
                 startActivityForResult(viewStoredData,99);
+
+                finish();
+
 
             } else {
 
@@ -234,6 +247,9 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 // opens up recursive sign in activity
                 Intent openAutoSignin = new Intent(getApplicationContext(), RecursiveSignIn.class);
                 startActivity(openAutoSignin);
+
+                finish();
+
 
             } else if (view.getId() == R.id.getQRCode)
             {
