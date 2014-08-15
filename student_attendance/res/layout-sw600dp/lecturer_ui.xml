@@ -30,9 +30,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/mancheckin"
-                    android:layout_above="@+id/lec_auto_signin"
+                    android:layout_below="@+id/lec_auto_signin"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="16dp"/>
+                    android:layout_marginTop="16dp"/>
 
             <Button android:id="@id/lec_recall"
                     android:layout_width="wrap_content"
@@ -48,17 +48,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/autocheckin"
-                    android:layout_above="@id/getQRCode"
+                    android:layout_below="@id/getQRCode"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="16dp"/>
+                    android:layout_marginTop="16dp"/>
 
             <Button android:id="@id/getQRCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/findqr"
-                    android:layout_alignParentBottom="true"
+                    android:layout_below="@id/lec_recall"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="80dp"/>
+                    android:layout_marginTop="16dp"/>
 
             <Button android:id="@id/reset_user"
                     android:layout_width="75dp"
@@ -84,6 +84,15 @@
                     android:textIsSelectable="true"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/scan_format" />
+
+            <TextView
+                    android:id="@+id/server_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    android:text="@string/server_status"
+                    android:textSize="16sp"
+                    android:layout_alignParentBottom="true" android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
     </FrameLayout>

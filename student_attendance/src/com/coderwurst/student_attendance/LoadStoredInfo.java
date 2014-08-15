@@ -348,8 +348,12 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
             // dismiss the dialog once done
             pDialog.dismiss();
 
-            finish();                   // closes this activity after data has been sent, returns user to home UI
+            // returns user to home screen
+            Intent sendUserHome = new Intent(getApplicationContext(), MainScreenActivity.class);
+            startActivity(sendUserHome);
 
+            // finish this activity
+            finish();
 
         }// onPostExecute
 

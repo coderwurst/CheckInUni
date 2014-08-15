@@ -79,22 +79,21 @@
               android:layout_marginTop="20dp"/>
 
     <!-- Input Type -->
-    <EditText android:id="@id/type"
+    <Spinner  android:id="@id/typeSpinner"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:singleLine="true"
               android:layout_marginLeft="5dp"
               android:layout_marginRight="5dp"
-              android:gravity="top"
               android:layout_alignParentLeft="true"
-              android:layout_below="@+id/typeTextView"/>
+              android:layout_below="@+id/typeTextView"
+              android:background="@android:drawable/btn_dropdown"/>
 
     <!-- Button Subimit -->
     <Button android:id="@id/add_student_man"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/checkin"
-            android:layout_below="@+id/type"
+            android:layout_below="@+id/typeSpinner"
             android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"/>
 

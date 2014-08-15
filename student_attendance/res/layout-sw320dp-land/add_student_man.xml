@@ -65,7 +65,7 @@
                       android:layout_below="@+id/module_id"/>
 
             <!-- Input Type -->
-            <EditText android:id="@id/type"
+            <Spinner android:id="@id/typeSpinner"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginTop="2dp"
@@ -74,7 +74,8 @@
                       android:singleLine="true"
                       android:gravity="top"
                       android:layout_alignParentLeft="true"
-                      android:layout_below="@+id/typeTextView"/>
+                      android:layout_below="@+id/typeTextView"
+                      android:background="@android:drawable/btn_dropdown"/>
 
             <!-- Button Subimit -->
             <Button android:id="@id/add_student_man"

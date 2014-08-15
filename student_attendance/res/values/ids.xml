@@ -26,4 +26,5 @@
     <item name="lec_delete" type="id"/>
     <item name="file_id" type="id"/>
     <item name="checkin_list" type="id"/>
+    <item name="typeSpinner" type="id"/>
 </resources>

@@ -21,7 +21,7 @@ import android.util.Log;
 public class Splash extends Activity
 
 {
-    WifiManager wifi;                           // wifi manager
+    WifiManager wifi;                                   // wifi manager
 
     // called when the activity is first created
     @Override

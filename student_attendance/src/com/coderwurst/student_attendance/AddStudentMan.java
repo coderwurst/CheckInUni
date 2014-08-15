@@ -3,7 +3,7 @@ package com.coderwurst.student_attendance;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.widget.Toast;
+import android.widget.*;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -14,11 +14,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 
 /**
@@ -36,13 +33,19 @@ public class AddStudentMan extends Activity
 {
 
     // fields to store data
-    EditText inputStudentID;
-    EditText inputModuleID;
-    EditText inputType;
+    private EditText inputStudentID;
+    private EditText inputModuleID;
+    // private EditText inputType;
 
-	Button btnSignIn;
+    // strings to hold entered information
+    private String sStudentID;
+    private String sModuleID;
+    private String sClassType;
 
-	// Progress Dialog
+    // button to sent student info to database
+	private Button btnSignIn;
+
+	// progress Dialog
 	private ProgressDialog pDialog;
     private String dialogText = "success";
 
@@ -59,6 +62,9 @@ public class AddStudentMan extends Activity
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
 
+    // dropdown menu components
+    private Spinner dropdown;
+
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,28 +73,71 @@ public class AddStudentMan extends Activity
         // logcat tag to view app progress
         Log.d("add student manual", "manual ui open");
 
-		// button to send details to server
+        // button to send details to server
 		btnSignIn = (Button) findViewById(R.id.add_student_man);
 
 		// confirm details button click event
 		btnSignIn.setOnClickListener(new View.OnClickListener() {
 
+
 			@Override
 			public void onClick(View arg0) {
-				// starting background task to update product
-				new SignStudentIn().execute();
-			}
-		});
+
+                sStudentID = inputStudentID.getText().toString();
+                sModuleID = inputModuleID.getText().toString();
+                sClassType = dropdown.getSelectedItem().toString();
+
+                if (sStudentID.isEmpty() || sModuleID.isEmpty() || sClassType.isEmpty())
+                {
+                    Toast errorToast = Toast.makeText(getApplicationContext(),
+                            "please check that all details have been entered and try again", Toast.LENGTH_LONG);
+
+                    errorToast.show();
+
+                } else
+                {
+
+                    // starting background task to update product
+                    new SignStudentIn().execute();
+
+                } // if - else to prevent an incomplete record being stored on the database
+			} // onClick
+		}); // onClickListener
 
         // edit text in input boxes for comparison before being sent
         inputStudentID = (EditText) findViewById(R.id.student_id);
         inputStudentID.setHint("eg. B000000");
         inputModuleID = (EditText) findViewById(R.id.module_id);
         inputModuleID.setHint("eg. ABC000");
-        inputType = (EditText) findViewById(R.id.type);
-        inputType.setHint("lecture or tutorial");
+        //inputType = (EditText) findViewById(R.id.type);
+        //inputType.setHint("lecture or tutorial");
+        // loads options into type list
+        // dropdown.setAdapter(adapter);
+        //set the default according to value
+        // dropdown.setSelection(0);
+
+        populateDeviceTypeSpinner();
 
     } // onCreate
+
+
+
+    private void populateDeviceTypeSpinner()
+    {
+
+        // dropdown menu components
+        dropdown = (Spinner)findViewById(R.id.typeSpinner);
+
+        ArrayAdapter<CharSequence> deviceTypeArrayAdapter = ArrayAdapter.createFromResource(this, R.array.classType, android.R.layout.simple_spinner_item);
+
+        deviceTypeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        dropdown.setAdapter(deviceTypeArrayAdapter);
+
+        //set the default according to value
+        dropdown.setSelection(0);
+    } // populateDeviceSpinner
+
 
 
 	/**
@@ -120,7 +169,7 @@ public class AddStudentMan extends Activity
             // Data captured from input fields
             String student_id = inputStudentID.getText().toString();
             String module_id = inputModuleID.getText().toString();
-            String type = inputType.getText().toString();
+            String type = dropdown.getSelectedItem().toString();
 
             // logcat tag to view app progress
             Log.d("add student manual", "details to be sent: " + student_id + "," + module_id + "," + type);

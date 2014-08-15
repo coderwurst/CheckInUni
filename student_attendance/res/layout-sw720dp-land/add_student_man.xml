@@ -19,7 +19,7 @@
                     android:background="@drawable/uulogo"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="150dp"
                     android:contentDescription="@string/uuj_logo_att"/>
 
             <!-- ID Label -->
@@ -75,18 +75,17 @@
                       android:layout_below="@+id/module_id"/>
 
             <!-- Input Type -->
-            <EditText android:id="@id/type"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="2dp"
-                      android:layout_marginLeft="250dp"
-                      android:layout_marginRight="250dp"
-                      android:singleLine="true"
-                      android:gravity="top"
-                      android:layout_alignParentLeft="true"
-                      android:layout_below="@+id/typeTextView"/>
+            <Spinner android:id="@id/typeSpinner"
+                     android:layout_width="fill_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="2dp"
+                     android:layout_marginLeft="250dp"
+                     android:layout_marginRight="250dp"
+                     android:layout_alignParentLeft="true"
+                     android:layout_below="@+id/typeTextView"
+                     android:background="@android:drawable/btn_dropdown"/>
 
-            <!-- Button Subimit -->
+            <!-- Button Submit -->
             <Button android:id="@id/add_student_man"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

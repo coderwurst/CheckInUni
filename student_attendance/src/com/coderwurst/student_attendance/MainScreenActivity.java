@@ -39,7 +39,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
     public static final String USER_ID = "User ID File";
     static SharedPreferences userDetails;
 
-    protected static String serverIP = "192.168.1.116";
+    protected static String serverIP = "192.168.1.111";
 
 
 

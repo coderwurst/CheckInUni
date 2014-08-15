@@ -45,7 +45,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
     // retrieves shared preferences to be changed
     public static final String USER_ID = "User ID File";
 
-    private TextView formatTxt, contentTxt;     // text view to inform tester of data captured at this stage
+    private TextView serverStatus;     // text view to inform tester of data captured at this stage
     private int scanID = 0;                     // int to store type of scan
 
     // components for checking internet connection
@@ -85,8 +85,9 @@ public class LecturerUI extends Activity implements View.OnClickListener
         btnReset = (Button) findViewById(R.id.reset_user);                  // testing purpose button to reset user
 
         // TextViews for hold format and content info for testing purposes
-        formatTxt = (TextView) findViewById(R.id.scan_format);
-        contentTxt = (TextView) findViewById(R.id.scan_content);
+        //formatTxt = (TextView) findViewById(R.id.scan_format);
+        //contentTxt = (TextView) findViewById(R.id.scan_content);
+        serverStatus = (TextView) findViewById(R.id.server_info);
 
         // set onClick listeners for all 3 buttons
         btnManSignin.setOnClickListener(this);
@@ -125,9 +126,10 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
             return true;
 
-        } else
+        } else                      // if else to load stored files into studentBatch LinkedList
 
-        return false;// if to load stored files into studentBatch LinkedList
+        return false;
+
 
     } // checkForStoredData
 
@@ -201,8 +203,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 // code to retrieve QR-Image from database
                 Intent openViewAllModules = new Intent(getApplicationContext(), ViewAllModules.class);
                 startActivity(openViewAllModules);
-
-                finish();
 
 
             } else if (view.getId() == R.id.lec_recall)
@@ -293,8 +293,8 @@ public class LecturerUI extends Activity implements View.OnClickListener
             // toast for unit testing to show tester scan contents
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
-            formatTxt.setText("FORMAT: " + scanFormat);
-            contentTxt.setText("CONTENT: " + scanContent);
+            // formatTxt.setText("FORMAT: " + scanFormat);
+            // contentTxt.setText("CONTENT: " + scanContent);
 
             Log.d("lecturer ui", "user wishes to register as another user");
 
@@ -397,16 +397,21 @@ public class LecturerUI extends Activity implements View.OnClickListener
             // check for previously stored files, if found, set button visability to on
             filesFound();
 
+            if(serverAvailable)
+            {
+                serverStatus.setText("server available");
+            } else {
+
+                serverStatus.setText("server offline");
+            }
+             // if to update server info
+
             // the server must also be available before files can be sent!
             if(filesFound() && serverAvailable)
             {
                 View b = findViewById(R.id.lec_recall);
                 b.setVisibility(View.VISIBLE);
             } // check for saved files
-
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    serverResponse, Toast.LENGTH_LONG);
-            toast.show();
 
         } // onPostExecute
     } // SignInStudent

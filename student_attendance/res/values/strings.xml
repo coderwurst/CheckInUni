@@ -17,6 +17,7 @@
     <string name="lecturer_man_signin">manual check in</string>
     <string name="lecturer_auto_signin">card check in</string>
     <string name="retrieve_QRCode">retrieve QR</string>
+    <string name="server_status">connecting...</string>
     <!-- Strings relating to batch processing -->
     <string name="lecturer_scan_QR">scan QR</string>
     <string name="lecturer_scan_ID">scan ID(s)</string>
@@ -27,6 +28,12 @@
 
     <!-- Strings relating to student functions-->
     <string name="scan">check in</string>
+
+    <!-- Strings to store available class types for dropdown menu in add student man UI-->
+    <string-array name="classType">
+            <item >lecture</item>
+            <item >tutorial</item>
+        </string-array>
 
 
 

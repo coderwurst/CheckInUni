@@ -53,10 +53,6 @@ public class StudentUI extends Activity implements View.OnClickListener
 
     private boolean onCampus = false;           // boolean to determine if 2 Uni wifi SSIDs are in range
 
-    // progress dialog to inform user of events
-    private ProgressDialog pDialog;
-    private String dialogText;
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -117,10 +113,10 @@ public class StudentUI extends Activity implements View.OnClickListener
             for (ScanResult mScanResult : results)                  // for loop to be preformed for number of results
             {
                 Log.d("wifi", "scanning results");
-                if (mScanResult.SSID.toString().equals("LittleLion"))  // check to see if eduroam network is in range
+                if (mScanResult.SSID.toString().equals("eduroam"))  // check to see if eduroam network is in range
                 {
                     firstNetwork = true;
-                } else if (mScanResult.SSID.toString().equals("LittleLion-guest"))   // check to see if Student network is in range
+                } else if (mScanResult.SSID.toString().equals("Student"))   // check to see if Student network is in range
                 {
                     secondNetwork = true;
                 } else if (mScanResult.SSID.toString().equals("eng_j"))         // check to see if eng_j network is in range

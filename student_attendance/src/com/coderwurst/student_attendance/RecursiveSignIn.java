@@ -293,7 +293,8 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 Log.d("recursive", "scanned id details");
 
                 // code to perform device beep to confirm successful scan
-                try {
+                try
+                {
 
                     Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                     Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
@@ -310,6 +311,21 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 String scannedIDInfo = scanContent;
 
                 studentNo = scannedIDInfo;      // CHANGE TO STORE THE SCANNED ID AS AN ADDITION TO A LINKED LIST
+
+                /* linear search to eliminate multiple IDs being scanned
+
+                int index = 0, comparison = 1;                            // index int for search position, comparison to count number of times linear search performed
+                boolean exit = false;                                     // boolean to show if value has been found
+
+                if (studentBatch != null)
+                {
+                    while (studentNo != studentBatch.get(index) && !exit)                  // ???while loop in order to search linearly for the value - why INDEX used here???
+                    {
+
+                    }//while
+
+                }//linearSearch                                // end of Linear Search Code
+                */
 
                 studentBatch.add(studentNo);
 
@@ -357,11 +373,11 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
             } else {
 
                 // if no data is returned, the scanner is closed
-
-                // handle cancel
-                Log.d("recursive","scan finished");
-
-                finish();
+                // the following code lead to unpredictability during testing by RD - investigate other methods of
+                // dealing with data that has been scanned incorrectly
+                // handle cancel REMOVE
+                // Log.d("recursive","scan finished"); REMOVE
+                // finish(); REMOVE
 
             } // series of else - if statements
         } else {
@@ -420,6 +436,13 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
         // success message
         Toast.makeText(getBaseContext(), "file saved successfully",Toast.LENGTH_SHORT).show();
+
+        // returns user to home screen
+        Intent sendUserHome = new Intent(getApplicationContext(), MainScreenActivity.class);
+        startActivity(sendUserHome);
+
+        // finish this activity
+        finish();
 
     } // StoreScannedInfo
 

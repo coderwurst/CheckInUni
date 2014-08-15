@@ -34,14 +34,14 @@ import java.util.List;
 public class InitialReg extends Activity
 
 {
-    String scannedID = "";      // string to store scanned ID data
+    private String scannedID = "";      // string to store scanned ID data
 
     // booleans to identify from the user ID which type of user and therefore what functionality the app can offer
-    boolean studentUser = false;
-    boolean staffUser = false;
+    private boolean studentUser = false;
+    private boolean staffUser = false;
 
     // further booleans used in user authentication
-    boolean deviceOK = true;
+    private boolean deviceOK = true;
 
     // opens the sharedPref file to allow user id to be stored
     public static final String PREFERENCES_FILE = "User ID File";
@@ -247,7 +247,7 @@ public class InitialReg extends Activity
 
 
             /**
-             * Following if-else block determines if the Log cat should be checked for a second response from the
+             * The following if-else block determines if the Log cat should be checked for a second response from the
              * Database (ie only when student user has been determined)
              */
             // check log cat for response (if user in database)
@@ -366,7 +366,7 @@ public class InitialReg extends Activity
                 // closing this screen
                 finish();
 
-            } // if else to determine if a student or staff number has been scanned
+            } // if else block to authenticate user details
 
             return null;
         }// doInBackground
