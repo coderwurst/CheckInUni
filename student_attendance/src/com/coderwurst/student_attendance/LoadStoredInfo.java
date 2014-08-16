@@ -2,7 +2,6 @@ package com.coderwurst.student_attendance;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,7 +33,7 @@ import android.widget.Toast;
  * Date: 16/07/2014
  * Time: 12:37
  * Version: V7.0
- * SPRINT 10 - ACTIVITY TO SEARCH AND LOAD ANY PREVIOUSLY SAVED CHECKINS BEFORE SENDING TO DATABASE
+ * SPRINT 10 - ACTIVITY TO SEARCH AND LOAD ANY PREVIOUSLY SAVED CHECK-IN(S) BEFORE SENDING TO DATABASE
  * ************************
  */
 
@@ -347,10 +346,6 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
 
             // dismiss the dialog once done
             pDialog.dismiss();
-
-            // returns user to home screen
-            Intent sendUserHome = new Intent(getApplicationContext(), MainScreenActivity.class);
-            startActivity(sendUserHome);
 
             // finish this activity
             finish();

@@ -83,7 +83,7 @@ public class ViewAllModules extends ListActivity
 					int position, long id) {
 
 				// getting values from selected ListItem
-				String pid = ((TextView) view.findViewById(R.id.pid)).getText()
+				String moduleID = ((TextView) view.findViewById(R.id.modID)).getText()
                         .toString();
                 String lectureFile = ((TextView) view.findViewById(R.id.lecture_url)).getText()
                         .toString();
@@ -91,7 +91,7 @@ public class ViewAllModules extends ListActivity
                         .toString();
 
                 // log app progress for testing purposes
-                Log.d("view modules", "stored address; " + pid + "," + lectureFile + tutorialFile);
+                Log.d("view modules", "stored address; " + moduleID + "," + lectureFile + tutorialFile);
 
                 // concatenates server address with location on server (returned from database)
                 String lectureUrl = url_location + lectureFile;
@@ -103,8 +103,8 @@ public class ViewAllModules extends ListActivity
 				// Starting new intent
 				Intent viewQR = new Intent(getApplicationContext(),	ChooseQR.class);
 
-				// sending pid to next activity
-				viewQR.putExtra(TAG_ID, pid);
+				// sending moduleID to next activity
+				viewQR.putExtra(TAG_ID, moduleID);
                 viewQR.putExtra(TAG_LECTURE, lectureUrl);
                 viewQR.putExtra(TAG_TUTORIAL, tutorialUrl);
 				
@@ -161,7 +161,7 @@ public class ViewAllModules extends ListActivity
 		} // onPreExecute
 
 		/**
-		 * once the user has been infromed, the process begins to get all modules from the server url,
+		 * once the user has been informed, the process begins to get all modules from the server url,
          * during which time the dialog box remains open
 		 * */
 		protected String doInBackground(String... args)
@@ -207,7 +207,7 @@ public class ViewAllModules extends ListActivity
 
 						// adding HashList to ArrayList
 						moduleList.add(map);
-					}
+					} // for
 				} else {                // no modules found
 
 					// no modules have been returned
@@ -243,7 +243,7 @@ public class ViewAllModules extends ListActivity
 							ViewAllModules.this, moduleList,
 							R.layout.view_qr, new String[] { TAG_ID,
 									TAG_NAME, TAG_LECTURE, TAG_TUTORIAL},
-							new int[] { R.id.pid, R.id.name, R.id.lecture_url, R.id.tutorial_url});
+							new int[] { R.id.modID, R.id.name, R.id.lecture_url, R.id.tutorial_url});
 
 					// updating listview
 					setListAdapter(adapter);

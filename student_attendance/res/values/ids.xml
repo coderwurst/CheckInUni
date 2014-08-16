@@ -27,4 +27,5 @@
     <item name="file_id" type="id"/>
     <item name="checkin_list" type="id"/>
     <item name="typeSpinner" type="id"/>
+    <item name="lec_saveDetails" type="id">lec_saveDetails</item>
 </resources>

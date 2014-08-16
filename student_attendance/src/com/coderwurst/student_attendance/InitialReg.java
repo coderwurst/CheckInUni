@@ -8,9 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -70,20 +67,30 @@ public class InitialReg extends Activity
     // code to retrieve device specific details
     private String deviceID;
 
+    /**
+     * This onCreate method unpacks data scanned into the app in the MainScreenActivity class, determines the user
+     * type and saved this data in the app's shared preferences accordingly. Calls authenticate user background task
+     * to determine if the ID scanned into the device is that of a registerd student or lecturer on the server. The
+     * method also stamps the device ID number, which is unique on each android device, to be sent and stored on the
+     * database if the user is a student. This is one of several functions in the app to prevent students from
+     * manipulating the check-in system.
+     */
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         // setContentView(R.layout.initial_reg);
 
-        // unpack the data scanned into the activity
+        // unpack the data scanned sent from MainScreenActivity class
         Bundle bundle = getIntent().getExtras();
         scannedID = bundle.getString("Info");
 
+        // retrieves the unique Android ID value for the device being used to register
         deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
 
-        // user Authentication Check
-        Log.d("initial reg", "ID Auth " + scannedID);          // logcat tag to view string contents (testing purposes only)
+        // user Authentication Check with server to ensure that the user is registered to use app
+        Log.d("initial reg", "ID Auth " + scannedID);          // logcat tag to view string contents
         Log.d("initial reg", "Device ID " + deviceID);
 
         // assign the app student or staff user privileges
@@ -110,7 +117,7 @@ public class InitialReg extends Activity
 
             // code to authenticate student ID with Database found in PHP scripts
 
-        } else {
+        } else {        // scanned data is neither a staff or student number
 
 
             Log.e("initial reg", "scanned data incorrect");          // logcat tag to view string contents (testing purposes only)
@@ -152,20 +159,28 @@ public class InitialReg extends Activity
             }// onClick
         }); */
 
+        // the users' details can be sent to the database for authentication
         new AuthenticateUser().execute();
         Log.d("initial reg", "user wishes to register on device");          // logcat tag to view string contents (testing purposes only)
 
     }// OnCreate
 
     /**
-     * Background Async Task to send information to database
+     * Background Async Task to send scanned information to database and perform a number of authentication checks. In
+     * the event of the user being a student, both the device ID and Student ID are authenticated. This level of
+     * authentication was decided to be not necessary for staff members, however if the security threat was determined
+     * to be high enough the same process could be used to authenticate staff members and their devices - should, for
+     * example, a staff member have his or her ID card stoled.
      */
+
     class AuthenticateUser extends AsyncTask<String, String, String>
     {
 
         /**
-         * shows user a progress dialog box
-         * */
+         * Before starting background thread Show Progress Dialog to inform
+         * user that the app is processing information.
+         **/
+
         @Override
         protected void onPreExecute()
         {
@@ -181,9 +196,11 @@ public class InitialReg extends Activity
 
 
         /**
+         * doInBackground makes several calls to the server,
          * authenticating ID details that have been scanned into device
          * */
-        protected String doInBackground(String... args)
+
+         protected String doInBackground(String... args)
         {
 
             String user_id = scannedID;         // string to store the scanned information
@@ -372,8 +389,10 @@ public class InitialReg extends Activity
         }// doInBackground
 
         /**
-         * after completing background task dismiss the progress dialog
-         * **/
+         * After completing background task the progress dialog can be dismissed, and the user
+         * is informed using a toast message if the process has not been successful that they
+         * must contact the administration office. Otherwise they will be taken to the home screen
+         **/
         protected void onPostExecute(String file_url)
         {
 

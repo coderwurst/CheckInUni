@@ -32,17 +32,17 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/confirm"
                     android:id="@id/lec_confirm"
-                    android:layout_below="@+id/file_id"
-                    android:layout_alignLeft="@+id/file_id"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_centerHorizontal="true"
+                    android:layout_above="@id/lec_delete"
+                    />
             <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/remove"
                     android:id="@id/lec_delete"
-                    android:layout_below="@+id/lec_confirm"
                     android:layout_alignLeft="@+id/lec_confirm"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="32dp"/>
 
             <!-- List view to show contents retrieved from Database   -->
             <ListView
@@ -52,9 +52,9 @@
                     android:paddingLeft="50dp"
                     android:paddingRight="50dp"
                     android:layout_alignLeft="@+id/lec_delete"
-                    android:layout_below="@+id/lec_delete"
+                    android:layout_below="@+id/file_id"
                     android:layout_marginTop="50dp"
-                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="250dp"
                     />
 
 

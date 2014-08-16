@@ -42,20 +42,26 @@ public class LecturerUI extends Activity implements View.OnClickListener
     private Button btnReset;
     private Button btnRecall;
 
-    // retrieves shared preferences to be changed
-    public static final String USER_ID = "User ID File";
-
     private TextView serverStatus;     // text view to inform tester of data captured at this stage
-    private int scanID = 0;                     // int to store type of scan
+    private int scanID = 0;            // int to store type of scan
 
     // components for checking internet connection
-    WifiManager wifi;                           // wifi manager
+    private WifiManager wifi;           // wifi manager
 
-    // server IP address
+    // server IP address retrieved from MainScreenActivity protected variable
     private static String serverAddress = MainScreenActivity.serverIP;
 
-    private String url_test_connection = "http://" + serverAddress + "/xampp/student_attendance/test_connection.php";     // can be changed to server address
-    protected static boolean serverAvailable;          // boolean to be used in addStudentManually and RecursiveSignIn to determine if internet connection is available
+    /**
+     * As it is important that the lecturer maintains at least some level of functionality at all times, this activity
+     * calls a script on the server at startup to determine the connection with the server. Connectivity is shown
+     * on screen, and the functionality of this class amended accordingly. The contents of the boolean serverAvailable
+     * are also accessed in the RecursiveSignIn class to determine if data should be sent to the database or stored
+     * on the device.
+     */
+
+    private String url_test_connection = "http://" + serverAddress + "/xampp/student_attendance/test_connection.php";
+    protected static boolean serverAvailable;          // determine if internet connection is available
+    private String serverResponse = "";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -63,16 +69,12 @@ public class LecturerUI extends Activity implements View.OnClickListener
     // JSON parser class
     JSONParser jsonParser = new JSONParser();
 
-    private String serverResponse = "";
-
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lecturer_ui);                               // opens up corresponding XML file
-
-        // checkWifi();
 
         // check to see if connection to University Server is available
         new TestConnection().execute();
@@ -87,7 +89,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
         // TextViews for hold format and content info for testing purposes
         //formatTxt = (TextView) findViewById(R.id.scan_format);
         //contentTxt = (TextView) findViewById(R.id.scan_content);
-        serverStatus = (TextView) findViewById(R.id.server_info);
+        serverStatus = (TextView) findViewById(R.id.server_info);            // updated to show server connectivity
 
         // set onClick listeners for all 3 buttons
         btnManSignin.setOnClickListener(this);
@@ -95,19 +97,29 @@ public class LecturerUI extends Activity implements View.OnClickListener
         btnGetQR.setOnClickListener(this);
         btnRecall.setOnClickListener(this);
 
+        // button to be removed before final version (hidden on screen)
         btnReset.setOnClickListener(this);
 
     } // onCreate
 
 
-    // method to be used to determine if recall data button shown on screen or not!!! (Button to be beside logo, wifi icon)
+    /**
+     * filesFound method to search the local storage on the device for previously stored check-in files, and update the
+     * LecturerUI accordingly with the option to send the stored files to the database (if found). During production
+     * a file 'scanfile.txt' was also found in this storage location. After a fresh install for usability testing, this
+     * file was no longer present. Due to the lack of time for further investigation as to where the scanfile originates,
+     * it was decided to eliminate the possible problems caused by its presence, by excluding it for consideration as a
+     * saved check-in file (see line 134 below)
+     */
+
     private boolean filesFound()
     {
 
-        File file = this.getFilesDir();          // returns storage location
+        File file = this.getFilesDir();                 // returns storage location
 
-        Log.d("storage location", file.toString());
+        Log.d("storage location", file.toString());     // allows programmer to follow app progress in console
 
+        // arraylist and string to store the information as it is retrieved from the stored text file
         ArrayList<String> names = new ArrayList<String>(Arrays.asList(file.list()));
         String filename = null;
 
@@ -124,54 +136,26 @@ public class LecturerUI extends Activity implements View.OnClickListener
             filename = names.get(names.size() - 1);
             Log.d("lecturer ui", "file to be read: " + filename);
 
-            return true;
+            return true;            // data found, UI will be updated accordingly
 
         } else                      // if else to load stored files into studentBatch LinkedList
 
-        return false;
-
+        return false;               // no data found
 
     } // checkForStoredData
 
 
     /**
-     * the process of activating the wifi is performed in Splash.java, however
-     * the app can progress to the lecturer UI quick enough to cause a crash
-     * as the transmitter is still being activated. Therefore the app waits in
-     * a while loop in this method for the confirmation to come through, before
-     * progressing to check server connectivity in the TestConnection async
-     * background task
-     **/
-    public void checkWifi()
-    {
-        // check to see if wifi is enabled, and if not, activate
-        wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-
-
-        /* if (!wifi.isWifiEnabled())
-        {
-            Toast wifiToast = Toast.makeText(getApplicationContext(),
-                    "activating wifi on device", Toast.LENGTH_LONG);
-            wifiToast.show();
-            // wifi.setWifiEnabled(true);
-            Log.d("lecturer ui", "wifi activated");
-        } // if */
-
-        if(wifi.isWifiEnabled())
-        {
-            // check to see if connection to University Server is available
-            new TestConnection().execute();
-        }
-
-    } // checkWifi
-
+     * The behaviour of the onClick listeners will vary depending on connection with the server, for this reason the
+     * code for these listeners was implemented in a slightly different way than previously.
+     */
 
     @Override
     public void onClick (View view)
     {
-        if (serverAvailable)
+        if (serverAvailable)                    // first block in if-else statement; server is available
         {
-            if (view.getId() == R.id.lec_man_signin)
+            if (view.getId() == R.id.lec_man_signin)            // user wishes to manually check-in a student
             {
                 // logcat tag to view app progress
                 Log.d("lecturer ui", "manual check in");
@@ -180,9 +164,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 Intent openManSignin = new Intent(getApplicationContext(), AddStudentMan.class);
                 startActivity(openManSignin);
 
-                finish();
-
-            } else if (view.getId() == R.id.lec_auto_signin)
+            } else if (view.getId() == R.id.lec_auto_signin)    // user wishes to recursively (auto) check-in
             {
 
                 // logcat tag to view app progress
@@ -192,9 +174,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 Intent openAutoSignin = new Intent(getApplicationContext(), RecursiveSignIn.class);
                 startActivity(openAutoSignin);
 
-                finish();
-
-            } else if (view.getId() == R.id.getQRCode)
+            } else if (view.getId() == R.id.getQRCode)          // user wishes to view a QR-Code for his/her class
             {
 
                 // logcat tag to view app progress
@@ -205,7 +185,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 startActivity(openViewAllModules);
 
 
-            } else if (view.getId() == R.id.lec_recall)
+            } else if (view.getId() == R.id.lec_recall)         // user wishes to send previously stored info
             {
                 // logcat tag to view app progress
                 Log.d("lecturer ui", "send previously stored files");
@@ -214,10 +194,8 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 Intent viewStoredData = new Intent(getApplicationContext(), LoadStoredInfo.class);
                 startActivityForResult(viewStoredData,99);
 
-                finish();
 
-
-            } else {
+            } else {                                            // temp code to reset user ID TO BE REMOVED
 
                 // temp test code to reset user ID
                 IntentIntegrator scanIntegrator = new IntentIntegrator(this);
@@ -225,10 +203,10 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 scanID = 1;
 
             }// if - else - else
-        // connection with database currently not available
+        // connection with database not available, only function able to be carried out at this time is auto check-in
         } else
         {
-            if (view.getId() == R.id.lec_man_signin)
+            if (view.getId() == R.id.lec_man_signin)            // manual check-in not available
             {
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "manual check in not available at this time", Toast.LENGTH_LONG);
@@ -238,7 +216,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 Log.e("lecturer ui", "manual check in - server not available");
 
 
-            } else if (view.getId() == R.id.lec_auto_signin)
+            } else if (view.getId() == R.id.lec_auto_signin)    // auto sign in is available, data stored on device
             {
 
                 // logcat tag to view app progress
@@ -248,10 +226,8 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 Intent openAutoSignin = new Intent(getApplicationContext(), RecursiveSignIn.class);
                 startActivity(openAutoSignin);
 
-                finish();
 
-
-            } else if (view.getId() == R.id.getQRCode)
+            } else if (view.getId() == R.id.getQRCode)          // get QR-Code is not available
             {
 
                 Toast toast = Toast.makeText(getApplicationContext(),
@@ -273,6 +249,14 @@ public class LecturerUI extends Activity implements View.OnClickListener
         // takes the scanned in data & prepares for use within this method
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
+        /**
+         * called when returning from this screen, to search for previously stored files as soon as connectivity
+         * becomes available (the user must need not leave the app to determine this, instead if he/ she returns
+         * to this UI from another screen or if the UI is changed from portrait to landscape the server connection
+         * will be tested again and the UI updated accordingly (setting the send previously saved files button to
+         * visable - line 276)
+         */
+
         if(requestCode == 99)
         {
             View b = findViewById(R.id.lec_recall);
@@ -287,6 +271,13 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
         } // check for saved files
 
+        /**
+         * During development an option remained to change user ID within this interface to save installation time,
+         * this functionality has been removed for final hand in, however the request code for the above activity
+         * result remained as while this reset user functionality was enabled, it was necessary to determine which
+         * type of activity result was being received by this activity and therefore how it should proceed with
+         * processing this information
+         */
 
         else if (scanningResult != null)             // as long as something has been scanned
         {
@@ -302,7 +293,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
                     // launching Registration Activity
                     Intent i = new Intent(getApplicationContext(), InitialReg.class);
-
 
                     // takes the scanned info and packs it into a bundle before sending it to the Registration class
                     String scannedInfo = scanContent;
@@ -326,15 +316,21 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
 
     /**
-     * Background Async Task to establish if a connection to the server is available
+     * Background Async Task to call a PHP script on the
+     * server machine in order to establish if a connection
+     * to the server is available
      * */
 
      class TestConnection extends AsyncTask<String, String, String>
     {
 
         /**
-         * Before starting background thread Show Progress Dialog
-         * */
+         * Before starting background thread Show Progress Dialog to inform
+         * user that the app is processing information. As this process was
+         * completed automatically, in less than half a second and in the
+         * background, it was not necessary to show the user a dialog box
+         **/
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -344,14 +340,16 @@ public class LecturerUI extends Activity implements View.OnClickListener
         /**
          * send request to server to return success confirmation
          * */
-        protected String doInBackground(String... args)
+
+         protected String doInBackground(String... args)
         {
 
             JSONObject json = null;
 
             // parameters to be passed into PHP script on server side
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            // no parameters to be added
+
+            // no parameters needed in this background task, server had to simply respond with information
 
             // getting JSON Object
             // NB url accepts POST method
@@ -389,8 +387,11 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
 
         /**
-         * After completing background task Dismiss the progress dialog
-         * **/
+         * After completing background task, the textview showing server connection was to be
+         * updated accordingly. In the event there are files stored on the device waiting to
+         * be sent, the corresponding menu option is activated
+         **/
+
         protected void onPostExecute(String file_url) {
 
 
@@ -414,6 +415,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
             } // check for saved files
 
         } // onPostExecute
-    } // SignInStudent
+    } // TestConnection
 
 } // LectureUI

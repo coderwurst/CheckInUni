@@ -30,7 +30,7 @@ import android.util.Log;
  * Version: V3.0
  * SPRINT 3 - CLASS REUSED FROM ANDROID HIVE TUTORIAL ON COMMUNICATING WITH DATABASE
  * http://www.androidhive.info/2012/05/how-to-connect-android-with-php-mysql/, FIRST
- * ACCESSED 04.07.14
+ * FIRST ACCESSED 04.07.14
  * ************************
  */
 

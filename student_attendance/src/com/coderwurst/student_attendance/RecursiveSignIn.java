@@ -372,12 +372,12 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
             } else {
 
-                // if no data is returned, the scanner is closed
-                // the following code lead to unpredictability during testing by RD - investigate other methods of
-                // dealing with data that has been scanned incorrectly
-                // handle cancel REMOVE
-                // Log.d("recursive","scan finished"); REMOVE
-                // finish(); REMOVE
+                Log.e("recirsive", "scan incomplete");
+
+                Toast errorScan = Toast.makeText(getApplicationContext(),
+                        "scan incomplete, please try again", Toast.LENGTH_SHORT);
+
+                errorScan.show();
 
             } // series of else - if statements
         } else {
@@ -437,9 +437,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         // success message
         Toast.makeText(getBaseContext(), "file saved successfully",Toast.LENGTH_SHORT).show();
 
-        // returns user to home screen
-        Intent sendUserHome = new Intent(getApplicationContext(), MainScreenActivity.class);
-        startActivity(sendUserHome);
+        // returns user to home screen - removed 16.08.14
+        // Intent sendUserHome = new Intent(getApplicationContext(), MainScreenActivity.class);
+        // startActivity(sendUserHome);
 
         // finish this activity
         finish();
@@ -515,9 +515,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                         // check log cat for response
                         Log.d("recursive", "database response; php success");
 
-                        // returns user to home screen
-                        Intent signInSuccess = new Intent(getApplicationContext(), MainScreenActivity.class);
-                        startActivity(signInSuccess);
+                        // returns user to home screen removed 16.08.14
+                        // Intent signInSuccess = new Intent(getApplicationContext(), MainScreenActivity.class);
+                        // startActivity(signInSuccess);
 
                         // finish this activity
                         finish();
@@ -530,9 +530,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                         // error message needed for when sign in is not successful
                         dialogText = "an error has occurred, please try again...";
 
-                        // returns user to home screen
-                        Intent signInError = new Intent(getApplicationContext(), MainScreenActivity.class);
-                        startActivity(signInError);
+                        // returns user to home screen removed 16.08;14
+                        //Intent signInError = new Intent(getApplicationContext(), MainScreenActivity.class);
+                        //startActivity(signInError);
 
                         // finish this activity
                         finish();
@@ -633,9 +633,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                     // error message needed for when sign in is not successful
                     dialogText = "an error has occurred, please try again...";
 
-                    // returns user to home screen
-                    Intent signInError = new Intent(getApplicationContext(), MainScreenActivity.class);
-                    startActivity(signInError);
+                    // returns user to home screen removed 16.08.14
+                    //Intent signInError = new Intent(getApplicationContext(), MainScreenActivity.class);
+                    //startActivity(signInError);
 
                     // finish this activity
                     finish();

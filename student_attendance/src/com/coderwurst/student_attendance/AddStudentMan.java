@@ -11,7 +11,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -65,10 +64,18 @@ public class AddStudentMan extends Activity
     // dropdown menu components
     private Spinner dropdown;
 
+    // data previously stored from Choose QR class
+    protected static String moduleID = ChooseQR.moduleCode;
+    protected static String classType = ChooseQR.classType;
+
+
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_student_man);
+
+        Log.d("add student manually", "mod ID: " + moduleID);
+
 
         // logcat tag to view app progress
         Log.d("add student manual", "manual ui open");
@@ -79,16 +86,17 @@ public class AddStudentMan extends Activity
 		// confirm details button click event
 		btnSignIn.setOnClickListener(new View.OnClickListener() {
 
-
 			@Override
 			public void onClick(View arg0) {
 
+                // retrieves current text entered into each field to be used to check if all data has been entered
                 sStudentID = inputStudentID.getText().toString();
                 sModuleID = inputModuleID.getText().toString();
                 sClassType = dropdown.getSelectedItem().toString();
 
                 if (sStudentID.isEmpty() || sModuleID.isEmpty() || sClassType.isEmpty())
                 {
+                    // informs the user that at least one piece of information has not yet been entered
                     Toast errorToast = Toast.makeText(getApplicationContext(),
                             "please check that all details have been entered and try again", Toast.LENGTH_LONG);
 
@@ -96,19 +104,29 @@ public class AddStudentMan extends Activity
 
                 } else
                 {
-
-                    // starting background task to update product
+                    // starting background task check student in
                     new SignStudentIn().execute();
 
                 } // if - else to prevent an incomplete record being stored on the database
 			} // onClick
 		}); // onClickListener
 
-        // edit text in input boxes for comparison before being sent
+        // text fields to be updated by user, until then an example input is shown
         inputStudentID = (EditText) findViewById(R.id.student_id);
         inputStudentID.setHint("eg. B000000");
         inputModuleID = (EditText) findViewById(R.id.module_id);
-        inputModuleID.setHint("eg. ABC000");
+
+        if (moduleID.isEmpty() || moduleID.equals(null))
+        {
+            inputModuleID.setHint("eg. ABC000");
+
+        } else      // if previous module has been stored, entered automatically into text field
+        {
+            inputModuleID.setText(moduleID);
+        } // if - else
+
+        populateDeviceTypeSpinner();        // call to load the dropdown menu with programmed options
+
         //inputType = (EditText) findViewById(R.id.type);
         //inputType.setHint("lecture or tutorial");
         // loads options into type list
@@ -116,44 +134,63 @@ public class AddStudentMan extends Activity
         //set the default according to value
         // dropdown.setSelection(0);
 
-        populateDeviceTypeSpinner();
-
     } // onCreate
 
-
+    /**
+     * This method is used to create a drop down menu (spinner) to hold the values for the types
+     * of class available to the user. The types are coded in the String resource file of the app,
+     * and can be changed at a later date. Currently there are the options for 'lecture' and
+     * 'tutorial', but this could be extended later to include; 'lad', 'seminar' or others
+     **/
 
     private void populateDeviceTypeSpinner()
     {
-
-        // dropdown menu components
+        // assigns the spinner object to the element in the xml file
         dropdown = (Spinner)findViewById(R.id.typeSpinner);
 
+        // finds the array storing the information in the values resource file, Strings
         ArrayAdapter<CharSequence> deviceTypeArrayAdapter = ArrayAdapter.createFromResource(this, R.array.classType, android.R.layout.simple_spinner_item);
 
+        // sets the contents of the previously found array to an array adapter
         deviceTypeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        // assigns the contents of the array to the dropdown object
         dropdown.setAdapter(deviceTypeArrayAdapter);
 
-        //set the default according to value
+        // if - else block to select previously selected class type info form ChooseQR.java (if any)
+        if(classType.equals("lecture"))
+        {
+            dropdown.setSelection(0);
+        } else if (classType.equals("tutorial"))
+        {
+            dropdown.setSelection(1);
+        } else
+
+        // if no previously saved selection, set the default according to array index (currently lecture)
         dropdown.setSelection(0);
+
     } // populateDeviceSpinner
 
 
 
 	/**
     * Background Async Task to Add a student manually
-    * */
-    class SignStudentIn extends AsyncTask<String, String, String> {
+    **/
+
+     class SignStudentIn extends AsyncTask<String, String, String> {
 
         /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
+         * Before starting background thread Show Progress Dialog to inform
+         * user that the app is processing information.
+         **/
+
+         @Override
         protected void onPreExecute()
         {
+            // instantiates the process, whilst showing the user a process dialog box
             super.onPreExecute();
             pDialog = new ProgressDialog(AddStudentMan.this);
-            pDialog.setMessage("submitting Details...");
+            pDialog.setMessage("submitting student details...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -161,12 +198,13 @@ public class AddStudentMan extends Activity
         } // onPreExecute
 
         /**
-         * registering the student as present
-         * */
+         * This doInBackground method completes the work involved in contacting the
+         * server to register the student details as entered by the lecturer
+         **/
         protected String doInBackground(String... args)
         {
 
-            // Data captured from input fields
+            // data captured from input fields stored in strings
             String student_id = inputStudentID.getText().toString();
             String module_id = inputModuleID.getText().toString();
             String type = dropdown.getSelectedItem().toString();
@@ -186,10 +224,9 @@ public class AddStudentMan extends Activity
                     "POST", params);
 
             // check log cat for response
-            // check log cat for response
             Log.d("add student manual", "database response; " + json.toString());
 
-            // check for success tag
+            // check for success tag if data has been successfully added to database
             try {
                 int success = json.getInt(TAG_SUCCESS);
 
@@ -198,11 +235,7 @@ public class AddStudentMan extends Activity
                     // details have been stored and the student is checked in
                     Log.d("add student manual", "check in success");
 
-                    // returns user to home screen
-                    Intent signInSuccess = new Intent(getApplicationContext(), MainScreenActivity.class);
-                    startActivity(signInSuccess);
-
-                    // finish this activity
+                    // finish this activity, returns user to home screen
                     finish();
 
                 } else {
@@ -211,27 +244,24 @@ public class AddStudentMan extends Activity
                     Log.e("add student manual", "php error occurred");
 
                     // error message needed for when sign in is not successful
-                    dialogText = "an error has occurred, please try again...";
+                    dialogText = "an error has occurred, please try again later...";
 
-                    // returns user to home screen
-                    Intent signInError = new Intent(getApplicationContext(), MainScreenActivity.class);
-                    startActivity(signInError);
-
-                    // finish this activity
+                    // finish this activity, returns user to home screen
                     finish();
 
                 } // if - else
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            } // try - catch
 
             return null;
         }// doInBackground
 
 
         /**
-         * After completing background task Dismiss the progress dialog
-         * **/
+         * After completing background task the progress dialog can be dismissed, and the user
+         * is informed using a toast message if the process has or has not been successful
+         **/
         protected void onPostExecute(String file_url) {
 
             // dialog to inform user sign in result
