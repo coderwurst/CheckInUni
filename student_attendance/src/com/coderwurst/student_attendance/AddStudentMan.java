@@ -65,8 +65,8 @@ public class AddStudentMan extends Activity
     private Spinner dropdown;
 
     // data previously stored from Choose QR class
-    protected static String moduleID = ChooseQR.moduleCode;
-    protected static String classType = ChooseQR.classType;
+    protected static String moduleID;
+    protected static String classType;
 
 
     @Override
