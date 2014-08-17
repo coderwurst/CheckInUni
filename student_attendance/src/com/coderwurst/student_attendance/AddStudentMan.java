@@ -262,6 +262,7 @@ public class AddStudentMan extends Activity
          * After completing background task the progress dialog can be dismissed, and the user
          * is informed using a toast message if the process has or has not been successful
          **/
+
         protected void onPostExecute(String file_url) {
 
             // dialog to inform user sign in result

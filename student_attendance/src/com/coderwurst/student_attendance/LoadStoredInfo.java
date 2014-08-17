@@ -47,10 +47,10 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
     private String classInfo = null;
     private String filename = null;
 
-    // server IP address
+    // server IP address (stored in MainScreenActivity
     private static String serverAddress = MainScreenActivity.serverIP;
 
-    // url to create new product
+    // url to access PHP script on server to add a student check-in
     private static String url_sign_in = "http://" + serverAddress + "/xampp/student_attendance/sign_in.php";
 
     // JSON Node names
@@ -67,12 +67,13 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
     private LinkedList <String> studentBatch = new LinkedList<String>();
     private int count;
 
-    Button btnConfirm;
-    Button btnDelete;
-
+    // list view and title to show previously stored information on screen
     private ListView lv;
     private TextView title;
 
+    // buttons to be used to send the saved information, or delete file
+    private Button btnConfirm;
+    private Button btnDelete;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -80,7 +81,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load_info);
 
-        // Buttons
+        // buttons
         btnConfirm = (Button) findViewById(R.id.lec_confirm);
         btnDelete = (Button) findViewById(R.id.lec_delete);
 
@@ -88,12 +89,13 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
         btnConfirm.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
 
+        // text view to show module info for saved file being presented
         title = (TextView) findViewById(R.id.file_id);
 
         // fill ListView with last stored data
         lv = (ListView) findViewById(R.id.checkin_list);
-        // loadList();
 
+        // the stored file is located on device memory
         checkForStoredData();
 
     } // onCreate
@@ -119,20 +121,13 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
 
     } // onClick
 
-    private void loadList ()
-    {
 
-        // uses an array adapter to load the information stored into the listview
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                studentBatch);
+    /**
+     * checkForStoredData method searches the device memory for the stored file and calls
+     * the loadStoredData method
+     */
 
-        lv.setAdapter(arrayAdapter);
-    } // loadList
-
-
-        private void checkForStoredData()
+    private void checkForStoredData()
     {
 
         File file = this.getFilesDir();          // returns storage location
@@ -154,6 +149,14 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
 
     } // checkForStoredData
 
+
+    /**
+     * loadStoredData method takes the filename from the checkForStoredData method,
+     * uses a file input stream to read the data into the activity, establishes
+     * the different components of the saved file (module name, class type & student
+     * numbers) before calling the loadList method to present this information
+     * on screen to the user
+     */
 
     private void loadStoredData (String pFilename)
     {
@@ -233,17 +236,37 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
 
     } // loadStoredData
 
+    /**
+     * loadList used to take the contents of the file imported in the loadStoredData
+     * method and present them on screen using an arrayadapter
+     */
+
+    private void loadList ()
+    {
+
+        // uses an array adapter to load the information stored into the listview
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                studentBatch);
+
+        lv.setAdapter(arrayAdapter);
+    } // loadList
+
 
 
     /**
      * Background Async Task to send information to database
      */
+
     class LecturerSignStudentIn extends AsyncTask<String, String, String>
     {
 
         /**
-         * shows user a progress dialog box
-         * */
+         * Before starting background thread Show Progress Dialog to inform
+         * user that the app is processing information.
+         **/
+
         @Override
         protected void onPreExecute()
         {
@@ -257,15 +280,19 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
         } // onPreExecute
 
         /**
-         * registering the student as present
-         * */
-        protected String doInBackground(String... args)
+         * This doInBackground method completes the work involved in contacting the
+         * server to register each student individually
+         **/
+
+         protected String doInBackground(String... args)
         {
 
             JSONObject json = null;
 
+            // for loop to cycle through the stored ids and send each one to database
             for (count = 0; count < studentBatch.size(); count++)
             {
+                // Strings to hold check-in information
                 String student_id = studentBatch.get(count).toString();
                 String module_id = moduleInfo;
                 String type = classInfo;
@@ -282,6 +309,10 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
                 // getting JSON Object
                 json = jsonParser.makeHttpRequest(url_sign_in, "POST", params);
 
+                /** try - catch implements a delay as during development it was found that greater
+                 *  numbers of students being processed lead to app crashing after first 3 pieces
+                 *  of student information sent to database
+                 **/
                 try
                 {
                     Thread.sleep(1500);
@@ -306,11 +337,6 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
 
                     deleteFile(filename);
 
-                    // returns user to home screen
-                    // Intent signInSuccess = new Intent(getApplicationContext(), LecturerUI.class);
-                    // startActivity(signInSuccess);
-
-
                 } else
                 {
                     // failed to sign-in
@@ -318,13 +344,6 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
 
                     // error message needed for when sign in is not successful
                     dialogText = "an error has occurred, please try again...";
-
-                    // returns user to home screen
-                    // Intent signInError = new Intent(getApplicationContext(), LecturerUI.class);
-                    // startActivity(signInError);
-
-                    // finish this activity
-                    // finish();
 
                 } // if - else
             } catch (JSONException e)
@@ -337,8 +356,10 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
         }// doInBackground
 
         /**
-         * after completing background task dismiss the progress dialog
-         * **/
+         * After completing background task the progress dialog can be dismissed, and the user
+         * is informed using a toast message if the process has or has not been successful
+         **/
+
         protected void onPostExecute(String file_url)
         {
             // dialog to inform user sign in result
@@ -347,7 +368,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
             // dismiss the dialog once done
             pDialog.dismiss();
 
-            // finish this activity
+            // finish this activity, returning user to home screen
             finish();
 
         }// onPostExecute

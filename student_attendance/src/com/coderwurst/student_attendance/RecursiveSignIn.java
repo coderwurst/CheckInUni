@@ -62,7 +62,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     // server IP address
     private static String serverAddress = MainScreenActivity.serverIP;
 
-    // url to create new product
+    // url addresses to check a student into a class, and return the student forename upon scanning
     private static String url_sign_in = "http://" + serverAddress + "/xampp/student_attendance/sign_in.php";
     private static String url_return_forename = "http://" + serverAddress + "/xampp/student_attendance/return_forename.php";
 
@@ -75,7 +75,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private String dialogText = "success";
 
     // creates the JSONParser object
-    JSONParser jsonParser = new JSONParser();
+    private JSONParser jsonParser = new JSONParser();
 
     // linkedList to store multiple students for batch processing
     private LinkedList <String> studentBatch = new LinkedList<String>();
@@ -95,7 +95,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recursive_signin);
 
-        // Buttons
+        // buttons to access recursive functionality
         btnGetStudentID = (Button) findViewById(R.id.lec_scan_id);
         btnGetMod = (Button) findViewById(R.id.lec_scan_mod);
         btnSignIn = (Button) findViewById(R.id.add_student_auto);
@@ -107,10 +107,16 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         // textview to hold current selected class info
         savedMod= (TextView)findViewById(R.id.rec_savedModule);
 
-
+        // onClickListeners for all 3 buttons
         btnGetStudentID.setOnClickListener(this);
         btnGetMod.setOnClickListener(this);
         btnSignIn.setOnClickListener(this);
+
+        /**
+         * in the event that the lecturer has not previously selected a module code and class type from the find QR
+         * screen, they will be prompted to scan a module code upon opening this activity. Otherwise the previously
+         * selected class details will be presented to them on screen
+         **/
 
         if (recModuleID == null)
         {
@@ -129,16 +135,17 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     } // onCreate
 
     /**
-     * if - else block in onClick method to ensure that the lecturer enters all the information necessary
+     * if - else block in onClick method to ensure that the lecturer enters all the information necessary before
+     * attempting to send the information to the database
      */
 
     @Override
     public void onClick (View view)
     {
-        // outer if statement to determine (from UI Activity) if a server connection is available
-        if(LecturerUI.serverAvailable)
+        // outer if-statement to determine (from UI Activity) if a server connection is available
+        if(MainScreenActivity.serverAvailable)
         {
-            if (view.getId() == R.id.lec_scan_id)     // && scannedModule == true
+            if (view.getId() == R.id.lec_scan_id)
             {
                 // logcat tag to view app progress
                 Log.d("recursive", "user wants to scan student id");
@@ -158,6 +165,10 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 scanIntegrator.initiateScan();
                 scanID = 2;
 
+                /**
+                 * internet connection available, checks are made to ensure that the user has scanned
+                 * both a student ID and a module ID before sending the information to the database
+                 */
 
             } else
             {
@@ -185,7 +196,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
 
             /**
-             * internet connection not available
+             * internet connection not available, the user can still scan a module ID and student ID(s)
+             * however upon pressing the check-in button the method is called to store the data on the
+             * device as opposed to sending it to the server
              */
 
 
@@ -216,7 +229,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
                 if (scannedID == true && scannedModule == true)     // verifies that all info necessary is present
                 {
-
+                    // toast to inform user that the info will be scanned to the device
                     Toast noConnection = Toast.makeText(getApplicationContext(),
                             "server connection not available, storing information", Toast.LENGTH_LONG);
                     noConnection.show();
@@ -227,9 +240,8 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                     // call method to store scanned details to device
                     storeScannedInfo();         // calls method to store scanned details to device
 
-                } else
+                } else      // the necessary details have not been entered
                 {
-
                     // logcat to view app progress
                     Log.e("recursive offline", "necessary details have not been successfully scanned");
 
@@ -244,11 +256,16 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     }// onClick
 
 
+    /**
+     * onactivityResult allows the user to scan multiple students, and keeps a count of the number of users scanned
+     * as well as presenting the name of student on screen after a scan (when Internet available). The user must exit
+     * this mode by pressing back on the device hardware
+     */
 
     // Returns scanning results for further computation
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
-
+        // scanning result
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
         // code to process information
@@ -333,8 +350,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 }
 
                 // stores scanned ID as the student number
-
                 String scannedIDInfo = scanContent;
+
+                Log.d("recursive", scannedIDInfo);
 
                 studentNo = scannedIDInfo;      // CHANGE TO STORE THE SCANNED ID AS AN ADDITION TO A LINKED LIST
 
@@ -350,10 +368,10 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
                     }//while
 
-                }//linearSearch                                // end of Linear Search Code
+                }//linearSearch                             // end of Linear Search Code
                 */
 
-                studentBatch.add(studentNo);
+                studentBatch.add(studentNo);                // adds the student number to a linkedList
 
                 scannedStuNo = scannedIDInfo;
 
@@ -362,21 +380,20 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 // shows details of last user scanned & keeps a count of number of student ids
                 String contents = intent.getStringExtra("SCAN_RESULT");
 
-                if(LecturerUI.serverAvailable)
+                // if internet is available, return forename
+                if(MainScreenActivity.serverAvailable)
                 {
-                    // if internet is available, return forename
-                    Log.d("recursive","batch id; " + contents);         // allows programmer to follow progress for testing
-                    new returnForename().execute();          // runs background task to retrieve student forename
+                    Log.d("recursive","batch id; " + contents);  // allows programmer to follow progress for testing
+                    new returnForename().execute();             // runs background task to retrieve student forename
 
-                } else{
+                } else {
 
-
+                    // if a server connection cannot be established, the scan simply returns a count
                     Toast confirmScan = Toast.makeText(getApplicationContext(),
                             "scan " + scanCount, Toast.LENGTH_SHORT);
 
                     confirmScan.show();
-
-                    scanCount++;
+                    scanCount++;        // increments value for next scan
 
                 } // toast to notify user of error in scanning of information
 
@@ -386,20 +403,23 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 repeatScan.addExtra("studentNo", 0);
                 repeatScan.initiateScan();
 
-            }else if (scanID == 1 && !scanFormat.equals("CODE_128"))            // to determine if scan is not in correct format
+            }else if (scanID == 1 && !scanFormat.equals("CODE_128"))    // to determine if scan is not in correct format
             {
 
                 // logcat to view app progress
                 Log.e("recursive", "incorrect data for student id scanned" + scanFormat);
 
+                // informs user of an errornous scan
                 Toast IDIncorrectFormat = Toast.makeText(getApplicationContext(),
                         "format incorrect, please try again...(" + scanFormat + ")", Toast.LENGTH_LONG);
+
                 IDIncorrectFormat.show();
 
             } else {
 
                 Log.e("recirsive", "scan incomplete");
 
+                // in the event that the image has not been successfully scanned, informs user to try again
                 Toast errorScan = Toast.makeText(getApplicationContext(),
                         "scan incomplete, please try again", Toast.LENGTH_SHORT);
 
@@ -418,16 +438,19 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
 
     /**
-     * method called if no internet connection available to store scanned information onto device
+     * method called if no internet connection available to store scanned information onto device. Info
+     * stored in local device memory assigned to app, and formatted to allow for effective recall of
+     * information upon reading the file back into the app before sending to database
      */
 
     public void storeScannedInfo()
     {
+        // strings to concatenate information for formatting
         String filename = moduleInfo + ".txt";                          // files identified by module code
         String header1 = "<" + moduleInfo + ">";                        // < & > identifiers used to locate module info
         String header2 = "{" + classInfo + "}";                         // { & } used to locate class type
 
-        String currentID;
+        String currentID;                                               // string to hold the current ID
         String allIds = "[";                                            // adds identifier to signalise the start of IDs
 
         for (count = 0; count < studentBatch.size(); count++)           // for loop to store each student ID scanned
@@ -439,21 +462,21 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
         allIds = allIds + "]";                                          // adds identifier to signalise the end of IDs
 
-        Log.d("recursive offline", "store student IDs: " + allIds);           // shows all ids to be stored
+        Log.d("recursive offline", "store student IDs: " + allIds);     // shows all ids to be stored
 
-        String toBeSent = header1 + header2 + allIds;
+        String toBeSent = header1 + header2 + allIds;                   // string to store all information concatentated
 
-        Log.d("recursive offline", "contents: " + toBeSent);                // show the file as it is being written
+        Log.d("recursive offline", "contents: " + toBeSent);            // show the file as it is being written
 
-        Log.d("recursive offline", "filename: " + filename);                // show filename assigned
+        Log.d("recursive offline", "filename: " + filename);            // show filename assigned
 
-        FileOutputStream outputStream;
+        FileOutputStream outputStream;                                  // new fileOutputStream to save file to device
 
         try {
-            outputStream = openFileOutput(filename, 0);
-            outputStream.write(toBeSent.getBytes());
-            outputStream.flush();
-            outputStream.close();
+            outputStream = openFileOutput(filename, 0);                 // opens a new stream
+            outputStream.write(toBeSent.getBytes());                    // converts information to be sent to byte format
+            outputStream.flush();                                       // flush to remove any lingering contents
+            outputStream.close();                                       // closes stream to finish the process
 
         } catch (Exception e) {
 
@@ -462,10 +485,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
         // success message
         Toast.makeText(getBaseContext(), "file saved successfully",Toast.LENGTH_SHORT).show();
-
-        // returns user to home screen - removed 16.08.14
-        // Intent sendUserHome = new Intent(getApplicationContext(), MainScreenActivity.class);
-        // startActivity(sendUserHome);
 
         // finish this activity
         finish();
@@ -480,8 +499,10 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     {
 
         /**
-         * shows user a progress dialog box
-         * */
+         * Before starting background thread Show Progress Dialog to inform
+         * user that the app is processing information.
+         **/
+
         @Override
         protected void onPreExecute()
         {
@@ -494,8 +515,10 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         } // onPreExecute
 
         /**
-         * registering the student as present
-         * */
+         * This doInBackground method completes the work involved in contacting the
+         * server to register the student and module details input by lecturer
+         **/
+
         protected String doInBackground(String... args)
         {
 
@@ -519,6 +542,12 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 // getting JSON Object
                 json = jsonParser.makeHttpRequest(url_sign_in, "POST", params);
 
+                /**
+                 *  try - catch implements a delay as during development it was found that greater
+                 *  numbers of students being processed lead to app crashing after first 3 pieces
+                 *  of student information sent to database
+                 **/
+
                 try
                 {
                     Thread.sleep(1500);
@@ -541,10 +570,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                         // check log cat for response
                         Log.d("recursive", "database response; php success");
 
-                        // returns user to home screen removed 16.08.14
-                        // Intent signInSuccess = new Intent(getApplicationContext(), MainScreenActivity.class);
-                        // startActivity(signInSuccess);
-
                         // finish this activity
                         finish();
 
@@ -556,10 +581,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                         // error message needed for when sign in is not successful
                         dialogText = "an error has occurred, please try again...";
 
-                        // returns user to home screen removed 16.08;14
-                        //Intent signInError = new Intent(getApplicationContext(), MainScreenActivity.class);
-                        //startActivity(signInError);
-
                         // finish this activity
                         finish();
 
@@ -567,15 +588,16 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 } catch (JSONException e)
                 {
                     e.printStackTrace();
-                }
-
+                } // try  -catch
 
                 return null;
         }// doInBackground
 
         /**
-         * after completing background task dismiss the progress dialog
-         * **/
+         * After completing background task the progress dialog can be dismissed, and the user
+         * is informed using a toast message if the process has or has not been successful
+         **/
+
         protected void onPostExecute(String file_url)
         {
             // dialog to inform user sign in result
@@ -584,6 +606,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
             // dismiss the dialog once done
             pDialog.dismiss();
 
+            // informs the user of a success or an error
             Toast toast = Toast.makeText(getApplicationContext(),
                     "check in: " + dialogText, Toast.LENGTH_LONG);
             toast.show();
@@ -596,20 +619,21 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     }// LecturerSignIntoClass
 
 
+     /**
+     * Background Async Task to retrieve student forename from database each time a lecturer scans
+     * in a student ID
+     **/
 
-
-
-    /**
-     * Background Async Task to retrieve student forename
-     */
     class returnForename extends AsyncTask<String, String, String>
     {
 
         String forename = null;
 
         /**
-         * shows user a progress dialog box
-         * */
+         * Before starting background thread there is no need to use a dialog box;
+         * as the operation is processed so quickly there is no notable change in performance
+         **/
+
         @Override
         protected void onPreExecute()
         {
@@ -618,9 +642,10 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         } // onPreExecute
 
         /**
-         * sending the student ID to database to return student name
+         * Background task to send the student ID to database to return student name
          * */
-        protected String doInBackground(String... args)
+
+         protected String doInBackground(String... args)
         {
 
                 JSONObject jsonForename = null;
@@ -677,16 +702,17 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
 
         /**
-         * after completing background task dismiss the progress dialog and confirm the student name to the lecturer
+         * after completing background task
+         * confirm the returned student name to the lecturer
          * **/
         protected void onPostExecute(String file_url)
         {
-
+            // toast to return the scan number and student forename
             Toast studentName = Toast.makeText(getApplicationContext(),
                     "scan "+ scanCount + ", " + forename, Toast.LENGTH_SHORT);
             studentName.show();
 
-            scanCount++;
+            scanCount++;            // increments the count for the next student
 
         }// onPostExecute
 

@@ -3,6 +3,8 @@ package com.coderwurst.student_attendance;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -44,7 +48,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
     private Button btnReset;
     private Button btnRecall;
 
-    private TextView serverStatus;     // text view to inform tester of data captured at this stage
+    private TextView serverStatus;     // used to inform user if server connection has been established
     private int scanID = 0;            // int to store type of scan
 
     // components for checking internet connection
@@ -71,6 +75,8 @@ public class LecturerUI extends Activity implements View.OnClickListener
     // JSON parser class
     JSONParser jsonParser = new JSONParser();
 
+    private Context context = this;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -81,11 +87,11 @@ public class LecturerUI extends Activity implements View.OnClickListener
         // check to see if connection to University Server is available
         new TestConnection().execute();
 
-        // Buttons
+        // buttons for lecturer functions
         btnManSignin = (Button) findViewById(R.id.lec_man_signin);          // to enter student & class details manually
         btnAutoSignin = (Button) findViewById(R.id.lec_auto_signin);        // to scan student ID & class QR-Code
         btnGetQR = (Button) findViewById(R.id.getQRCode);                   // to retrieve a particular QR-Code
-        btnRecall = (Button) findViewById(R.id.lec_recall);
+        btnRecall = (Button) findViewById(R.id.lec_recall);                 // to view files previously saved on device
         btnReset = (Button) findViewById(R.id.reset_user);                  // testing purpose button to reset user
 
         // TextViews for hold format and content info for testing purposes
@@ -93,7 +99,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
         //contentTxt = (TextView) findViewById(R.id.scan_content);
         serverStatus = (TextView) findViewById(R.id.server_info);            // updated to show server connectivity
 
-        // set onClick listeners for all 3 buttons
+        // set onClick listeners for all buttons
         btnManSignin.setOnClickListener(this);
         btnAutoSignin.setOnClickListener(this);
         btnGetQR.setOnClickListener(this);
@@ -141,14 +147,14 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
         } else                      // if else to load stored files into studentBatch LinkedList
 
-            return false;               // no data found
+            return false;           // no data found
 
-    } // checkForStoredData
+    } // filesFound
 
 
     /**
      * The behaviour of the onClick listeners will vary depending on connection with the server, for this reason the
-     * code for these listeners was implemented in a slightly different way than previously.
+     * code for these listeners was implemented in a slightly different way to previous classes
      */
 
     @Override
@@ -315,11 +321,37 @@ public class LecturerUI extends Activity implements View.OnClickListener
     }// onActivityResult
 
 
+    public static boolean isReachable(Context context)
+    {
+        // First, check we have any sort of connectivity
+        final ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
+        boolean isReachable = false;
+
+        if (netInfo != null && netInfo.isConnected()) {
+            // Some sort of connection is open, check if server is reachable
+            try {
+                URL url = new URL("http://www.google.com");
+                HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
+                urlc.setRequestProperty("User-Agent", "Android Application");
+                urlc.setRequestProperty("Connection", "close");
+                urlc.setConnectTimeout(30 * 1000);
+                urlc.connect();
+                isReachable = (urlc.getResponseCode() == 200);
+            } catch (IOException e) {
+                Log.e("lecturer ui", e.getMessage());
+            }
+        }
+
+        return isReachable;
+    } // isReachable
+
+
+
 
     /**
-     * Background Async Task to call a PHP script on the
-     * server machine in order to establish if a connection
-     * to the server is available
+     * Background Async Task used each time the user returns to this screen to establish if the server
+     * connection is available
      * */
 
     class TestConnection extends AsyncTask<String, String, String>
@@ -339,50 +371,56 @@ public class LecturerUI extends Activity implements View.OnClickListener
         } // onPreExecute
 
         /**
-         * send request to server to return success confirmation
+         * send request to server to return success confirmation - code completed with reference to
+         * http://www.desousa.com.pt/blog/2012/01/testing-server-reachability-on-android, first Accessed 17.08.14
          * */
 
         protected String doInBackground(String... args)
         {
 
-            // move to class variables, but causes app crash when not available
-            JSONObject json = null;
+            // use connectivity manager and network info to establish if the device has Internet access
+            final ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            final NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
+            // boolean serverOnline = false;                       // assume that the server is not yet available
 
-            // parameters to be passed into PHP script on server side
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            if (netInfo != null && netInfo.isConnected())       // first check that there is Internet Connectivity on device
+            {
+                // then try and make a connection to the server
+                try {
+                    URL url = new URL("http://" + MainScreenActivity.serverIP);                 // server IP address
+                    HttpURLConnection testServer = (HttpURLConnection) url.openConnection();    // open up connection
 
-            // no parameters needed in this background task, server had to simply respond with information
+                    // sets the HttpURLConnection defaults for testing a conection
+                    testServer.setRequestProperty("User-Agent", "Android Application");
+                    testServer.setRequestProperty("Connection", "close");
 
-            // getting JSON Object
-            // NB url accepts POST method
-            json = jsonParser.makeHttpRequest(url_test_connection,
-                    "POST", params);
+                    // the connection timeout period is 5000 milliseconds (3 seconds)
+                    testServer.setConnectTimeout(5000);
+                    // connects to server
+                    testServer.connect();
 
-            // check log cat for response
-            Log.d("lecturer ui", "test server response; " + json.toString());
-
-            // check for success tag
-            try {
-                int success = json.getInt(TAG_SUCCESS);
-
-                if (success == 1) {
-
+                    // the connection will then return a value, which is stored as the boolean for true if server available
+                    serverAvailable = (testServer.getResponseCode() == 200);
                     serverResponse = "connection available";
-                    serverAvailable = true;
+
                     // details have been stored and the student is checked in
                     Log.d("lecturer ui", "connection established");
 
-                } else {
+                } catch (IOException e) {
 
+                    // otherwise an exception will be thrown as the server is not available
                     serverResponse = "connection not available, offline mode activated";
                     serverAvailable = false;
                     // failed to sign-in, PHP has returned an error
-                    Log.e("lecturer ui", "connection with server cannot be established");
+                    Log.e("lecturer ui", e.getMessage());
+                }
+            } else {
+                // else no internet connection is available
+                serverResponse = "connection not available, offline mode activated";
+                serverAvailable = false;
+                Log.e("lecturer ui", "Internet Connection Unavailable");
+            } // if - else
 
-                } // if - else
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } // try - catch
             return null;
         }// doInBackground
 

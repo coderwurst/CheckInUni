@@ -7,9 +7,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -37,7 +34,7 @@ public class SignIn extends Activity
 
     public static final String USER_ID = "User ID File";        // string to hold the user id information
 
-    static SharedPreferences userDetails;                       // sharedPreferences file for user ID
+        static SharedPreferences userDetails;                       // sharedPreferences file for user ID
 
     // Strings to hold data elements
     String allInfo = "";
@@ -131,9 +128,11 @@ public class SignIn extends Activity
 	class SignIntoClass extends AsyncTask<String, String, String>
     {
 
-		/**
-		 * shows user a progress dialog box
-		 * */
+        /**
+         * Before starting background thread Show Progress Dialog to inform
+         * user that the app is processing information.
+         **/
+
 		@Override
 		protected void onPreExecute()
         {
@@ -145,9 +144,11 @@ public class SignIn extends Activity
 			pDialog.show();
 		} // onPreExecute
 
-		/**
-		 * registering the student as present
-		 * */
+        /**
+         * This doInBackground method completes the work involved in contacting the
+         * server to register the student and module details input by lecturer
+         **/
+
 		protected String doInBackground(String... args)
         {
 
@@ -218,6 +219,7 @@ public class SignIn extends Activity
 		 * after completing background task dismiss the progress dialog and inform the user that sign-in has been
          * a success or failure depending on the database response...
 		 **/
+
 		protected void onPostExecute(String file_url)
         {
             // dialog to inform user sign in result

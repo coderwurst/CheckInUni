@@ -21,7 +21,7 @@ import android.util.Log;
 public class Splash extends Activity
 
 {
-    WifiManager wifi;                                   // wifi manager
+    WifiManager wifi;                                   // wifi manager object
 
     // called when the activity is first created
     @Override
@@ -40,7 +40,22 @@ public class Splash extends Activity
  } // onCreate
 
 
-    class CheckWifi extends AsyncTask<Void, Void, Integer>{
+    /**
+     * Inner class to perform a check to determine if a Wifi transmitter has been deactivated, and if
+     * so it is turned on again before loading up the student or lecturer Ui screen. In both of these
+     * activities wifi is needed to establish if a student is on campus, or in the case of the
+     * lecturer if the device is able to connect to the server. As this processing can sometimes take
+     * a long amount of time (up to 9 seconds) it was decided to complete the task within the splash
+     * activity to create a better user experience once the app has been loaded
+     */
+
+    class CheckWifi extends AsyncTask<Void, Void, Integer>
+    {
+
+        /**
+         * This doInBackground method completes the work involved in contacting the
+         * server to register the student and module details input by lecturer
+         **/
 
         @Override
          protected Integer doInBackground(Void... params) {
@@ -58,10 +73,16 @@ public class Splash extends Activity
             } // if
 
 
+            /**
+             * calculations made to determine the average time taken to activate the Wifi transmitter
+             * during development, including outputting the state of the adapter to allow the
+             * developer to determine when the next process can be called
+             */
+
             long timeIn = System.nanoTime();
             int state;
 
-            while (wifi.isWifiEnabled() == false)
+            while (wifi.isWifiEnabled() == false)       // turns wifi on if currently off
             {
                 state = wifi.getWifiState();
                 Log.d("wifi", "current state: " + state);
@@ -79,11 +100,17 @@ public class Splash extends Activity
 
             double seconds = (double)duration / 1000000000.0;
 
-            Log.d("wifi", "time taken: " + seconds);
             // at this point wifi is activated
+            Log.d("wifi", "time taken: " + seconds);
 
             return 1;
         } // doInBackground
+
+
+        /**
+         * upon completion the splash activity is ended and the user is taken to the main
+         * activity screen
+         */
 
         protected void onPostExecute(Integer result)
         {
@@ -92,7 +119,6 @@ public class Splash extends Activity
             Splash.this.finish();                                                   // closes splash activity
             Log.d("splash", "leaving");
         } // onPostExecute
-
     } // LoadData
 
 } // Splash

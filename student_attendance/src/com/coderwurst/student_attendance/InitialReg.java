@@ -2,8 +2,11 @@ package com.coderwurst.student_attendance;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
@@ -14,6 +17,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,16 +73,8 @@ public class InitialReg extends Activity
     // code to retrieve device specific details
     private String deviceID;
 
-    /**
-     * This onCreate method unpacks data scanned into the app in the MainScreenActivity class, determines the user
-     * type and saved this data in the app's shared preferences accordingly. Calls authenticate user background task
-     * to determine if the ID scanned into the device is that of a registerd student or lecturer on the server. The
-     * method also stamps the device ID number, which is unique on each android device, to be sent and stored on the
-     * database if the user is a student. This is one of several functions in the app to prevent students from
-     * manipulating the check-in system.
-     */
+    private static boolean serverAvailable = MainScreenActivity.serverAvailable;
 
-    @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -158,6 +156,11 @@ public class InitialReg extends Activity
                 // previous position of sharedPreferences code
             }// onClick
         }); */
+
+        if(!serverAvailable)
+        {
+            finish();
+        }
 
         // the users' details can be sent to the database for authentication
         new AuthenticateUser().execute();
