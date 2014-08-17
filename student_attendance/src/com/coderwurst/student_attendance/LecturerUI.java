@@ -18,6 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -102,7 +104,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
     } // onCreate
 
-
     /**
      * filesFound method to search the local storage on the device for previously stored check-in files, and update the
      * LecturerUI accordingly with the option to send the stored files to the database (if found). During production
@@ -140,7 +141,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
         } else                      // if else to load stored files into studentBatch LinkedList
 
-        return false;               // no data found
+            return false;               // no data found
 
     } // checkForStoredData
 
@@ -203,7 +204,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 scanID = 1;
 
             }// if - else - else
-        // connection with database not available, only function able to be carried out at this time is auto check-in
+            // connection with database not available, only function able to be carried out at this time is auto check-in
         } else
         {
             if (view.getId() == R.id.lec_man_signin)            // manual check-in not available
@@ -289,18 +290,18 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
             Log.d("lecturer ui", "user wishes to register as another user");
 
-                    // allows the user to re-register
+            // allows the user to re-register
 
-                    // launching Registration Activity
-                    Intent i = new Intent(getApplicationContext(), InitialReg.class);
+            // launching Registration Activity
+            Intent i = new Intent(getApplicationContext(), InitialReg.class);
 
-                    // takes the scanned info and packs it into a bundle before sending it to the Registration class
-                    String scannedInfo = scanContent;
-                    i.putExtra("Info", scannedInfo);
-                    startActivity(i);
+            // takes the scanned info and packs it into a bundle before sending it to the Registration class
+            String scannedInfo = scanContent;
+            i.putExtra("Info", scannedInfo);
+            startActivity(i);
 
-                    // closing this screen
-                    finish();
+            // closing this screen
+            finish();
 
         } else {
 
@@ -321,7 +322,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
      * to the server is available
      * */
 
-     class TestConnection extends AsyncTask<String, String, String>
+    class TestConnection extends AsyncTask<String, String, String>
     {
 
         /**
@@ -341,9 +342,10 @@ public class LecturerUI extends Activity implements View.OnClickListener
          * send request to server to return success confirmation
          * */
 
-         protected String doInBackground(String... args)
+        protected String doInBackground(String... args)
         {
 
+            // move to class variables, but causes app crash when not available
             JSONObject json = null;
 
             // parameters to be passed into PHP script on server side
@@ -405,7 +407,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
                 serverStatus.setText("server offline");
             }
-             // if to update server info
+            // if to update server info
 
             // the server must also be available before files can be sent!
             if(filesFound() && serverAvailable)

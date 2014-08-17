@@ -144,8 +144,12 @@ public class ChooseQR extends Activity implements View.OnClickListener
                     "module: " + moduleCode + ", class: " + classType, Toast.LENGTH_LONG);
             confirmation.show();
 
-            AddStudentMan.moduleID = moduleID;
-            AddStudentMan.classType = classType;
+            // stores the users choice for use in the AddStudentManually Activity
+            AddStudentMan.addModuleID = moduleID;
+            AddStudentMan.addClassType = classType;
+            // stores the users choice for use in the RecursiveSignIn Activity
+            RecursiveSignIn.recModuleID = moduleID;
+            RecursiveSignIn.recClassType = classType;
 
         }// if else for button click
 

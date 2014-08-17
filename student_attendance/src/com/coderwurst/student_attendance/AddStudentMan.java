@@ -65,8 +65,8 @@ public class AddStudentMan extends Activity
     private Spinner dropdown;
 
     // data previously stored from Choose QR class
-    protected static String moduleID;
-    protected static String classType;
+    protected static String addModuleID = null;
+    protected static String addClassType = null;
 
 
     @Override
@@ -74,7 +74,7 @@ public class AddStudentMan extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_student_man);
 
-        Log.d("add student manually", "mod ID: " + moduleID);
+        Log.d("add student manually", "mod ID: " + addModuleID);
 
 
         // logcat tag to view app progress
@@ -116,13 +116,13 @@ public class AddStudentMan extends Activity
         inputStudentID.setHint("eg. B000000");
         inputModuleID = (EditText) findViewById(R.id.module_id);
 
-        if (moduleID.isEmpty() || moduleID.equals(null))
+        if (addModuleID == null)
         {
             inputModuleID.setHint("eg. ABC000");
 
         } else      // if previous module has been stored, entered automatically into text field
         {
-            inputModuleID.setText(moduleID);
+            inputModuleID.setText(addModuleID);
         } // if - else
 
         populateDeviceTypeSpinner();        // call to load the dropdown menu with programmed options
@@ -158,10 +158,10 @@ public class AddStudentMan extends Activity
         dropdown.setAdapter(deviceTypeArrayAdapter);
 
         // if - else block to select previously selected class type info form ChooseQR.java (if any)
-        if(classType.equals("lecture"))
+        if(addClassType == "lecture")
         {
             dropdown.setSelection(0);
-        } else if (classType.equals("tutorial"))
+        } else if (addClassType == "tutorial")
         {
             dropdown.setSelection(1);
         } else

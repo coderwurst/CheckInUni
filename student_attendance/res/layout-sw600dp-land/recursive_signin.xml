@@ -55,6 +55,17 @@
                     />
 
             <TextView
+                    android:id="@+id/rec_savedModule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="false"
+                    android:text="@string/default_mod_id"
+                    android:textSize="24sp"
+                    android:visibility="visible"
+                    android:layout_alignTop="@+id/UULogo"
+                    android:layout_alignParentLeft="true"/>
+
+            <!--TextView
                     android:id="@+id/scan_format"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@id/scan_format" />
+                    android:layout_below="@id/scan_format" /-->
 
         </RelativeLayout>
     </FrameLayout>

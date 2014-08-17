@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -46,6 +47,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
     // private TextView formatTxt, contentTxt;     // text view to inform tester of data captured at this stage TESTING ONLY
     private int scanID = 0;                     // int to store the type of scan
+    private TextView savedMod;
 
     // boolean values to ensure the lecturer scans both ID and class codes before attempting to check student in
     private boolean scannedID = false;
@@ -83,6 +85,10 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private String scannedStuNo;
     private int scanCount = 1;
 
+    // data previously stored from Choose QR class
+    protected static String recModuleID = null;
+    protected static String recClassType = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -98,9 +104,27 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         // formatTxt = (TextView) findViewById(R.id.scan_format);
         // contentTxt = (TextView) findViewById(R.id.scan_content);
 
+        // textview to hold current selected class info
+        savedMod= (TextView)findViewById(R.id.rec_savedModule);
+
+
         btnGetStudentID.setOnClickListener(this);
         btnGetMod.setOnClickListener(this);
         btnSignIn.setOnClickListener(this);
+
+        if (recModuleID == null)
+        {
+            // show scan QR button
+            savedMod.setText("scan QR Code");
+
+        } else      // if previous module has been stored, entered automatically into text field
+        {
+            savedMod.setText(recModuleID + ", " + recClassType);
+            moduleInfo = recModuleID;
+            classInfo = recClassType;
+            scannedModule = true;
+            // make scan QR button invisible, instead set a textview to hold value
+        } // if - else
 
     } // onCreate
 
@@ -272,6 +296,8 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 Log.d("recursive", "module type; " + classInfo);
 
                 scannedModule = true;       // boolean to ensure necessary information has been included before processing
+
+                savedMod.setText(moduleInfo + ", " + classInfo);
 
 
             } else if (scanID == 2 && !scanFormat.equals("QR_CODE"))            // in the event the user does not scan a QR-Code
