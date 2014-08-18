@@ -21,7 +21,6 @@
     <string name="default_mod_id">COM000</string>
     <string name="default_class">default</string>
 
-
     <!-- Strings relating to batch processing -->
     <string name="lecturer_scan_QR">scan QR</string>
     <string name="lecturer_scan_ID">scan ID(s)</string>

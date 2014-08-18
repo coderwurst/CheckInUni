@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" android:background="@color/UUJBlue">
 
@@ -70,20 +69,15 @@
                     android:background="@android:color/transparent"/>
 
             <TextView
-                    android:id="@+id/scan_format"
+                    android:id="@+id/module_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/reset_user" />
-
-            <TextView
-                    android:id="@+id/scan_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/scan_format" />
+                    android:textIsSelectable="false"
+                    android:text="@string/default_mod_id"
+                    android:textSize="16dp"
+                    android:layout_above="@+id/server_info"
+                    android:layout_alignLeft="@+id/server_info"
+                    android:visibility="invisible"/>
 
             <TextView
                     android:id="@+id/server_info"
@@ -92,7 +86,8 @@
                     android:textIsSelectable="true"
                     android:text="@string/server_status"
                     android:textSize="16sp"
-                    android:layout_alignParentBottom="true" android:layout_alignParentRight="true"/>
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
     </FrameLayout>

@@ -376,6 +376,11 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
             // dismiss the dialog once done
             pDialog.dismiss();
 
+            // informs the user of a success or an error
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "check in: " + dialogText, Toast.LENGTH_LONG);
+            toast.show();
+
             // finish this activity, returning user to home screen
             finish();
 

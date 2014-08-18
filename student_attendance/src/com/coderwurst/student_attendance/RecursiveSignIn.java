@@ -94,6 +94,16 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private static final String TAG_MODID = "moduleId";
     private static final String TAG_CLASSTYPE = "classType";
 
+    // instructional Strings to guide user through process
+    private String lecturer_guide = "FIRST STEP: 'scan QR-Code' to collect class info\nSECOND STEP: 'scan ID card(s)' of students" +
+            "\nFINAL STEP: 'check in' to review and send or delete data";
+    private String lecturer_guide1a = "FIRST STEP: use previously saved info:";
+    private String lecturer_guide1b = "\nOR: 'scan QR-Code' for a different class";
+    private String lecturer_guide1c = "\nSECOND STEP: 'scan ID card(s)' of students\nFINAL STEP: 'check in' to " +
+            "review data";
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -126,11 +136,12 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         if (recModuleID == null)
         {
             // show scan QR button
-            savedMod.setText("scan QR Code");
+            savedMod.setText(lecturer_guide);
 
         } else      // if previous module has been stored, entered automatically into text field
         {
-            savedMod.setText(recModuleID + ", " + recClassType);
+            savedMod.setText(lecturer_guide1a + "\t" + recModuleID + ", " + recClassType + lecturer_guide1b
+                    + lecturer_guide1c);
             moduleInfo = recModuleID;
             classInfo = recClassType;
             scannedModule = true;
@@ -159,6 +170,8 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 scanIntegrator.initiateScan();
                 scanID = 1;
 
+
+
             } else if (view.getId() == R.id.lec_scan_mod)
             {
 
@@ -169,6 +182,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 IntentIntegrator scanIntegrator = new IntentIntegrator(this);
                 scanIntegrator.initiateScan();
                 scanID = 2;
+
 
                 /**
                  * internet connection available, checks are made to ensure that the user has scanned
@@ -333,8 +347,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
                 scannedModule = true;       // boolean to ensure necessary information has been included before processing
 
-                savedMod.setText(moduleInfo + ", " + classInfo);
-
 
             } else if (scanID == 2 && !scanFormat.equals("QR_CODE"))            // in the event the user does not scan a QR-Code
             {
@@ -375,21 +387,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
                 studentNo = scannedIDInfo;      // CHANGE TO STORE THE SCANNED ID AS AN ADDITION TO A LINKED LIST
 
-                /* linear search to eliminate multiple IDs being scanned
-
-                int index = 0, comparison = 1;                            // index int for search position, comparison to count number of times linear search performed
-                boolean exit = false;                                     // boolean to show if value has been found
-
-                if (studentBatch != null)
-                {
-                    while (studentNo != studentBatch.get(index) && !exit)                  // ???while loop in order to search linearly for the value - why INDEX used here???
-                    {
-
-                    }//while
-
-                }//linearSearch                             // end of Linear Search Code
-                */
-
                 studentBatch.add(studentNo);                // adds the student number to a linkedList
 
                 scannedStuNo = scannedIDInfo;
@@ -421,6 +418,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 IntentIntegrator repeatScan = new IntentIntegrator(this);
                 repeatScan.addExtra("studentNo", 0);
                 repeatScan.initiateScan();
+
 
             }else if (scanID == 1 && !scanFormat.equals("CODE_128"))    // to determine if scan is not in correct format
             {

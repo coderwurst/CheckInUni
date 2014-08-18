@@ -42,7 +42,7 @@
                     android:background="@drawable/scanmod"
                     android:layout_marginTop="20dp"
                     android:layout_below="@+id/UULogo"
-                    android:layout_centerHorizontal="true"
+                    android:layout_alignLeft="@id/UULogo"
                     />
 
             <Button android:id="@id/add_student_auto"
@@ -51,35 +51,21 @@
                     android:background="@drawable/lecturercheckin"
                     android:layout_below="@id/lec_scan_id"
                     android:layout_marginTop="20dp"
-                    android:layout_centerHorizontal="true"
+                    android:layout_alignRight="@id/UULogo"
                     />
 
             <TextView
                     android:id="@+id/rec_savedModule"
-                    android:layout_width="wrap_content"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:textIsSelectable="false"
                     android:text="@string/default_mod_id"
-                    android:textSize="24sp"
+                    android:textSize="18sp"
                     android:visibility="visible"
-                    android:layout_alignTop="@+id/UULogo"
-                    android:layout_alignParentLeft="true"/>
-
-            <!--TextView
-                    android:id="@+id/scan_format"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/add_student_auto" />
-
-            <TextView
-                    android:id="@+id/scan_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/scan_format" /-->
+                    android:layout_below="@+id/UULogo"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="12dp"
+                    />
 
         </RelativeLayout>
     </FrameLayout>

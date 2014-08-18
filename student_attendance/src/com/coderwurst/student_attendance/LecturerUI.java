@@ -48,43 +48,56 @@ public class LecturerUI extends Activity implements View.OnClickListener
     private Button btnReset;
     private Button btnRecall;
 
-    private TextView serverStatus;     // used to inform user if server connection has been established
-    private int scanID = 0;            // int to store type of scan
+    private TextView serverStatus;      // used to inform user if server connection has been established
+    private TextView moduleNumber;      // used to show currently selected module code
+    private int scanID = 0;             // int to store type of scan
 
-    // components for checking internet connection
-    private WifiManager wifi;           // wifi manager
 
     // server IP address retrieved from MainScreenActivity protected variable
     private static String serverAddress = MainScreenActivity.serverIP;
 
-    /**
-     * As it is important that the lecturer maintains at least some level of functionality at all times, this activity
-     * calls a script on the server at startup to determine the connection with the server. Connectivity is shown
-     * on screen, and the functionality of this class amended accordingly. The contents of the boolean serverAvailable
-     * are also accessed in the RecursiveSignIn class to determine if data should be sent to the database or stored
-     * on the device.
-     */
-
-    private String url_test_connection = "http://" + serverAddress + "/xampp/student_attendance/test_connection.php";
-    protected static boolean serverAvailable;          // determine if internet connection is available
+    protected static boolean serverAvailable;           // determine if internet connection is available
     private String serverResponse = "";
 
-    // JSON Node names
-    private static final String TAG_SUCCESS = "success";
+    private Context context = this;                     // context used in checking connectivity
 
-    // JSON parser class
-    JSONParser jsonParser = new JSONParser();
+    protected static String recModuleID = null;         // string to hold selected module ID
 
-    private Context context = this;
+    /**
+     * This activity remains open in the background whilst the user accesses other UIs. One of which is
+     * the find QR code function. If a user selects a QR-Code from the list, it is stores in the protected
+     * variable 'recModuleID'. Upon returning to this activity, the onResume method is called, and updates
+     * the text field to show this information (if necessary)
+     */
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        if (recModuleID != null)
+        {
+            // show scan QR button
+            moduleNumber.setVisibility(View.VISIBLE);
+            moduleNumber.setText("module: " + recModuleID);
+
+        } // if the lecturer has stored module info, it will be presented on screen
+
+    } // onResume
 
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lecturer_ui);                               // opens up corresponding XML file
+        setContentView(R.layout.lecturer_ui);           // opens up corresponding XML file
 
-        // check to see if connection to University Server is available
+        /**
+         * check to see if connection to University Server is available, will be called each time
+         * the user reloads the UI; eg. when changing orientation. The purpose of which is to ensure
+         * that server connection is available over a longer period of time (initial check in
+         * main screen activity may only be called once in a day)
+         **/
         new TestConnection().execute();
 
         // buttons for lecturer functions
@@ -95,9 +108,8 @@ public class LecturerUI extends Activity implements View.OnClickListener
         btnReset = (Button) findViewById(R.id.reset_user);                  // testing purpose button to reset user
 
         // TextViews for hold format and content info for testing purposes
-        //formatTxt = (TextView) findViewById(R.id.scan_format);
-        //contentTxt = (TextView) findViewById(R.id.scan_content);
-        serverStatus = (TextView) findViewById(R.id.server_info);            // updated to show server connectivity
+        serverStatus = (TextView) findViewById(R.id.server_info);           // updated to show server connectivity
+        moduleNumber = (TextView) findViewById(R.id.module_info);
 
         // set onClick listeners for all buttons
         btnManSignin.setOnClickListener(this);
@@ -107,6 +119,20 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
         // button to be removed before final version (hidden on screen)
         btnReset.setOnClickListener(this);
+
+        /**
+         * in the event that the lecturer has not previously selected a module code and class type from the find QR
+         * screen, they will be prompted to scan a module code upon opening this activity. Otherwise the previously
+         * selected class details will be presented to them on screen
+         **/
+
+        if (recModuleID != null)
+        {
+            // show scan QR button
+            moduleNumber.setVisibility(View.VISIBLE);
+            moduleNumber.setText("module: " + recModuleID);
+
+        } // if the lecturer has stored module info, it will be presented on screen
 
     } // onCreate
 
@@ -249,6 +275,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
         } // if - else to determine operation if internet is or isn't available
 
     }// onClick
+
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent)

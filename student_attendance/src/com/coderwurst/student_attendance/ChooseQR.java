@@ -150,6 +150,10 @@ public class ChooseQR extends Activity implements View.OnClickListener
             // stores the users choice for use in the RecursiveSignIn Activity
             RecursiveSignIn.recModuleID = moduleID;
             RecursiveSignIn.recClassType = classType;
+            // stores the users choice for use in the main UI
+            LecturerUI.recModuleID = moduleID;
+
+            finish();
 
         }// if else for button click
 

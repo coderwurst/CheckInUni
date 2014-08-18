@@ -136,7 +136,7 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="review" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="lecturer" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.coderwurst.student_attendance" />
   </component>
   <component name="ChangeListManager">
@@ -162,10 +162,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainScreenActivity.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="MainScreenActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/MainScreenActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="4410">
+            <state vertical-scroll-proportion="-6.453799" vertical-offset="3908" max-vertical-offset="4410">
               <caret line="51" column="53" selection-start-line="51" selection-start-column="53" selection-end-line="51" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -174,11 +174,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ViewAllModules.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/ViewAllModules.java">
+      <file leaf-file-name="LoadStoredInfo.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/LoadStoredInfo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1440" max-vertical-offset="3555">
-              <caret line="53" column="4" selection-start-line="53" selection-start-column="4" selection-end-line="55" selection-end-column="50" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="5378" max-vertical-offset="5940">
+              <caret line="381" column="25" selection-start-line="381" selection-start-column="25" selection-end-line="381" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1904#1912#0" expanded="true" />
+                <element signature="e#4107#4115#0" expanded="true" />
+                <element signature="e#8341#8349#0" expanded="true" />
+                <element signature="e#10129#10144#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChooseQR.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/ChooseQR.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1829" max-vertical-offset="2370">
+              <caret line="155" column="12" selection-start-line="155" selection-start-column="12" selection-end-line="155" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -187,24 +203,19 @@
       <file leaf-file-name="RecursiveSignIn.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/RecursiveSignIn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.8863635" vertical-offset="640" max-vertical-offset="10830">
-              <caret line="80" column="54" selection-start-line="80" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="8813" max-vertical-offset="10800">
+              <caret line="625" column="12" selection-start-line="625" selection-start-column="12" selection-end-line="628" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReviewInfo.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/ReviewInfo.java">
+      <file leaf-file-name="StudentUI.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/StudentUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.54956895" vertical-offset="1575" max-vertical-offset="4695">
-              <caret line="122" column="26" selection-start-line="122" selection-start-column="26" selection-end-line="122" selection-end-column="26" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1706#1714#0" expanded="true" />
-                <element signature="e#6195#6203#0" expanded="true" />
-                <element signature="e#8143#8158#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0" vertical-offset="113" max-vertical-offset="6030">
+              <caret line="407" column="0" selection-start-line="407" selection-start-column="0" selection-end-line="407" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -238,8 +249,6 @@
         <option value="$PROJECT_DIR$/src/com/google/zxing/integration/android/IntentIntegrator.java" />
         <option value="$PROJECT_DIR$/res/layout-sw600dp/student_ui.xml" />
         <option value="$PROJECT_DIR$/res/layout-sw600dp-land/student_ui.xml" />
-        <option value="$PROJECT_DIR$/res/layout-sw600dp-land/lecturer_ui.xml" />
-        <option value="$PROJECT_DIR$/res/layout-sw600dp/lecturer_ui.xml" />
         <option value="$PROJECT_DIR$/res/layout/add_student_man.xml" />
         <option value="$PROJECT_DIR$/res/layout-sw320dp-land/add_student_man.xml" />
         <option value="$PROJECT_DIR$/res/layout-sw480dp-land/add_student_man.xml" />
@@ -250,11 +259,7 @@
         <option value="$PROJECT_DIR$/res/layout-sw600dp/add_student_man.xml" />
         <option value="$PROJECT_DIR$/res/layout-sw600dp-land/add_student_man.xml" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/ViewAllModules.java" />
-        <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/JSONParser.java" />
-        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/ChooseQR.java" />
-        <option value="$PROJECT_DIR$/res/layout-sw600dp/recursive_signin.xml" />
-        <option value="$PROJECT_DIR$/res/layout-sw600dp-land/recursive_signin.xml" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/AddStudentMan.java" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/SignIn.java" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/Splash.java" />
@@ -262,14 +267,20 @@
         <option value="$PROJECT_DIR$/res/layout-sw600dp-land/choose_qr.xml" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/InitialReg.java" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/StudentUI.java" />
-        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/LecturerUI.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/RecursiveSignIn.java" />
         <option value="$PROJECT_DIR$/res/layout-sw600dp-land/load_info.xml" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/MainScreenActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/LoadStoredInfo.java" />
         <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/ReviewInfo.java" />
         <option value="$PROJECT_DIR$/res/layout-sw600dp/load_info.xml" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/res/layout-sw600dp-land/recursive_signin.xml" />
+        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/RecursiveSignIn.java" />
+        <option value="$PROJECT_DIR$/res/layout-sw600dp/recursive_signin.xml" />
+        <option value="$PROJECT_DIR$/res/layout-sw600dp/lecturer_ui.xml" />
+        <option value="$PROJECT_DIR$/res/layout-sw600dp-land/lecturer_ui.xml" />
+        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/ChooseQR.java" />
+        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/LecturerUI.java" />
+        <option value="$PROJECT_DIR$/src/com/coderwurst/student_attendance/LoadStoredInfo.java" />
       </list>
     </option>
   </component>
@@ -697,6 +708,7 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30613893" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33835617" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3260274" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -704,7 +716,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31917807" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3260274" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27671233" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -715,7 +727,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -891,6 +902,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.09174312" vertical-offset="0" max-vertical-offset="1470">
           <caret line="4" column="32" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -954,17 +966,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout-sw600dp/lecturer_ui.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4274571" vertical-offset="0" max-vertical-offset="1560">
-          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/add_student_man.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -972,6 +973,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6539509" vertical-offset="1185" max-vertical-offset="1620">
           <caret line="95" column="50" selection-start-line="95" selection-start-column="50" selection-end-line="95" selection-end-column="50" />
+          <folding>
+            <element signature="e#981#1003#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -992,6 +996,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.57" vertical-offset="1062" max-vertical-offset="1545">
           <caret line="86" column="7" selection-start-line="86" selection-start-column="7" selection-end-line="86" selection-end-column="7" />
+          <folding>
+            <element signature="e#1054#1076#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1002,6 +1009,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.9259257" vertical-offset="707" max-vertical-offset="1545">
           <caret line="56" column="12" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="12" />
+          <folding>
+            <element signature="e#1062#1084#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1012,6 +1022,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.85106385" vertical-offset="1035" max-vertical-offset="1590">
           <caret line="93" column="58" selection-start-line="93" selection-start-column="58" selection-end-line="93" selection-end-column="58" />
+          <folding>
+            <element signature="e#1092#1114#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1022,6 +1035,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.71100914" vertical-offset="1070" max-vertical-offset="1620">
           <caret line="92" column="47" selection-start-line="92" selection-start-column="47" selection-end-line="92" selection-end-column="47" />
+          <folding>
+            <element signature="e#981#1003#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1032,6 +1048,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.63829786" vertical-offset="1155" max-vertical-offset="1680">
           <caret line="95" column="52" selection-start-line="95" selection-start-column="52" selection-end-line="95" selection-end-column="52" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1068,56 +1085,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42592594" vertical-offset="16" max-vertical-offset="750">
-          <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/JSONParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.32327586" vertical-offset="45" max-vertical-offset="1530">
           <caret line="32" column="9" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout-sw600dp-land/lecturer_ui.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6163142" vertical-offset="297" max-vertical-offset="1575">
-          <caret line="47" column="52" selection-start-line="47" selection-start-column="52" selection-end-line="47" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout-sw600dp-land/recursive_signin.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.657277" vertical-offset="450" max-vertical-offset="1365">
-          <caret line="58" column="55" selection-start-line="58" selection-start-column="41" selection-end-line="58" selection-end-column="55" />
-          <folding>
-            <element signature="e#1099#1121#0" expanded="false" />
-            <element signature="e#2655#2679#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout-sw600dp/recursive_signin.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4194053" vertical-offset="692" max-vertical-offset="1395">
-          <caret line="64" column="40" selection-start-line="64" selection-start-column="40" selection-end-line="64" selection-end-column="40" />
-          <folding>
-            <element signature="e#2793#2817#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1185,22 +1156,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/StudentUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1085384" vertical-offset="5069" max-vertical-offset="6030">
-          <caret line="407" column="0" selection-start-line="407" selection-start-column="0" selection-end-line="407" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/LecturerUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="6180">
-          <caret line="322" column="0" selection-start-line="322" selection-start-column="0" selection-end-line="322" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.53125" vertical-offset="931" max-vertical-offset="1725">
@@ -1223,22 +1178,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/ChooseQR.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="690" max-vertical-offset="2310">
-          <caret line="90" column="8" selection-start-line="90" selection-start-column="8" selection-end-line="92" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/RecursiveSignIn.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.8863635" vertical-offset="640" max-vertical-offset="10830">
-          <caret line="80" column="54" selection-start-line="80" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout-sw600dp-land/load_info.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -1250,38 +1189,6 @@
             <element signature="e#910#925#0" expanded="true" />
             <element signature="e#1490#1505#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/MainScreenActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="4410">
-          <caret line="51" column="53" selection-start-line="51" selection-start-column="53" selection-end-line="51" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/LoadStoredInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.81840795" vertical-offset="2701" max-vertical-offset="5865">
-          <caret line="202" column="53" selection-start-line="202" selection-start-column="42" selection-end-line="202" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1904#1912#0" expanded="true" />
-            <element signature="e#4107#4115#0" expanded="true" />
-            <element signature="e#8341#8349#0" expanded="true" />
-            <element signature="e#10129#10144#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/ViewAllModules.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="3555">
-          <caret line="53" column="4" selection-start-line="53" selection-start-column="4" selection-end-line="55" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1298,13 +1205,137 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/ReviewInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.54956895" vertical-offset="1575" max-vertical-offset="4695">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1575" max-vertical-offset="4695">
           <caret line="122" column="26" selection-start-line="122" selection-start-column="26" selection-end-line="122" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1706#1714#0" expanded="true" />
             <element signature="e#6195#6203#0" expanded="true" />
             <element signature="e#8143#8158#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/ViewAllModules.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.9396552" vertical-offset="1440" max-vertical-offset="3555">
+          <caret line="53" column="4" selection-start-line="53" selection-start-column="4" selection-end-line="55" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.61206895" vertical-offset="61" max-vertical-offset="735">
+          <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout-sw600dp/recursive_signin.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35162094" vertical-offset="489" max-vertical-offset="1125">
+          <caret line="42" column="49" selection-start-line="42" selection-start-column="49" selection-end-line="42" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout-sw600dp-land/recursive_signin.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="80" max-vertical-offset="1155">
+          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout-sw600dp/lecturer_ui.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.037037" vertical-offset="941" max-vertical-offset="1485">
+          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+          <folding>
+            <element signature="e#1071#1093#0" expanded="true" />
+            <element signature="e#3484#3508#0" expanded="true" />
+            <element signature="e#4001#4024#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout-sw600dp-land/lecturer_ui.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.148149" vertical-offset="1181" max-vertical-offset="1740">
+          <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+          <folding>
+            <element signature="e#1099#1121#0" expanded="true" />
+            <element signature="e#4233#4257#0" expanded="true" />
+            <element signature="e#4751#4774#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/LecturerUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.54" vertical-offset="1320" max-vertical-offset="6585">
+          <caret line="132" column="33" selection-start-line="132" selection-start-column="33" selection-end-line="132" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/ChooseQR.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1829" max-vertical-offset="2370">
+          <caret line="155" column="12" selection-start-line="155" selection-start-column="12" selection-end-line="155" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/RecursiveSignIn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="8813" max-vertical-offset="10800">
+          <caret line="625" column="12" selection-start-line="625" selection-start-column="12" selection-end-line="628" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/LoadStoredInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5378" max-vertical-offset="5940">
+          <caret line="381" column="25" selection-start-line="381" selection-start-column="25" selection-end-line="381" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1904#1912#0" expanded="true" />
+            <element signature="e#4107#4115#0" expanded="true" />
+            <element signature="e#8341#8349#0" expanded="true" />
+            <element signature="e#10129#10144#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/StudentUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="113" max-vertical-offset="6030">
+          <caret line="407" column="0" selection-start-line="407" selection-start-column="0" selection-end-line="407" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/coderwurst/student_attendance/MainScreenActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.453799" vertical-offset="3908" max-vertical-offset="4410">
+          <caret line="51" column="53" selection-start-line="51" selection-start-column="53" selection-end-line="51" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
