@@ -85,6 +85,12 @@
                 android:label="@string/app_name" >
         </activity>
 
+        <!-- Activity to review scanned data before sending files to database -->
+        <activity
+                android:name="com.coderwurst.student_attendance.ReviewInfo"
+                android:label="@string/app_name" >
+        </activity>
+
 
     </application>
 

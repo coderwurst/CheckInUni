@@ -22,10 +22,22 @@
                     android:text="@string/title"
                     android:id="@id/file_id"
                     android:layout_gravity="center_horizontal"
-                    android:textSize="50sp"
+                    android:textSize="32sp"
                     android:layout_marginTop="80dp"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="20dp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title"
+                    android:id="@id/total"
+                    android:textSize="16sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_below="@+id/file_id"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="20dp"
+                    />
 
             <Button
                     android:layout_width="wrap_content"
@@ -53,7 +65,7 @@
                     android:paddingRight="50dp"
                     android:layout_alignLeft="@+id/lec_delete"
                     android:layout_below="@+id/file_id"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="100dp"
                     android:layout_marginBottom="250dp"
                     />
 

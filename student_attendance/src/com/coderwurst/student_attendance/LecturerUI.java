@@ -321,34 +321,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
     }// onActivityResult
 
 
-    public static boolean isReachable(Context context)
-    {
-        // First, check we have any sort of connectivity
-        final ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        final NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
-        boolean isReachable = false;
-
-        if (netInfo != null && netInfo.isConnected()) {
-            // Some sort of connection is open, check if server is reachable
-            try {
-                URL url = new URL("http://www.google.com");
-                HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
-                urlc.setRequestProperty("User-Agent", "Android Application");
-                urlc.setRequestProperty("Connection", "close");
-                urlc.setConnectTimeout(30 * 1000);
-                urlc.connect();
-                isReachable = (urlc.getResponseCode() == 200);
-            } catch (IOException e) {
-                Log.e("lecturer ui", e.getMessage());
-            }
-        }
-
-        return isReachable;
-    } // isReachable
-
-
-
-
     /**
      * Background Async Task used each time the user returns to this screen to establish if the server
      * connection is available

@@ -89,6 +89,11 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     protected static String recModuleID = null;
     protected static String recClassType = null;
 
+    // tags used when passing the information into the ReviewInfo class
+    private static final String TAG_STUDENTLIST = "studentList";
+    private static final String TAG_MODID = "moduleId";
+    private static final String TAG_CLASSTYPE = "classType";
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -178,7 +183,21 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                     // logcat to view app progress
                     Log.d("recursive", "scanned details to be sent to database");
 
-                    new LecturerSignStudentIn().execute();          // code to submit details to the database
+                    // new LecturerSignStudentIn().execute();          // code to submit details to the database
+
+                    // Starting new intent
+                    Intent reviewInput = new Intent(getApplicationContext(), ReviewInfo.class);
+
+                    // sending moduleID to next activity
+                    reviewInput.putExtra(TAG_MODID, moduleInfo);
+                    reviewInput.putExtra(TAG_CLASSTYPE, classInfo);
+                    reviewInput.putExtra(TAG_STUDENTLIST, studentBatch);
+
+
+                    // starting new activity and expecting some response back
+                    startActivity(reviewInput);
+
+                    finish();
 
                 } else
                 {

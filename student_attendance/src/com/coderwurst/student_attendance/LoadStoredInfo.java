@@ -70,6 +70,8 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
     // list view and title to show previously stored information on screen
     private ListView lv;
     private TextView title;
+    private TextView runningTotal;
+
 
     // buttons to be used to send the saved information, or delete file
     private Button btnConfirm;
@@ -91,6 +93,9 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
 
         // text view to show module info for saved file being presented
         title = (TextView) findViewById(R.id.file_id);
+
+        // text view to show the total number of students scanned
+        runningTotal = (TextView) findViewById(R.id.total);
 
         // fill ListView with last stored data
         lv = (ListView) findViewById(R.id.checkin_list);
@@ -182,7 +187,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
                 dataToRead += readString;
 
                 inputBuffer = new char[100];
-            }
+            } // while
 
             inputStream.close();
 
@@ -230,6 +235,9 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
 
 
         } while (!allIDs.isEmpty());                // do - while loop to continue until no text remains
+
+        // updates the total number of students in the saved file
+        runningTotal.setText("Total: " + studentBatch.size() + " students");
 
         loadList();
 

@@ -28,4 +28,5 @@
     <item name="checkin_list" type="id"/>
     <item name="typeSpinner" type="id"/>
     <item name="lec_saveDetails" type="id">lec_saveDetails</item>
+    <item name="total" type="id">total</item>
 </resources>
