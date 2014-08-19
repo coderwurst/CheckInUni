@@ -49,7 +49,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
     static SharedPreferences userDetails;
 
     // serverIP available across whole app, to increase efficiency & prevent user error when entering the address
-    protected static String serverIP = "192.168.1.115";
+    protected static String serverIP = "172.17.8.211";
 
     protected static boolean serverAvailable;            // to determine if the server is available
     private String serverResponse;
@@ -57,13 +57,24 @@ public class MainScreenActivity extends Activity implements OnClickListener
     private Context context = this;             // context to be used to check server connectivity
 
 
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+
+        new TestConnection().execute();
+
+    } // onResume
+
+
     /**
      * Main screen activity called after splash screen to determine if user details have been previously stored,
      * and if so what type of user to open up corresponding UI. If no user details have been previously stored,
      * then the app opens to allow a user to register on the device
      **/
-	
-	@Override
+
+   	@Override
 	public void onCreate(Bundle savedInstanceState)
     {
 		super.onCreate(savedInstanceState);
@@ -237,6 +248,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
 
                     // the connection will then return a value, which is stored as the boolean for true if server available
                     serverAvailable = (testServer.getResponseCode() == 200);
+                    serverAvailable = true;
                     serverResponse = "connection available";
 
                     // details have been stored and the student is checked in
@@ -249,7 +261,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
                     serverAvailable = false;
                     // failed to sign-in, PHP has returned an error
                     Log.e("main screen", "Server connection unavailable: " + e.getMessage());
-                }
+                } // try - catch
             } else {
                 // else no internet connection is available
                 serverResponse = "connection not available, offline mode activated";
@@ -271,7 +283,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
         protected void onPostExecute(String file_url)
         {
 
-            if (!serverAvailable && savedID == 0 || savedID == 2)
+            if (serverAvailable != true && savedID == 0)
             {
                 // inform user of incompatible scan
                 Toast connectionError = Toast.makeText(getApplicationContext(),
@@ -280,7 +292,17 @@ public class MainScreenActivity extends Activity implements OnClickListener
 
                 finish();
 
-            } // if the server is not available
+            } else if (serverAvailable != true && savedID == 2)
+            {
+                // inform user of incompatible scan
+                Toast connectionError = Toast.makeText(getApplicationContext(),
+                        "server not available at this time", Toast.LENGTH_LONG);
+                connectionError.show();
+
+                finish();
+
+
+            }// if the server is not available
 
         } // onPostExecute
     } // TestConnection

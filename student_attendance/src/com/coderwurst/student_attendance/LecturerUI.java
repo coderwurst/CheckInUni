@@ -67,7 +67,8 @@ public class LecturerUI extends Activity implements View.OnClickListener
      * This activity remains open in the background whilst the user accesses other UIs. One of which is
      * the find QR code function. If a user selects a QR-Code from the list, it is stores in the protected
      * variable 'recModuleID'. Upon returning to this activity, the onResume method is called, and updates
-     * the text field to show this information (if necessary)
+     * the text field to show this information (if necessary). It is also used to recheck server connectivity
+     * each time the user returns to the screen, and updates te features as necessary
      */
 
     @Override
@@ -82,6 +83,8 @@ public class LecturerUI extends Activity implements View.OnClickListener
             moduleNumber.setText("module: " + recModuleID);
 
         } // if the lecturer has stored module info, it will be presented on screen
+
+        new TestConnection().execute();         // test connectivity
 
     } // onResume
 

@@ -76,6 +76,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
     // creates the JSONParser object
     private JSONParser jsonParser = new JSONParser();
+    private JSONObject jsonForename = null;
 
     // linkedList to store multiple students for batch processing
     private LinkedList <String> studentBatch = new LinkedList<String>();
@@ -102,6 +103,22 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private String lecturer_guide1c = "\nSECOND STEP: 'scan ID card(s)' of students\nFINAL STEP: 'check in' to " +
             "review data";
 
+    private boolean serverAvailable;
+
+    /**
+     * Each time this screen is accessed, the app checks the Lecturer UI for server connectivity. As the Lecturer UI
+     * contains code to check for server access each time it is called, it means that the recursive mode also
+     * gets updated through this process
+     */
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        serverAvailable = LecturerUI.serverAvailable;
+
+    } // onResume
 
 
     @Override
@@ -109,6 +126,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recursive_signin);
+
+        // check for connectivity
+        serverAvailable = MainScreenActivity.serverAvailable;
 
         // buttons to access recursive functionality
         btnGetStudentID = (Button) findViewById(R.id.lec_scan_id);
@@ -151,6 +171,25 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     } // onCreate
 
     /**
+     * onDestroy called when leaving the app, to reset any information stored in teh JSON objects. Before this code
+     * was implemented, there was an issue with the app returning values previously sent to the database, when the
+     * server connection was disabled (such as returning incorrect values for student forename - it presented the
+     * remains of the previous successful check-in)
+     */
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+
+        jsonParser = null;
+        jsonForename = null;
+
+    } // onDestroy
+
+
+
+    /**
      * if - else block in onClick method to ensure that the lecturer enters all the information necessary before
      * attempting to send the information to the database
      */
@@ -159,7 +198,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     public void onClick (View view)
     {
         // outer if-statement to determine (from UI Activity) if a server connection is available
-        if(MainScreenActivity.serverAvailable)
+        if(serverAvailable)
         {
             if (view.getId() == R.id.lec_scan_id)
             {
@@ -397,7 +436,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 String contents = intent.getStringExtra("SCAN_RESULT");
 
                 // if internet is available, return forename
-                if(MainScreenActivity.serverAvailable)
+                if(serverAvailable)
                 {
                     Log.d("recursive","batch id; " + contents);  // allows programmer to follow progress for testing
                     new returnForename().execute();             // runs background task to retrieve student forename
@@ -510,133 +549,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
 
     /**
-     * Background Async Task to send information to database
-     */
-    class LecturerSignStudentIn extends AsyncTask<String, String, String>
-    {
-
-        /**
-         * Before starting background thread Show Progress Dialog to inform
-         * user that the app is processing information.
-         **/
-
-        @Override
-        protected void onPreExecute()
-        {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(RecursiveSignIn.this);
-            pDialog.setMessage("sending info...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        } // onPreExecute
-
-        /**
-         * This doInBackground method completes the work involved in contacting the
-         * server to register the student and module details input by lecturer
-         **/
-
-        protected String doInBackground(String... args)
-        {
-
-            JSONObject json = null;
-
-            for (count = 0; count < studentBatch.size(); count++)
-            {
-                String student_id = studentBatch.get(count).toString();
-                String module_id = moduleInfo;
-                String type = classInfo;
-
-                // logcat to view progress of app
-                Log.d("recursive", "info sent to database; " + student_id + "," +  module_id + "," + type);
-
-                // parameters to be passed into PHP script on server side
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("student_id", student_id));
-                params.add(new BasicNameValuePair("module_id", module_id));
-                params.add(new BasicNameValuePair("type", type));
-
-                // getting JSON Object
-                json = jsonParser.makeHttpRequest(url_sign_in, "POST", params);
-
-                /**
-                 *  try - catch implements a delay as during development it was found that greater
-                 *  numbers of students being processed lead to app crashing after first 3 pieces
-                 *  of student information sent to database
-                 **/
-
-                try
-                {
-                    Thread.sleep(1500);
-                } catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
-
-                // check log cat for response
-                Log.d("recursive", "database response" + json.toString());
-
-            } // for loop for batch progressing multiple students
-
-                try
-                {
-                    int success = json.getInt(TAG_SUCCESS);
-
-                    if (success == 1)
-                    {
-                        // check log cat for response
-                        Log.d("recursive", "database response; php success");
-
-                        // finish this activity
-                        finish();
-
-                    } else
-                    {
-                        // failed to sign-in
-                        Log.e("recursive", "database response; php error");
-
-                        // error message needed for when sign in is not successful
-                        dialogText = "an error has occurred, please try again...";
-
-                        // finish this activity
-                        finish();
-
-                    } // if - else
-                } catch (JSONException e)
-                {
-                    e.printStackTrace();
-                } // try  -catch
-
-                return null;
-        }// doInBackground
-
-        /**
-         * After completing background task the progress dialog can be dismissed, and the user
-         * is informed using a toast message if the process has or has not been successful
-         **/
-
-        protected void onPostExecute(String file_url)
-        {
-            // dialog to inform user sign in result
-            pDialog.setMessage(dialogText);
-
-            // dismiss the dialog once done
-            pDialog.dismiss();
-
-            // informs the user of a success or an error
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "check in: " + dialogText, Toast.LENGTH_LONG);
-            toast.show();
-
-            finish();                   // closes this activity after data has been sent, returns user to home UI
-
-
-        }// onPostExecute
-
-    }// LecturerSignIntoClass
-
-
-     /**
      * Background Async Task to retrieve student forename from database each time a lecturer scans
      * in a student ID
      **/
@@ -664,8 +576,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
          protected String doInBackground(String... args)
         {
-
-                JSONObject jsonForename = null;
 
                 // logcat to view progress of app
                 Log.d("recursive", "info sent to database; " + scannedStuNo);
