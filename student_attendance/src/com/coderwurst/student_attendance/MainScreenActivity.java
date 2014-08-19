@@ -49,7 +49,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
     static SharedPreferences userDetails;
 
     // serverIP available across whole app, to increase efficiency & prevent user error when entering the address
-    protected static String serverIP = "172.17.8.211";
+    protected static String serverIP = "192.168.0.21";
 
     protected static boolean serverAvailable;            // to determine if the server is available
     private String serverResponse;
