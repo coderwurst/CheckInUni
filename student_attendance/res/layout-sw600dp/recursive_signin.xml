@@ -46,7 +46,7 @@
             <Button android:id="@id/add_student_auto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/lecturercheckin"
+                    android:background="@drawable/lecturercheckin_disabled"
                     android:layout_below="@id/lec_scan_id"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="16dp"
@@ -58,12 +58,9 @@
                     android:layout_height="wrap_content"
                     android:textIsSelectable="false"
                     android:text="@string/default_mod_id"
-                    android:layout_below="@id/UULogo"
-                    android:layout_alignRight="@id/UULogo"
-                    android:layout_alignLeft="@id/UULogo"
-                    android:layout_marginTop="16sp"
-                    android:textSize="18sp"
-                    android:visibility="visible"/>
+                    android:textSize="16sp"
+                    android:visibility="visible"
+                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"/>
 
         </RelativeLayout>
     </FrameLayout>

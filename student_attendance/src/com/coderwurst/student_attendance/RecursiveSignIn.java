@@ -96,13 +96,12 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private static final String TAG_CLASSTYPE = "classType";
 
     // instructional Strings to guide user through process
-    private String lecturer_guide = "FIRST STEP: 'scan QR-Code' to collect class info\nSECOND STEP: 'scan ID card(s)' of students" +
-            "\nFINAL STEP: 'check in' to review and send or delete data";
-    private String lecturer_guide1a = "FIRST STEP: use previously saved info:";
-    private String lecturer_guide1b = "\nOR: 'scan QR-Code' for a different class";
-    private String lecturer_guide1c = "\nSECOND STEP: 'scan ID card(s)' of students\nFINAL STEP: 'check in' to " +
-            "review data";
+    //private String lecturer_guide = "FIRST STEP: 'scan QR-Code' to collect class info\nSECOND STEP: 'scan ID card(s)' of students" +
+    //        "\nFINAL STEP: 'check in' to review and send or delete data";
 
+    private String lecturer_guide = "1) scan module id\n2) scan student id\n3) review & submit";
+
+    // boolean to determine if server connection is still available
     private boolean serverAvailable;
 
     /**
@@ -117,6 +116,30 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         super.onResume();
 
         serverAvailable = LecturerUI.serverAvailable;
+
+        if (scannedModule && !scannedID)
+        {
+            btnGetMod.setBackgroundResource(R.drawable.scanmod_disabled);
+            btnGetStudentID.setBackgroundResource(R.drawable.scanid);
+
+        } else if(scannedID && !scannedModule)
+        {
+            btnGetMod.setBackgroundResource(R.drawable.scanmod);
+            btnGetStudentID.setBackgroundResource(R.drawable.scanid_disabled);
+
+        } else if (scannedID && scannedModule)
+        {
+            btnGetMod.setBackgroundResource(R.drawable.scanmod_disabled);
+            btnGetStudentID.setBackgroundResource(R.drawable.scanid_disabled);
+            btnSignIn.setBackgroundResource(R.drawable.lecturercheckin);
+
+        } else
+        {
+            btnGetMod.setBackgroundResource(R.drawable.scanmod);
+            btnGetStudentID.setBackgroundResource(R.drawable.scanid_disabled);
+            btnSignIn.setBackgroundResource(R.drawable.lecturercheckin_disabled);
+
+        }// if - else - if - else - if - if
 
     } // onResume
 
@@ -134,10 +157,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         btnGetStudentID = (Button) findViewById(R.id.lec_scan_id);
         btnGetMod = (Button) findViewById(R.id.lec_scan_mod);
         btnSignIn = (Button) findViewById(R.id.add_student_auto);
-
-        // TextViews for hold format and content info for testing purposes
-        // formatTxt = (TextView) findViewById(R.id.scan_format);
-        // contentTxt = (TextView) findViewById(R.id.scan_content);
 
         // textview to hold current selected class info
         savedMod= (TextView)findViewById(R.id.rec_savedModule);
@@ -160,8 +179,12 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
         } else      // if previous module has been stored, entered automatically into text field
         {
-            savedMod.setText(lecturer_guide1a + "\t" + recModuleID + ", " + recClassType + lecturer_guide1b
-                    + lecturer_guide1c);
+
+            Toast informUser = Toast.makeText(getApplicationContext(),
+                    "use MODULE to scan new class details", Toast.LENGTH_LONG);
+            informUser.show();
+
+            savedMod.setText("\nmodule num: " + recModuleID + "\nclass type: " + recClassType);
             moduleInfo = recModuleID;
             classInfo = recClassType;
             scannedModule = true;

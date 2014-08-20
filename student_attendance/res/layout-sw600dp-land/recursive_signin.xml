@@ -48,7 +48,7 @@
             <Button android:id="@id/add_student_auto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/lecturercheckin"
+                    android:background="@drawable/lecturercheckin_disabled"
                     android:layout_below="@id/lec_scan_id"
                     android:layout_marginTop="20dp"
                     android:layout_alignRight="@id/UULogo"
@@ -56,16 +56,13 @@
 
             <TextView
                     android:id="@+id/rec_savedModule"
-                    android:layout_width="250dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textIsSelectable="false"
                     android:text="@string/default_mod_id"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:visibility="visible"
-                    android:layout_below="@+id/UULogo"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="12dp"
-                    />
+                    android:layout_alignBottom="@id/add_student_auto" android:layout_alignParentLeft="true"/>
 
         </RelativeLayout>
     </FrameLayout>

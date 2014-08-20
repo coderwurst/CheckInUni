@@ -62,7 +62,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
     private Context context = this;                     // context used in checking connectivity
 
     protected static String recModuleID = null;         // string to hold selected module ID
-
+    protected static String recClassType = null;        // string to hold the class type
     /**
      * This activity remains open in the background whilst the user accesses other UIs. One of which is
      * the find QR code function. If a user selects a QR-Code from the list, it is stores in the protected
@@ -80,7 +80,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
         {
             // show scan QR button
             moduleNumber.setVisibility(View.VISIBLE);
-            moduleNumber.setText("module: " + recModuleID);
+            moduleNumber.setText("module num: " + recModuleID + "\nclass type: " + recClassType);
 
         } // if the lecturer has stored module info, it will be presented on screen
 

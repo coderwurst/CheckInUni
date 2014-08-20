@@ -75,9 +75,8 @@
                     android:textIsSelectable="false"
                     android:text="@string/default_mod_id"
                     android:textSize="16dp"
-                    android:layout_above="@+id/server_info"
-                    android:layout_alignLeft="@+id/server_info"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"/>
 
             <TextView
                     android:id="@+id/server_info"

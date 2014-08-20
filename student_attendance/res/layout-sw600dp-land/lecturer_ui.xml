@@ -93,9 +93,8 @@
                     android:textIsSelectable="false"
                     android:text="@string/default_mod_id"
                     android:textSize="16dp"
-                    android:layout_above="@+id/server_info"
-                    android:layout_alignLeft="@+id/server_info"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" android:layout_alignBottom="@id/lec_man_signin"
+                    android:layout_alignParentLeft="true"/>
 
             <TextView
                     android:id="@+id/server_info"
@@ -103,8 +102,8 @@
                     android:layout_height="wrap_content"
                     android:textIsSelectable="false"
                     android:text="@string/server_status"
-                    android:textSize="16dp" android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"/>
+                    android:textSize="16dp"
+                    android:layout_alignBottom="@id/lec_man_signin" android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
     </FrameLayout>

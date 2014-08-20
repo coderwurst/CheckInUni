@@ -108,14 +108,16 @@ public class ViewAllModules extends ListActivity
                 viewQR.putExtra(TAG_LECTURE, lectureUrl);
                 viewQR.putExtra(TAG_TUTORIAL, tutorialUrl);
 				
-				// starting new activity and expecting some response back
-				startActivityForResult(viewQR, 100);
+				// starting new activity to view QR information for chosen module
+				startActivity(viewQR);
+
+                finish();
 			} // onItemClick
 		}); // onItemClickListener
 
 	}// onCreate
 
-	// Response from Edit Product Activity
+	/* Response from LoadAllModules activity
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -125,16 +127,18 @@ public class ViewAllModules extends ListActivity
          * the activity was started with the identifier 100, the program waits for the result of this activity (ie the
          * ChooseQR.java to be returned to this screen, after which the intent is executed; preventing unused
          * app windows from remaining active and open in the background
-         **/
+         *
 
-		if (resultCode == 100)              // if result code 100
+		if (resultCode == 100)                  // returned value from the Choose QR Intent
         {
-			Intent intent = getIntent();    // gets the current intent (ViewAllModules.java)
-			finish();                       // finishes ChooseQR.java
-			startActivity(intent);          // restarts ViewAllModules
+			Intent newIntent = getIntent();     // gets the new intent (ChooseQR.java)
+			finish();                           // finishes background task
+			startActivity(newIntent);           // opens ChooseQR
 		} // if
 
-	}// onActivityResult
+	}// onActivityResult */
+
+
 
 	/**
 	 * background async task to load all modules as stored in database
