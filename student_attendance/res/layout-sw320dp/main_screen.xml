@@ -7,24 +7,22 @@
              android:layout_height="match_parent"
              android:background="@color/UUJBlue" >
 
-
     <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="20dp">
+            android:layout_height="fill_parent" android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true" android:layout_margin="10dp">
 
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
+
             <Button android:id="@+id/reg_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/registration"
-                    android:layout_below="@id/UULogo"
-                    android:layout_marginTop="75dp"/>
+                    android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="100dp"/>
 
             <TextView
                     android:id="@+id/scan_format"
@@ -48,13 +46,11 @@
                     android:layout_gravity="center"
                     android:id="@+id/UULogo"
                     android:background="@drawable/uulogo"
+                    android:layout_marginTop="100dp"
                     android:contentDescription="@string/uuj_logo_att"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="75dp"/>
+                    android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
 
         </RelativeLayout>
-
     </FrameLayout>
 
 </FrameLayout>

@@ -25,7 +25,7 @@
             <!-- ID Label -->
             <TextView android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:text="Student I.D."
+                      android:text="@string/add_man_studentID"
                       android:paddingLeft="250dp"
                       android:paddingRight="250dp"
                       android:textSize="12sp"
@@ -48,7 +48,7 @@
             <TextView android:id="@+id/midTextView"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:text="Module I.D."
+                      android:text="@string/add_man_moduleID"
                       android:paddingLeft="250dp"
                       android:paddingRight="250dp"
                       android:textSize="12sp"
@@ -69,7 +69,7 @@
             <TextView android:id="@+id/typeTextView"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:text="Type"
+                      android:text="@string/add_man_classType"
                       android:paddingLeft="250dp"
                       android:paddingRight="250dp"
                       android:textSize="12sp"
@@ -92,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/lecturercheckinhoriz"
                     android:layout_alignBottom="@+id/UULogo" android:layout_alignParentRight="true"/>
+
 
         </RelativeLayout>
 

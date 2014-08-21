@@ -10,8 +10,8 @@
             android:layout_height="fill_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_margin="5dp"
-            >
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp">
 
 
         <RelativeLayout
@@ -21,29 +21,31 @@
             <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title"
+            android:text="@string/default_class"
             android:id="@id/qr_id"
-            android:layout_gravity="center_horizontal"
             android:textSize="30sp"
-            android:layout_alignParentTop="true" android:layout_alignParentLeft="true"/>
+            android:layout_marginRight="135dp"
+            android:layout_above="@+id/webView"
+            android:layout_toLeftOf="@id/module_number"/>
 
             <WebView
             android:id="@+id/webView"
             android:layout_gravity="center"
             android:scaleType="centerInside"
-            android:layout_width="450dp"
-            android:layout_height="400dp"
+            android:layout_width="400dp"
+            android:layout_height="300dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/lec_lecqr"/>
+            android:layout_toRightOf="@id/lec_lecqr"
+            android:layout_marginRight="10dp"/>
 
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@id/lec_lecqr"
             android:background="@drawable/lecture"
-            android:layout_below="@id/qr_id"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_alignTop="@+id/webView"
+            android:layout_alignLeft="@id/lec_tutqr"
+            android:layout_marginTop="32dp"/>
 
 
     <Button
@@ -52,17 +54,26 @@
             android:background="@drawable/tutorial"
             android:id="@id/lec_tutqr"
             android:layout_below="@id/lec_lecqr"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="5dp"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@id/lec_saveDetails"
+            android:layout_below="@+id/lec_tutqr"
+            android:layout_alignLeft="@id/lec_tutqr"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/savedetails"/>
 
     <TextView
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="default"
+             android:text="@string/default_mod_id"
              android:textSize="16sp"
              android:id="@id/module_number"
              android:layout_above="@+id/webView"
-             android:layout_alignLeft="@+id/webView"/>
+             android:layout_alignRight="@+id/webView"/>
 
         </RelativeLayout>
     </FrameLayout>

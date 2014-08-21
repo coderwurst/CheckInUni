@@ -18,12 +18,13 @@
                 android:layout_height="fill_parent">
 
             <Button android:id="@+id/test_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="reset"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="false"
                     android:textSize="26dp"
                     android:textStyle="bold"
-                    android:layout_alignParentTop="true" android:layout_alignParentLeft="true"/>
+                    android:background="@android:color/transparent"/>
 
             <ImageView
                     android:layout_width="wrap_content"
@@ -42,7 +43,7 @@
                     android:layout_gravity="center"
                     android:background="@drawable/checkin"
                     android:layout_below="@+id/UULogo"
-                    android:layout_marginTop="75dp"
+                    android:layout_marginTop="50dp"
                     android:layout_centerHorizontal="true"/>
 
             <TextView

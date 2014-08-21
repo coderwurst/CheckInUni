@@ -8,7 +8,7 @@
     <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true" android:layout_margin="100dp">
+            android:layout_alignParentLeft="true" android:layout_margin="10dp">
 
 
         <RelativeLayout
@@ -29,45 +29,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/scanid"
-                    android:layout_above="@id/add_student_auto"
+                    android:layout_below="@id/lec_scan_mod"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="16dp"
                     />
 
             <Button android:id="@id/lec_scan_mod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/scanmod"
-                    android:layout_above="@+id/lec_scan_id"
+                    android:layout_below="@+id/UULogo"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="32dp"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="132dp"
                     />
 
             <Button android:id="@id/add_student_auto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/lecturercheckin"
-                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/lecturercheckin_disabled"
+                    android:layout_below="@id/lec_scan_id"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="16dp"
                     />
 
             <TextView
-                    android:id="@+id/scan_format"
+                    android:id="@+id/rec_savedModule"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/add_student_auto" />
-
-            <TextView
-                    android:id="@+id/scan_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/scan_format" />
+                    android:textIsSelectable="false"
+                    android:text="@string/default_mod_id"
+                    android:textSize="16sp"
+                    android:visibility="visible"
+                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"/>
 
         </RelativeLayout>
     </FrameLayout>

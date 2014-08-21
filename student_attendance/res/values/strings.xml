@@ -36,8 +36,11 @@
     <string-array name="classType">
             <item >lecture</item>
             <item >tutorial</item>
-        </string-array>
+    </string-array>
 
-
+    <!-- Add Student Man headings -->
+    <string name="add_man_studentID">Student ID</string>
+    <string name="add_man_moduleID">Module ID</string>
+    <string name="add_man_classType">Type</string>
 
 </resources>

@@ -24,7 +24,7 @@
                 android:background="@drawable/uulogo"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="100dp"
                 android:contentDescription="@string/uuj_logo_att"/>
 
     <!-- List view to show contents retrieved from Database   -->
@@ -37,6 +37,7 @@
             android:paddingRight="50dp"
             android:layout_alignLeft="@+id/UULogo"
             android:layout_alignRight="@+id/UULogo"
+            android:layout_marginTop="100dp"
             android:layout_marginBottom="20dp"/>
 
         </RelativeLayout>

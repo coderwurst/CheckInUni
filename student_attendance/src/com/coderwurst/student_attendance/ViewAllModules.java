@@ -74,6 +74,7 @@ public class ViewAllModules extends ListActivity
 
 		// get listview from xml file
 		ListView lv = getListView();
+        
 
 		// on click, user will be taken to chosen module QR-Codes
 		lv.setOnItemClickListener(new OnItemClickListener() {
@@ -116,29 +117,6 @@ public class ViewAllModules extends ListActivity
 		}); // onItemClickListener
 
 	}// onCreate
-
-	/* Response from LoadAllModules activity
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-		super.onActivityResult(requestCode, resultCode, data);
-
-        /**
-         * the activity was started with the identifier 100, the program waits for the result of this activity (ie the
-         * ChooseQR.java to be returned to this screen, after which the intent is executed; preventing unused
-         * app windows from remaining active and open in the background
-         *
-
-		if (resultCode == 100)                  // returned value from the Choose QR Intent
-        {
-			Intent newIntent = getIntent();     // gets the new intent (ChooseQR.java)
-			finish();                           // finishes background task
-			startActivity(newIntent);           // opens ChooseQR
-		} // if
-
-	}// onActivityResult */
-
-
 
 	/**
 	 * background async task to load all modules as stored in database

@@ -22,9 +22,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/loading"
-            android:textSize="24dp"
+            android:textSize="32dp"
             android:id="@+id/textView"
             android:layout_below="@+id/progressBar"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"/>
+
 </RelativeLayout>

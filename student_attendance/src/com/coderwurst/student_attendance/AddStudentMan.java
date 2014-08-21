@@ -83,11 +83,11 @@ public class AddStudentMan extends Activity
         // button to send details to server
 		btnSignIn = (Button) findViewById(R.id.add_student_man);
 
-		// confirm details button click event
-		btnSignIn.setOnClickListener(new View.OnClickListener() {
+        // confirm details button click event
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
 
-			@Override
-			public void onClick(View arg0) {
+            @Override
+            public void onClick(View arg0) {
 
                 // retrieves current text entered into each field to be used to check if all data has been entered
                 sStudentID = inputStudentID.getText().toString();
@@ -108,8 +108,8 @@ public class AddStudentMan extends Activity
                     new SignStudentIn().execute();
 
                 } // if - else to prevent an incomplete record being stored on the database
-			} // onClick
-		}); // onClickListener
+            } // onClick
+        }); // onClickListener
 
         // text fields to be updated by user, until then an example input is shown
         inputStudentID = (EditText) findViewById(R.id.student_id);
@@ -126,13 +126,6 @@ public class AddStudentMan extends Activity
         } // if - else
 
         populateDeviceTypeSpinner();        // call to load the dropdown menu with programmed options
-
-        //inputType = (EditText) findViewById(R.id.type);
-        //inputType.setHint("lecture or tutorial");
-        // loads options into type list
-        // dropdown.setAdapter(adapter);
-        //set the default according to value
-        // dropdown.setSelection(0);
 
     } // onCreate
 

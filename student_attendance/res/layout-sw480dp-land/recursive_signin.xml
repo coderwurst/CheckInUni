@@ -10,7 +10,7 @@
             android:layout_height="fill_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            >
+            android:layout_margin="20dp">
 
 
         <RelativeLayout
@@ -24,50 +24,39 @@
                     android:background="@drawable/uulogo"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
                     android:contentDescription="@string/uuj_logo_att"/>
 
             <Button android:id="@id/lec_scan_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/scanid"
-                    android:layout_below="@id/lec_scan_mod"
-                    android:layout_marginTop="10dp"
-                    android:layout_centerHorizontal="true"
-                    />
+                    android:layout_below="@+id/UULogo" android:layout_alignParentRight="true"/>
 
             <Button android:id="@id/lec_scan_mod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/scanmod"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/UULogo"
-                    android:layout_centerHorizontal="true"
-                    />
+                    android:layout_below="@+id/UULogo" android:layout_alignParentLeft="true"/>
 
             <Button android:id="@id/add_student_auto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/lecturercheckin"
+                    android:background="@drawable/lecturercheckin_disabled"
                     android:layout_below="@id/lec_scan_id"
-                    android:layout_marginTop="10dp"
-                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_alignRight="@id/UULogo"
                     />
 
             <TextView
-                    android:id="@+id/scan_format"
+                    android:id="@+id/rec_savedModule"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/add_student_auto" />
-
-            <TextView
-                    android:id="@+id/scan_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/scan_format" />
+                    android:textIsSelectable="false"
+                    android:text="@string/default_mod_id"
+                    android:textSize="16sp"
+                    android:visibility="visible"
+                    android:layout_alignBottom="@id/add_student_auto" android:layout_alignParentLeft="true"/>
 
         </RelativeLayout>
     </FrameLayout>

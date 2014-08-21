@@ -27,7 +27,7 @@
             <!-- ID Label -->
             <TextView android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:text="Student I.D."
+                      android:text="@string/add_man_studentID"
                       android:paddingLeft="10dp"
                       android:paddingRight="10dp"
                       android:paddingTop="20dp"
@@ -50,7 +50,7 @@
             <TextView android:id="@+id/midTextView"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:text="Module I.D."
+                      android:text="@string/add_man_moduleID"
                       android:paddingLeft="10dp"
                       android:paddingRight="10dp"
                       android:paddingTop="20dp"
@@ -65,14 +65,13 @@
                       android:layout_marginBottom="10dp"
                       android:singleLine="true"
                       android:inputType="textCapCharacters"
-                      android:layout_below="@+id/midTextView"
-                    />
+                      android:layout_below="@+id/midTextView"/>
 
             <!-- Type Label -->
             <TextView android:id="@+id/typeTextView"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:text="Type"
+                      android:text="@string/add_man_classType"
                       android:paddingLeft="10dp"
                       android:paddingRight="10dp"
                       android:paddingTop="20dp"

@@ -180,10 +180,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         } else      // if previous module has been stored, entered automatically into text field
         {
 
-            Toast informUser = Toast.makeText(getApplicationContext(),
-                    "use MODULE to scan new class details", Toast.LENGTH_LONG);
-            informUser.show();
-
             savedMod.setText("\nmodule num: " + recModuleID + "\nclass type: " + recClassType);
             moduleInfo = recModuleID;
             classInfo = recClassType;

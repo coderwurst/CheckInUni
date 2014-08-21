@@ -16,48 +16,57 @@
                 android:layout_height="fill_parent">
 
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title"
-                    android:id="@id/module_number" android:layout_gravity="center_horizontal" android:textSize="24sp"
-                    android:layout_marginTop="20dp" android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_class"
+            android:id="@id/qr_id"
+            android:layout_gravity="center_horizontal"
+            android:textSize="30sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
 
             <WebView
-                    android:id="@+id/webView"
-                    android:layout_gravity="center"
-                    android:scaleType="centerInside"
-                    android:layout_width="250dp"
-                    android:layout_height="250dp"
-                    android:layout_below="@+id/module_number"
-                    android:layout_marginTop="10dp"
-                    android:layout_centerHorizontal="true"/>
+            android:id="@+id/webView"
+            android:layout_gravity="center"
+            android:scaleType="centerInside"
+            android:layout_width="300dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="12dp"
+            android:layout_below="@+id/qr_id"
+            android:layout_centerHorizontal="true"/>
 
-            <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/lecture"
-                    android:id="@id/lec_lecqr"
-                    android:layout_below="@+id/webView"
-                    android:layout_marginTop="10dp"
-                    android:layout_centerHorizontal="true"
-                    />
-            <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/tutorial"
-                    android:id="@id/lec_tutqr"
-                    android:layout_below="@+id/lec_lecqr"
-                    android:layout_marginTop="10dp"
-                    android:layout_centerHorizontal="true"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="default"
-                    android:textSize="8sp"
-                    android:id="@id/qr_id"
-                    android:layout_above="@+id/webView"
-                    android:layout_alignLeft="@+id/webView"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/lecture"
+            android:id="@id/lec_lecqr"
+            android:layout_below="@+id/webView" android:layout_centerHorizontal="true"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tutorial"
+            android:id="@id/lec_tutqr"
+            android:layout_below="@+id/lec_lecqr"
+            android:layout_alignRight="@+id/webView"
+            android:layout_marginTop="10dp"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@id/lec_saveDetails"
+            android:layout_below="@+id/lec_tutqr"
+            android:layout_alignLeft="@id/lec_tutqr"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/savedetails"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_mod_id"
+            android:textSize="16sp"
+            android:id="@id/module_number"
+            android:layout_above="@+id/webView"
+            android:layout_alignRight="@+id/webView"/>
 
 
         </RelativeLayout>

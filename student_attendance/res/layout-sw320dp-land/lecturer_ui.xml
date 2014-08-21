@@ -10,67 +10,61 @@
             android:layout_height="fill_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_margin="5dp">
+            android:layout_margin="10dp">
 
 
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
-
             <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/UULogo"
                     android:background="@drawable/uulogo"
-                    android:contentDescription="@string/uuj_logo_att"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"/>
-
-            <Button android:id="@id/lec_recall"
-                    android:layout_width="120dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/savedfiles"
-                    android:layout_below="@+id/UULogo"
-                    android:layout_marginTop="16dp"
-                    android:visibility="invisible"/>
+                    android:contentDescription="@string/uuj_logo_att"/>
 
             <Button android:id="@id/lec_man_signin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/mancheckin"
-                    android:layout_toRightOf="@+id/UULogo"
-                    android:layout_alignLeft="@id/lec_auto_signin"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_below="@+id/lec_auto_signin"
+                    android:layout_centerHorizontal="true"/>
+
+            <Button android:id="@id/lec_recall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/savedfiles"
+                    android:layout_above="@+id/lec_man_signin"
+                    android:layout_toRightOf="@id/UULogo"
+                    android:layout_marginLeft="50dp"
+                    android:visibility="invisible"/>
 
             <Button android:id="@id/lec_auto_signin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/autocheckin"
-                    android:layout_below="@id/lec_man_signin"
-                    android:layout_marginTop="20dp"
+                    android:layout_below="@id/getQRCode"
                     android:layout_centerHorizontal="true"/>
 
             <Button android:id="@id/getQRCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/findqr"
-                    android:layout_below="@id/lec_auto_signin"
-                    android:layout_marginTop="20dp"
+                    android:layout_below="@id/UULogo"
+                    android:layout_marginTop="10dp"
                     android:layout_centerHorizontal="true"/>
 
             <Button android:id="@id/reset_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="reset"
-                    android:layout_alignParentBottom="true"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="false"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="20dp"
                     android:textSize="26dp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:background="@android:color/transparent"/>
 
             <TextView
                     android:id="@+id/scan_format"
@@ -87,6 +81,25 @@
                     android:textIsSelectable="true"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/scan_format" />
+
+            <TextView
+                    android:id="@+id/module_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="false"
+                    android:text="@string/default_mod_id"
+                    android:textSize="16dp"
+                    android:visibility="invisible" android:layout_alignBottom="@id/lec_man_signin"
+                    android:layout_alignParentLeft="true"/>
+
+            <TextView
+                    android:id="@+id/server_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="false"
+                    android:text="@string/server_status"
+                    android:textSize="16dp"
+                    android:layout_alignBottom="@id/lec_man_signin" android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
     </FrameLayout>

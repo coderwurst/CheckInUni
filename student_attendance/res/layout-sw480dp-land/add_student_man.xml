@@ -18,18 +18,19 @@
                     android:id="@+id/UULogo"
                     android:background="@drawable/uulogo"
                     android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
-                    android:layout_marginLeft="20dp"
                     android:contentDescription="@string/uuj_logo_att"/>
 
             <!-- ID Label -->
             <TextView android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:text="Student I.D."
+                      android:text="@string/add_man_studentID"
+                      android:paddingLeft="250dp"
+                      android:paddingRight="250dp"
                       android:textSize="12sp"
                       android:layout_below="@+id/UULogo"
                       android:layout_marginTop="40dp"
-                      android:layout_alignLeft="@+id/UULogo"
                       android:id="@+id/sidTextView"/>
 
             <!-- Input Student ID -->
@@ -37,18 +38,19 @@
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginTop="2dp"
-                      android:layout_alignLeft="@+id/UULogo"
-                      android:layout_alignRight="@+id/UULogo"
+                      android:layout_marginLeft="250dp"
+                      android:layout_marginRight="250dp"
                       android:singleLine="true"
-                      android:layout_below="@+id/sidTextView"/>
+                      android:layout_below="@+id/sidTextView"
+                      android:inputType="textCapCharacters"/>
 
             <!-- Module Label -->
             <TextView android:id="@+id/midTextView"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:text="Module I.D."
-                      android:layout_alignLeft="@+id/UULogo"
-                      android:layout_alignRight="@+id/UULogo"
+                      android:text="@string/add_man_moduleID"
+                      android:paddingLeft="250dp"
+                      android:paddingRight="250dp"
                       android:textSize="12sp"
                       android:layout_below="@+id/student_id" />
 
@@ -57,19 +59,19 @@
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginTop="2dp"
-                      android:layout_alignLeft="@+id/UULogo"
-                      android:layout_alignRight="@+id/UULogo"
+                      android:layout_marginLeft="250dp"
+                      android:layout_marginRight="250dp"
                       android:singleLine="true"
-                      android:inputType="text"
+                      android:inputType="textCapCharacters"
                       android:layout_below="@+id/midTextView"/>
 
             <!-- Type Label -->
             <TextView android:id="@+id/typeTextView"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:text="Type"
-                      android:layout_alignLeft="@+id/UULogo"
-                      android:layout_alignRight="@+id/UULogo"
+                      android:text="@string/add_man_classType"
+                      android:paddingLeft="250dp"
+                      android:paddingRight="250dp"
                       android:textSize="12sp"
                       android:layout_below="@+id/module_id"/>
 
@@ -78,19 +80,18 @@
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginTop="2dp"
-                      android:layout_alignLeft="@+id/UULogo"
-                      android:layout_alignRight="@+id/UULogo"
+                      android:layout_marginLeft="250dp"
+                      android:layout_marginRight="250dp"
+                      android:layout_alignParentLeft="true"
                       android:layout_below="@+id/typeTextView"
-                      android:background="@android:drawable/btn_dropdown"
-                    />
+                      android:background="@android:drawable/btn_dropdown"/>
 
             <!-- Button Subimit -->
             <Button android:id="@id/add_student_man"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/lecturercheckinhoriz"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"/>
+                    android:layout_alignParentBottom="true" android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
 

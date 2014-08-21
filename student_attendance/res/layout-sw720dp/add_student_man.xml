@@ -6,8 +6,7 @@
     <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="100dp">
+            android:layout_alignParentLeft="true" android:layout_margin="100dp">
 
 
         <RelativeLayout
@@ -28,10 +27,10 @@
             <!-- ID Label -->
             <TextView android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:text="Student I.D."
+                      android:text="@string/add_man_studentID"
                       android:paddingLeft="10dp"
                       android:paddingRight="10dp"
-                      android:paddingTop="100dp"
+                      android:paddingTop="120dp"
                       android:textSize="24sp"
                       android:layout_below="@+id/UULogo"
                       android:layout_marginTop="50dp"
@@ -44,13 +43,14 @@
                       android:layout_margin="5dp"
                       android:layout_marginBottom="10dp"
                       android:singleLine="true"
-                      android:layout_below="@+id/sidTextView"/>
+                      android:layout_below="@+id/sidTextView"
+                      android:inputType="textCapCharacters"/>
 
             <!-- Module Label -->
             <TextView android:id="@+id/midTextView"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:text="Module I.D."
+                      android:text="@string/add_man_moduleID"
                       android:paddingLeft="10dp"
                       android:paddingRight="10dp"
                       android:paddingTop="20dp"
@@ -64,14 +64,15 @@
                       android:layout_margin="5dp"
                       android:layout_marginBottom="10dp"
                       android:singleLine="true"
-                      android:inputType="text"
-                      android:layout_below="@+id/midTextView"/>
+                      android:inputType="textCapCharacters"
+                      android:layout_below="@+id/midTextView"
+                    />
 
             <!-- Type Label -->
             <TextView android:id="@+id/typeTextView"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:text="Type"
+                      android:text="@string/add_man_classType"
                       android:paddingLeft="10dp"
                       android:paddingRight="10dp"
                       android:paddingTop="20dp"
@@ -79,18 +80,13 @@
                       android:layout_below="@+id/module_id"/>
 
             <!-- Input Type -->
-            <Spinner android:id="@id/typeSpinner"
+            <Spinner  android:id="@id/typeSpinner"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:layout_margin="5dp"
-                      android:layout_marginBottom="10dp"
-                      android:singleLine="true"
-                      android:gravity="top"
                       android:layout_alignParentLeft="true"
                       android:layout_below="@+id/typeTextView"
                       android:background="@android:drawable/btn_dropdown"/>
-
-
 
             <!-- Button Subimit -->
             <Button android:id="@id/add_student_man"
@@ -99,7 +95,7 @@
                     android:background="@drawable/checkin"
                     android:layout_below="@+id/typeSpinner"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="200dp"/>
+                    android:layout_marginTop="150dp"/>
 
         </RelativeLayout>
 

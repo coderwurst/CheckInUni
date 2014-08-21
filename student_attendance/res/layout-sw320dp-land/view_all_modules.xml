@@ -23,7 +23,7 @@
                 android:id="@+id/UULogo"
                 android:background="@drawable/uulogo"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:contentDescription="@string/uuj_logo_att"/>
 
@@ -35,8 +35,8 @@
             android:layout_height="wrap_content"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
-            android:layout_alignTop="@+id/UULogo"
-            android:layout_toRightOf="@+id/UULogo"
+            android:layout_alignLeft="@+id/UULogo"
+            android:layout_alignRight="@+id/UULogo"
             android:layout_marginBottom="20dp"/>
 
         </RelativeLayout>

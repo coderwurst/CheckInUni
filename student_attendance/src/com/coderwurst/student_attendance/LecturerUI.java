@@ -210,6 +210,15 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 Intent openAutoSignin = new Intent(getApplicationContext(), RecursiveSignIn.class);
                 startActivity(openAutoSignin);
 
+                if (recModuleID != null)
+                {
+                    Toast informUser = Toast.makeText(getApplicationContext(),
+                            "use MODULE to scan new class details", Toast.LENGTH_LONG);
+                    informUser.show();
+
+                } // if
+
+
             } else if (view.getId() == R.id.getQRCode)          // user wishes to view a QR-Code for his/her class
             {
 

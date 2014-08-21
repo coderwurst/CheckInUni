@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/scanid"
-                    android:layout_below="@+id/lec_scan_mod"
+                    android:layout_below="@id/lec_scan_mod"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50dp"
                     />
@@ -46,27 +46,21 @@
             <Button android:id="@id/add_student_auto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/lecturercheckin"
-                    android:layout_below="@+id/lec_scan_id"
+                    android:background="@drawable/lecturercheckin_disabled"
+                    android:layout_below="@id/lec_scan_id"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50dp"
                     />
 
             <TextView
-                    android:id="@+id/scan_format"
+                    android:id="@+id/rec_savedModule"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/add_student_auto" />
-
-            <TextView
-                    android:id="@+id/scan_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/scan_format" />
+                    android:textIsSelectable="false"
+                    android:text="@string/default_mod_id"
+                    android:textSize="16sp"
+                    android:visibility="visible"
+                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"/>
 
         </RelativeLayout>
     </FrameLayout>

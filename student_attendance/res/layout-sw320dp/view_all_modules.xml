@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/UUJBlue">
+                 xmlns:tools="http://schemas.android.com/tools"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:background="@color/UUJBlue">
     <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_margin="20dp">
+            android:layout_margin="10dp">
 
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/UULogo"
-                    android:background="@drawable/uulogo"
-                    android:contentDescription="@string/uuj_logo_att"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="75dp"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/UULogo"
+                android:background="@drawable/uulogo"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                android:contentDescription="@string/uuj_logo_att"/>
 
-            <!-- List view to show contents retrieved from Database   -->
-            <ListView
-                    android:id="@android:id/list"
-                    android:layout_below="@+id/UULogo"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:layout_margin="25dp"
-                    />
+    <!-- List view to show contents retrieved from Database   -->
+    <ListView
+            android:id="@android:id/list"
+            android:layout_below="@+id/UULogo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="132dp"
+            android:layout_marginTop="72dp"
+            android:layout_margin="50dp"
+            />
 
         </RelativeLayout>
 
