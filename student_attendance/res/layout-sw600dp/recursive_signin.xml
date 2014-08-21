@@ -37,7 +37,7 @@
             <Button android:id="@id/lec_scan_mod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/scanmod"
+                    android:background="@drawable/scanmodule"
                     android:layout_below="@+id/UULogo"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="132dp"

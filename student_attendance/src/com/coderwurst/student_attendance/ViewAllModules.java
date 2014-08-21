@@ -74,7 +74,7 @@ public class ViewAllModules extends ListActivity
 
 		// get listview from xml file
 		ListView lv = getListView();
-        
+
 
 		// on click, user will be taken to chosen module QR-Codes
 		lv.setOnItemClickListener(new OnItemClickListener() {
@@ -190,10 +190,9 @@ public class ViewAllModules extends ListActivity
 						// adding HashList to ArrayList
 						moduleList.add(map);
 					} // for
-				} else {                // no modules found
+				} else {
 
-					// no modules have been returned
-                    // ?????????????????????????????????? ERROR HANDLING ????????????????????????????????????
+					Log.e("view modules", "no modules found");
 
 				} // if - else
 			} catch (JSONException e) {
@@ -223,7 +222,7 @@ public class ViewAllModules extends ListActivity
 					 * */
 					ListAdapter adapter = new SimpleAdapter(
 							ViewAllModules.this, moduleList,
-							R.layout.view_qr, new String[] { TAG_ID,
+							R.layout.format_lv, new String[] { TAG_ID,
 									TAG_NAME, TAG_LECTURE, TAG_TUTORIAL},
 							new int[] { R.id.modID, R.id.name, R.id.lecture_url, R.id.tutorial_url});
 

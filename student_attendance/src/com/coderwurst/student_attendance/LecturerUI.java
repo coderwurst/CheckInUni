@@ -45,7 +45,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
     private Button btnManSignin;
     private Button btnAutoSignin;
     private Button btnGetQR;
-    private Button btnReset;
     private Button btnRecall;
 
     private TextView serverStatus;      // used to inform user if server connection has been established
@@ -108,7 +107,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
         btnAutoSignin = (Button) findViewById(R.id.lec_auto_signin);        // to scan student ID & class QR-Code
         btnGetQR = (Button) findViewById(R.id.getQRCode);                   // to retrieve a particular QR-Code
         btnRecall = (Button) findViewById(R.id.lec_recall);                 // to view files previously saved on device
-        btnReset = (Button) findViewById(R.id.reset_user);                  // testing purpose button to reset user
 
         // TextViews for hold format and content info for testing purposes
         serverStatus = (TextView) findViewById(R.id.server_info);           // updated to show server connectivity
@@ -119,9 +117,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
         btnAutoSignin.setOnClickListener(this);
         btnGetQR.setOnClickListener(this);
         btnRecall.setOnClickListener(this);
-
-        // button to be removed before final version (hidden on screen)
-        btnReset.setOnClickListener(this);
 
         /**
          * in the event that the lecturer has not previously selected a module code and class type from the find QR
@@ -210,14 +205,6 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 Intent openAutoSignin = new Intent(getApplicationContext(), RecursiveSignIn.class);
                 startActivity(openAutoSignin);
 
-                if (recModuleID != null)
-                {
-                    Toast informUser = Toast.makeText(getApplicationContext(),
-                            "use MODULE to scan new class details", Toast.LENGTH_LONG);
-                    informUser.show();
-
-                } // if
-
 
             } else if (view.getId() == R.id.getQRCode)          // user wishes to view a QR-Code for his/her class
             {
@@ -240,14 +227,8 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 startActivityForResult(viewStoredData,99);
 
 
-            } else {                                            // temp code to reset user ID TO BE REMOVED
+            } // if - else - else
 
-                // temp test code to reset user ID
-                IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-                scanIntegrator.initiateScan();
-                scanID = 1;
-
-            }// if - else - else
             // connection with database not available, only function able to be carried out at this time is auto check-in
         } else
         {
@@ -330,12 +311,9 @@ public class LecturerUI extends Activity implements View.OnClickListener
             // toast for unit testing to show tester scan contents
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
-            // formatTxt.setText("FORMAT: " + scanFormat);
-            // contentTxt.setText("CONTENT: " + scanContent);
+
 
             Log.d("lecturer ui", "user wishes to register as another user");
-
-            // allows the user to re-register
 
             // launching Registration Activity
             Intent i = new Intent(getApplicationContext(), InitialReg.class);

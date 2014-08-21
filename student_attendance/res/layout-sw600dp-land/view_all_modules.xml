@@ -33,11 +33,14 @@
             android:layout_below="@+id/UULogo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="50dp"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
             android:layout_alignLeft="@+id/UULogo"
             android:layout_alignRight="@+id/UULogo"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:divider="@null"
+            android:dividerHeight="0dp"/>
 
         </RelativeLayout>
 

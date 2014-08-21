@@ -179,6 +179,7 @@ public class ReviewInfo extends Activity implements View.OnClickListener
                     android.R.layout.simple_list_item_1,
                     studentBatch);
 
+            // listView formatted using format_lv.xml
             lv.setAdapter(arrayAdapter);
         } // loadList
 
@@ -272,7 +273,7 @@ public class ReviewInfo extends Activity implements View.OnClickListener
                         Log.e("TAG", "database response; php error");
 
                         // error message needed for when sign in is not successful
-                        dialogText = "an error has occurred, please try again...";
+                        dialogText = "an error has occurred, please try again later...";
 
                     } // if - else
                 } catch (JSONException e)
@@ -296,6 +297,11 @@ public class ReviewInfo extends Activity implements View.OnClickListener
 
                 // dismiss the dialog once done
                 pDialog.dismiss();
+
+                Toast result = Toast.makeText(getApplicationContext(),
+                        "check-in: " + dialogText, Toast.LENGTH_LONG);
+                result.show();
+
 
                 // finish this activity, returning user to home screen
                 finish();

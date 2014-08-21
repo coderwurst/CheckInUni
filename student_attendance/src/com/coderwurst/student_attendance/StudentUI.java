@@ -36,11 +36,9 @@ public class StudentUI extends Activity implements View.OnClickListener
 
 {
     private Button btnScan;                     // button to initiate sign-in process
-    private Button btnResetUsr;                 // button to reset sharedPref for testing purposes
 
     IntentResult scanningResult = null;         // intent result to store scanned information
 
-    // private TextView formatTxt, contentTxt;     // text view for data captured at this stage TESTING ONLY
     private int scanID = 0;                     // int to store type of scan
 
     private WifiManager wifi;                           // wifi manager
@@ -71,15 +69,9 @@ public class StudentUI extends Activity implements View.OnClickListener
 
         // buttons
         btnScan = (Button) findViewById(R.id.scan_button);          // button to return all students
-        btnResetUsr = (Button) findViewById(R.id.test_button);      // button to initiate scan
-
-        // TextViews for hold format and content info FOR TESTING PURPOSES ONLY
-        // formatTxt = (TextView) findViewById(R.id.scan_format);
-        // contentTxt = (TextView) findViewById(R.id.scan_content);
 
         // sets onCLick listeners for both buttons
         btnScan.setOnClickListener(this);
-        btnResetUsr.setOnClickListener(this);       // button to allow user type to be reset (testing purposes only)
 
         // method call to check if uni networks are in range
         checkNet();
@@ -97,16 +89,8 @@ public class StudentUI extends Activity implements View.OnClickListener
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();      // opens Zxing scanner
             scanID = 2;
+        } // if
 
-        } else {                                // FOR TESTING PURPOSES ONLY, TO BE REMOVED
-
-            Log.d("student ui", "user wishes to register as another user");
-            // calls scanner to register new details in system TO BE REMOVED FOR FINAL VERSION
-            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-            scanIntegrator.initiateScan();      // opens Zxing scanner
-            scanID = 1;
-
-        }// if - else
     }// onClick
 
 

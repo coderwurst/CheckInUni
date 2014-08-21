@@ -70,6 +70,8 @@
                     android:paddingRight="250dp"
                     android:layout_alignTop="@+id/lec_confirm"
                     android:layout_alignBottom="@+id/lec_delete"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
                     />
 
 

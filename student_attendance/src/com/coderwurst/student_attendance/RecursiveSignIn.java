@@ -95,11 +95,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     private static final String TAG_MODID = "moduleId";
     private static final String TAG_CLASSTYPE = "classType";
 
-    // instructional Strings to guide user through process
-    //private String lecturer_guide = "FIRST STEP: 'scan QR-Code' to collect class info\nSECOND STEP: 'scan ID card(s)' of students" +
-    //        "\nFINAL STEP: 'check in' to review and send or delete data";
-
-    private String lecturer_guide = "1) scan module id\n2) scan student id\n3) review & submit";
+    private String noInfo = "no previous module info found";
 
     // boolean to determine if server connection is still available
     private boolean serverAvailable;
@@ -119,12 +115,13 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
         if (scannedModule && !scannedID)
         {
-            btnGetMod.setBackgroundResource(R.drawable.scanmod_disabled);
+            btnGetMod.setBackgroundResource(R.drawable.newmodule);
             btnGetStudentID.setBackgroundResource(R.drawable.scanid);
+            savedMod.setText("module: " + moduleInfo);
 
         } else if(scannedID && !scannedModule)
         {
-            btnGetMod.setBackgroundResource(R.drawable.scanmod);
+            btnGetMod.setBackgroundResource(R.drawable.newmodule);
             btnGetStudentID.setBackgroundResource(R.drawable.scanid_disabled);
 
         } else if (scannedID && scannedModule)
@@ -174,17 +171,24 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
         if (recModuleID == null)
         {
-            // show scan QR button
-            savedMod.setText(lecturer_guide);
+            // small hint on bottom left of screen
+            savedMod.setText(noInfo);
+
+            // set up buttons for complete scan
+            btnGetMod.setBackgroundResource(R.drawable.scanmodule);
+            btnGetStudentID.setBackgroundResource(R.drawable.scanid_disabled);
 
         } else      // if previous module has been stored, entered automatically into text field
         {
+            // button images chosen depending on stored module data
+            btnGetMod.setBackgroundResource(R.drawable.newmodule);
+            btnGetStudentID.setBackgroundResource(R.drawable.scanid);
 
-            savedMod.setText("\nmodule num: " + recModuleID + "\nclass type: " + recClassType);
+            // user informed of chosen details
+            savedMod.setText("\nmodule num: " + recModuleID + "class type: " + recClassType);
             moduleInfo = recModuleID;
             classInfo = recClassType;
             scannedModule = true;
-            // make scan QR button invisible, instead set a textview to hold value
         } // if - else
 
     } // onCreate
@@ -365,8 +369,6 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
-            //formatTxt.setText("FORMAT: " + scanFormat);                   // Testing Purposes only
-            //contentTxt.setText("CONTENT: " + scanContent);
 
             // logcat to view app progress
             Log.d("recursive", "scanned details; " + scanContent);

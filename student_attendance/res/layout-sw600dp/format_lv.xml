@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical" android:background="@color/UUJBlue">
+
+    <!-- module number - will be HIDDEN - used to pass to ChooseQR activity -->
+    <TextView
+            android:id="@+id/modID"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    <!-- url to lecture QR-Code - will be HIDDEN - used to pass to ChooseQR activity -->
+    <TextView
+            android:id="@+id/lecture_url"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    <!-- url to tutorial QR-Code - will be HIDDEN - used to pass to ChooseQR activity -->
+    <TextView
+            android:id="@id/tutorial_url"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    <!-- Name Label -->
+    <TextView
+            android:id="@+id/name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:paddingLeft="12dp"
+            android:textSize="24dp"
+            android:textStyle="bold"/>
+
+</LinearLayout>

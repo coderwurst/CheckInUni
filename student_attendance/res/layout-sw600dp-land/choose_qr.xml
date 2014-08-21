@@ -24,9 +24,8 @@
             android:text="@string/default_class"
             android:id="@id/qr_id"
             android:textSize="30sp"
-            android:layout_marginRight="135dp"
             android:layout_above="@+id/webView"
-            android:layout_toLeftOf="@id/module_number"/>
+            android:layout_alignLeft="@id/webView"/>
 
             <WebView
             android:id="@+id/webView"

@@ -98,22 +98,12 @@ public class InitialReg extends Activity
 
             staffUser = true;       // boolean stored in shared preferences, automatically loaded on next start up
 
-            // userType = (EditText) findViewById(R.id.user_type);
-            // userType.setText("staff");
-
-            // code to authenticate staff ID with Database
-
         } else if (scannedID.charAt(0) == 'B' || scannedID.charAt(0) == 'b')
         {
 
             Log.d("initial reg", "user is a student");          // logcat tag to view string contents (testing purposes only)
 
             studentUser = true;     // boolean stored in shared preferences, automatically loaded on next start up
-
-            // userType = (EditText) findViewById(R.id.user_type);
-            // userType.setText("student");
-
-            // code to authenticate student ID with Database found in PHP scripts
 
         } else {        // scanned data is neither a staff or student number
 
@@ -134,29 +124,7 @@ public class InitialReg extends Activity
 
         } // if - else - if
 
-        // text set to scanned information for confirmation (testing purposes only)
-        // userID = (EditText) findViewById(R.id.user_id);
-        // userID.setText(scannedID);
-
-
-        /* button to confirm input and send to database
-        Button btnSubmitID = (Button) findViewById(R.id.confirm_reg_details);
-
-        // button click event
-        btnSubmitID.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view)
-            {
-
-                new AuthenticateUser().execute();
-                Log.d("initial reg", "user wishes to register on device");          // logcat tag to view string contents (testing purposes only)
-
-
-                // previous position of sharedPreferences code
-            }// onClick
-        }); */
-
+        // should the server not be available, the user cannot register as authentication is not available
         if(!serverAvailable)
         {
             finish();
@@ -164,7 +132,7 @@ public class InitialReg extends Activity
 
         // the users' details can be sent to the database for authentication
         new AuthenticateUser().execute();
-        Log.d("initial reg", "user wishes to register on device");          // logcat tag to view string contents (testing purposes only)
+        Log.d("initial reg", "user wishes to register on device");  // logcat tag to view string contents
 
     }// OnCreate
 
@@ -399,12 +367,21 @@ public class InitialReg extends Activity
         protected void onPostExecute(String file_url)
         {
 
+            Toast onPostToast = Toast.makeText(getApplicationContext(), "",Toast.LENGTH_LONG);
+
+                    // if to inform user that the device is already registered
             if (!deviceOK)
             {
-                Toast deviceError = Toast.makeText(getApplicationContext(),
-                        "user already registered on another device, please contact your administrator...", Toast.LENGTH_LONG);
-                deviceError.show();
-            } // if to inform user that the device is already registered
+                onPostToast.setText("user already registered on another device, please contact your administrator...");
+                onPostToast.show();
+            } else if (deviceOK && studentUser)
+            {
+                onPostToast.setText("student registration successful...");
+                onPostToast.show();
+            } else
+
+            onPostToast.setText("staff registration successful");
+            onPostToast.show();
 
             pDialog.setMessage(dialogText);
             // dismiss the dialog once done

@@ -15,7 +15,7 @@
     <activity
             android:name="com.coderwurst.student_attendance.MainScreenActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:screenOrientation="landscape">
     </activity>
 
         <!-- Splash Screen -->
@@ -46,7 +46,7 @@
         <!-- Lecturer UI -->
         <activity
                 android:name="com.coderwurst.student_attendance.LecturerUI"
-                android:label="@string/app_name" >
+                android:label="@string/app_name">
         </activity>
 
         <!-- Student UI -->
@@ -64,6 +64,7 @@
         <!-- Activity to add student recursively -->
         <activity
                 android:name="com.coderwurst.student_attendance.RecursiveSignIn"
+                android:screenOrientation="landscape"
                 android:label="@string/app_name" >
         </activity>
 

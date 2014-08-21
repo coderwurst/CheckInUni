@@ -59,15 +59,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="16dp"/>
 
-            <Button android:id="@id/reset_user"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="false"
-                    android:textSize="26dp"
-                    android:textStyle="bold"
-                    android:background="@android:color/transparent"/>
-
             <TextView
                     android:id="@+id/module_info"
                     android:layout_width="wrap_content"

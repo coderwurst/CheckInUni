@@ -34,7 +34,7 @@ public class SignIn extends Activity
 
     public static final String USER_ID = "User ID File";        // string to hold the user id information
 
-        static SharedPreferences userDetails;                       // sharedPreferences file for user ID
+    static SharedPreferences userDetails;                       // sharedPreferences file for user ID
 
     // Strings to hold data elements
     String allInfo = "";
@@ -48,11 +48,6 @@ public class SignIn extends Activity
 
     // creates the JSONParser object
 	JSONParser jsonParser = new JSONParser();
-
-    /* fields to store data - for testing purposes only
-	EditText inputStudentID;
-	EditText inputModuleID;
-	EditText inputType; */
 
     // server IP address
     private static String serverAddress = MainScreenActivity.serverIP;
@@ -74,7 +69,6 @@ public class SignIn extends Activity
 
         // opens up sign-in confirmation screen
         super.onCreate(savedInstanceState);
-		// setContentView(R.layout.sign_in);        // TESTING PURPOSES ONLY
 
         // unpack the data scanned into the app
         Bundle bundle = getIntent().getExtras();
@@ -89,35 +83,11 @@ public class SignIn extends Activity
         moduleInfo = allInfo.substring(allInfo.indexOf("{") + 1, allInfo.indexOf("}"));
         classInfo = allInfo.substring(allInfo.indexOf("[") + 1, allInfo.indexOf("]"));
 
-        /* edit text in input boxes for comparison before being sent    FOR TESTING PURPOSES ONLY, TO BE REMOVED
-		inputStudentID = (EditText) findViewById(R.id.student_id);
-        inputStudentID.setText(userID);
-		inputModuleID = (EditText) findViewById(R.id.module_id);
-        inputModuleID.setText(moduleInfo);
-		inputType = (EditText) findViewById(R.id.type);
-        inputType.setText(classInfo); */
-
         // logcat tag to view contents of string at this stage (testing purposes only)
         Log.d("check in", "module ID info; " + moduleInfo);
         Log.d("check in", "class type; " + classInfo);
 
-		// button to confirm input and send to database
-		// Button btnCreateProduct = (Button) findViewById(R.id.btnCreateProduct);
-
-		// button click event
-		// btnCreateProduct.setOnClickListener(new View.OnClickListener() {
-
-
-        // creating new product in background thread
         new SignIntoClass().execute();
-
-			/*@Override
-			public void onClick(View view)
-            {
-				// creating new product in background thread
-				new SignIntoClass().execute();
-			}// onClick
-		});*/
 
 	}// onCreate
 
@@ -154,11 +124,7 @@ public class SignIn extends Activity
 
             JSONObject json = null;
 
-			/* Strings to take contents of TextViews, to be changed when implementing automatic transition
-            String student_id = inputStudentID.getText().toString();
-			String module_id = inputModuleID.getText().toString();
-			String type = inputType.getText().toString(); */
-
+            // strings to hold data to pass to database
             String student_id = userID;
             String module_id = moduleInfo;
             String type = classInfo;

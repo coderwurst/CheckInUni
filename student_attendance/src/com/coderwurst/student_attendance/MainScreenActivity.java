@@ -40,7 +40,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
 
 {
 	private Button btnReg;                      // button to register a new user
-    private TextView formatTxt, contentTxt;     // text view to inform tester of data captured at this stage
+
     private int savedID = 0;                     // int to store type of scan
     private int scanID = 0;
 
@@ -49,7 +49,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
     static SharedPreferences userDetails;
 
     // serverIP available across whole app, to increase efficiency & prevent user error when entering the address
-    protected static String serverIP = "172.17.15.55";      // 193.61.149.35 RD Server
+    protected static String serverIP = "192.168.1.115";      // 193.61.149.35 RD Server
 
     protected static boolean serverAvailable;            // to determine if the server is available
     private String serverResponse;
@@ -124,10 +124,6 @@ public class MainScreenActivity extends Activity implements OnClickListener
             // button to register details
             btnReg = (Button) findViewById(R.id.reg_button);
 
-            // textViews for hold format and content info for testing purposes
-            //formatTxt = (TextView) findViewById(R.id.scan_format);
-            //contentTxt = (TextView) findViewById(R.id.scan_content);
-
             // set up onClick listener to take user to scanning functionality
             btnReg.setOnClickListener(this);
 
@@ -165,8 +161,6 @@ public class MainScreenActivity extends Activity implements OnClickListener
             // strings to store scanned data
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
-            // formatTxt.setText("FORMAT: " + scanFormat);
-            // contentTxt.setText("CONTENT: " + scanContent);
 
             Log.d("main screen", "new user" + scanContent);   // log in java console which type of user is registering with device
 
