@@ -58,7 +58,8 @@ public class SignIn extends Activity
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
 
-
+    // tags for log statements
+    private static final String TAG = "check in";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -75,8 +76,8 @@ public class SignIn extends Activity
         allInfo = bundle.getString("Info");
 
         // logcat tag to view contents of string at this stage (testing)
-        Log.d("check in", "user ID value; " + userID);
-        Log.d("check in", "module ID value; " + allInfo);
+        Log.d(TAG, "user ID value; " + userID);
+        Log.d(TAG, "module ID value; " + allInfo);
 
         /** extract the necessary information out of this string to be used using special chars {} for module and []
         * for class type. Values taken from index position +1 as indexes begin at position 0 */
@@ -84,8 +85,8 @@ public class SignIn extends Activity
         classInfo = allInfo.substring(allInfo.indexOf("[") + 1, allInfo.indexOf("]"));
 
         // logcat tag to view contents of string at this stage (testing purposes only)
-        Log.d("check in", "module ID info; " + moduleInfo);
-        Log.d("check in", "class type; " + classInfo);
+        Log.d(TAG, "module ID info; " + moduleInfo);
+        Log.d(TAG, "class type; " + classInfo);
 
         new SignIntoClass().execute();
 
@@ -140,7 +141,7 @@ public class SignIn extends Activity
 					"POST", params);
 
 			// check log cat for response
-			Log.d("check in", "database response; " + json.toString());
+			Log.d(TAG, "database response; " + json.toString());
 
 			// check for success tag
 			try {
@@ -149,7 +150,7 @@ public class SignIn extends Activity
 				if (success == 1) {             // if to determine if the PHP script has returned a success message (1)
 
                     // details have been stored and the student is checked in
-                    Log.d("check in", "check in success");
+                    Log.d(TAG, "check in success");
 
                     // returns user to home screen
 					Intent signInSuccess = new Intent(getApplicationContext(), MainScreenActivity.class);
@@ -161,7 +162,7 @@ public class SignIn extends Activity
 				} else {
 
 					// failed to sign-in, PHP has returned an error
-                    Log.e("check in", "php error occurred");
+                    Log.e(TAG, "php error occurred");
 
                     // error message needed for when sign in is not successful
                     dialogText = "an error has occurred, please try again...";

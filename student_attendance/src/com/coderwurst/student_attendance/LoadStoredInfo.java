@@ -77,6 +77,9 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
     private Button btnConfirm;
     private Button btnDelete;
 
+    // tags for log statements
+    private static final String TAG = "load";
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -111,7 +114,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
         if (view.getId() == R.id.lec_confirm)     // && scannedModule == true
         {
             // logcat tag to view app progress
-            Log.d("load", "user wishes to load previous file");
+            Log.d(TAG, "user wishes to load previous file");
 
             new LecturerSignStudentIn().execute();          // code to submit details to the database
 
@@ -119,7 +122,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
         {
 
             deleteFile(filename);                       // removes the file stored in internal memory
-            Log.d("load", filename + " deleted");       // logcat tag to view app progress
+            Log.d(TAG, filename + " deleted");       // logcat tag to view app progress
 
             finish();
         }// if - else
@@ -137,16 +140,16 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
 
         File file = this.getFilesDir();          // returns storage location
 
-        Log.d("load", file.toString());
+        Log.d(TAG, file.toString());
 
         ArrayList<String> names = new ArrayList<String>(Arrays.asList(file.list()));
         String filename = names.get(names.size() - 1);;
 
-        Log.d("load", names.size() + " stored files: " + names);
+        Log.d(TAG, names.size() + " stored files: " + names);
 
         if (names.size() >= 1 && filename != "scanfile.txt")                  // currently always a scanfile.txt also stored in this directory - INVESTIGATE
         {
-            Log.d("load", "file to be read: " + filename);
+            Log.d(TAG, "file to be read: " + filename);
 
             loadStoredData(filename);
 
@@ -197,7 +200,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
             e.printStackTrace();
         } // try - catch
 
-        Log.d("load", "read data: " + dataToRead);
+        Log.d(TAG, "read data: " + dataToRead);
 
         // success message
         Toast.makeText(getBaseContext(), "file loaded successfully", Toast.LENGTH_SHORT).show();
@@ -210,10 +213,10 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
         title.setText(moduleInfo);
 
         classInfo = dataToRead.substring(dataToRead.indexOf("{") + 1, dataToRead.indexOf("}"));
-        Log.d("load", "class type: " + classInfo);
+        Log.d(TAG, "class type: " + classInfo);
 
         String allIDs = dataToRead.substring(dataToRead.indexOf("[") + 1, dataToRead.indexOf("]"));
-        Log.d("load", "all ids: " + allIDs);
+        Log.d(TAG, "all ids: " + allIDs);
 
         String thisID; // to store the contents of the current id being removed from the list
 
@@ -225,11 +228,11 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
 
             String readID = "£" + thisID + "$";     // re-inserts the StudentID identifiers
 
-            Log.d("load", "read ID: " + readID);
+            Log.d(TAG, "read ID: " + readID);
 
             allIDs = allIDs.replace(readID, "");    // removes the ID last added to studentBatch from the remaining list
 
-            Log.d("load", "remaining: " + allIDs);
+            Log.d(TAG, "remaining: " + allIDs);
 
             // NB this code to replace the last read ID with "" IE also eliminates duplicates
 
@@ -306,7 +309,7 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
                 String type = classInfo;
 
                 // logcat to view progress of app
-                Log.d("load", "info sent to database; " + student_id + "," +  module_id + "," + type);
+                Log.d(TAG, "info sent to database; " + student_id + "," +  module_id + "," + type);
 
                 // parameters to be passed into PHP script on server side
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -341,14 +344,14 @@ public class LoadStoredInfo extends Activity implements View.OnClickListener
                 if (success == 1)
                 {
                     // check log cat for response
-                    Log.d("load", "database response; php success");
+                    Log.d(TAG, "database response; php success");
 
                     deleteFile(filename);
 
                 } else
                 {
                     // failed to sign-in
-                    Log.e("load", "database response; php error");
+                    Log.e(TAG, "database response; php error");
 
                     // error message needed for when sign in is not successful
                     dialogText = "an error has occurred, please try again...";

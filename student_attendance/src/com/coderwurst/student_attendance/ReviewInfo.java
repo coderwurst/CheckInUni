@@ -123,8 +123,8 @@ public class ReviewInfo extends Activity implements View.OnClickListener
             int removedIDs = initialSize - finalSize;
 
             // logcat tag to view app progress
-            Log.d("TAG", "module id: " + moduleID + ", " + classType);
-            Log.d("TAG", "scanned total: " + studentBatch.size());
+            Log.d(TAG, "module id: " + moduleID + ", " + classType);
+            Log.d(TAG, "scanned total: " + studentBatch.size());
 
             // change the text views to that of the imported details
             title.setText(moduleID + ", " + classType);
@@ -142,7 +142,7 @@ public class ReviewInfo extends Activity implements View.OnClickListener
             if (view.getId() == R.id.lec_confirm)     // && scannedModule == true
             {
                 // logcat tag to view app progress
-                Log.d("TAG", "user wishes to load previous file");
+                Log.d(TAG, "user wishes to load previous file");
 
                 new LecturerSignStudentIn().execute();          // code to submit details to the database
 
@@ -161,7 +161,7 @@ public class ReviewInfo extends Activity implements View.OnClickListener
         moduleID = null;
         classType = null;
         studentBatch = null;
-        Log.d("TAG", "details removed");       // logcat tag to view app progress
+        Log.d(TAG, "details removed");       // logcat tag to view app progress
     } // deleteFile
 
 
@@ -228,7 +228,7 @@ public class ReviewInfo extends Activity implements View.OnClickListener
                     String type = classType;
 
                     // logcat to view progress of app
-                    Log.d("TAG", "info sent to database; " + student_id + "," +  module_id + "," + type);
+                    Log.d(TAG, "info sent to database; " + student_id + "," +  module_id + "," + type);
 
                     // parameters to be passed into PHP script on server side
                     List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -252,7 +252,7 @@ public class ReviewInfo extends Activity implements View.OnClickListener
                     }
 
                     // check log cat for response
-                    Log.d("TAG", "database response" + json.toString());
+                    Log.d(TAG, "database response" + json.toString());
 
                 } // for loop for batch progressing multiple students
 
@@ -263,14 +263,14 @@ public class ReviewInfo extends Activity implements View.OnClickListener
                     if (success == 1)
                     {
                         // check log cat for response
-                        Log.d("TAG", "database response; php success");
+                        Log.d(TAG, "database response; php success");
 
                         deleteFile();
 
                     } else
                     {
                         // failed to sign-in
-                        Log.e("TAG", "database response; php error");
+                        Log.e(TAG, "database response; php error");
 
                         // error message needed for when sign in is not successful
                         dialogText = "an error has occurred, please try again later...";

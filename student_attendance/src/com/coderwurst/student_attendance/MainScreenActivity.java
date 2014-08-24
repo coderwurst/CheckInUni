@@ -49,14 +49,15 @@ public class MainScreenActivity extends Activity implements OnClickListener
     static SharedPreferences userDetails;
 
     // serverIP available across whole app, to increase efficiency & prevent user error when entering the address
-    protected static String serverIP = "192.168.1.115";      // 193.61.149.35 RD Server
+    protected static String serverIP = "192.168.1.105";      // 193.61.149.35 RD Server
 
     protected static boolean serverAvailable;            // to determine if the server is available
     private String serverResponse;
 
     private Context context = this;             // context to be used to check server connectivity
 
-
+    // tags for log statements
+    private static final String TAG = "main screen";
 
     @Override
     protected void onStart()
@@ -93,7 +94,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
 
         if (savedID == 2)               // savedPreferences for student, then the app will open to student UI
         {
-            Log.d("main screen", "user type; student");   // log in java console which type of user is registered with device
+            Log.d(TAG, "user type; student");   // log in java console which type of user is registered with device
 
             // code to open up student UI
             Intent openStudentUI = new Intent(getApplicationContext(), StudentUI.class);
@@ -106,7 +107,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
         } else if (savedID == 1)        // otherwise the app will start up straight to lecturer UI
         {
 
-            Log.d("main screen", "user type; lecturer");   // log in java console which type of user is registered with device
+            Log.d(TAG, "user type; lecturer");   // log in java console which type of user is registered with device
 
             // code to open up staff UI
             Intent openLecturerUI = new Intent(getApplicationContext(), LecturerUI.class);
@@ -119,7 +120,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
         {
             setContentView(R.layout.main_screen);
 
-            Log.d("main screen", "user type not found");   // log in java console which type of user is registered with device
+            Log.d(TAG, "user type not found");   // log in java console which type of user is registered with device
 
             // button to register details
             btnReg = (Button) findViewById(R.id.reg_button);
@@ -162,7 +163,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
 
-            Log.d("main screen", "new user" + scanContent);   // log in java console which type of user is registering with device
+            Log.d(TAG, "new user" + scanContent);   // log in java console which type of user is registering with device
 
             // launching Registration Activity
             Intent register = new Intent(getApplicationContext(), InitialReg.class);
@@ -178,7 +179,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
 
         } else {
 
-            Log.e("main screen", "cancelled registration");   // log in java console to show an error has occurred
+            Log.e(TAG, "cancelled registration");   // log in java console to show an error has occurred
 
             // inform user of incompatible scan
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -246,7 +247,7 @@ public class MainScreenActivity extends Activity implements OnClickListener
                     serverResponse = "connection available";
 
                     // details have been stored and the student is checked in
-                    Log.d("main screen", "Server connection established");
+                    Log.d(TAG, "Server connection established");
 
                 } catch (IOException e) {
 
@@ -254,13 +255,13 @@ public class MainScreenActivity extends Activity implements OnClickListener
                     serverResponse = "connection not available, offline mode activated";
                     serverAvailable = false;
                     // failed to sign-in, PHP has returned an error
-                    Log.e("main screen", "Server connection unavailable: " + e.getMessage());
+                    Log.e(TAG, "Server connection unavailable: " + e.getMessage());
                 } // try - catch
             } else {
                 // else no internet connection is available
                 serverResponse = "connection not available, offline mode activated";
                 serverAvailable = false;
-                Log.e("main screen", "Internet Connection Unavailable");
+                Log.e(TAG, "Internet Connection Unavailable");
             } // if - else
 
             return null;

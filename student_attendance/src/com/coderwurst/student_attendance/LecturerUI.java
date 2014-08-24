@@ -62,6 +62,10 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
     protected static String recModuleID = null;         // string to hold selected module ID
     protected static String recClassType = null;        // string to hold the class type
+
+    // tags for log statements
+    private static final String TAG = "lecturer ui";
+
     /**
      * This activity remains open in the background whilst the user accesses other UIs. One of which is
      * the find QR code function. If a user selects a QR-Code from the list, it is stores in the protected
@@ -154,7 +158,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
         ArrayList<String> names = new ArrayList<String>(Arrays.asList(file.list()));
         String filename = null;
 
-        Log.d("lecturer ui", names.size() + " stored files: " + names);
+        Log.d(TAG, names.size() + " stored files: " + names);
 
         // first if statement to determine if there are any files stored on the device
         if (names.size() >= 1)
@@ -165,7 +169,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
         if (filename != "scanfile.txt" && filename != null)     // may be a file scanfile.txt also stored on device
         {
             filename = names.get(names.size() - 1);
-            Log.d("lecturer ui", "file to be read: " + filename);
+            Log.d(TAG, "file to be read: " + filename);
 
             return true;            // data found, UI will be updated accordingly
 
@@ -189,7 +193,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
             if (view.getId() == R.id.lec_man_signin)            // user wishes to manually check-in a student
             {
                 // logcat tag to view app progress
-                Log.d("lecturer ui", "manual check in");
+                Log.d(TAG, "manual check in");
 
                 // opens up manual sign in activity with text input fields
                 Intent openManSignin = new Intent(getApplicationContext(), AddStudentMan.class);
@@ -199,7 +203,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
             {
 
                 // logcat tag to view app progress
-                Log.d("lecturer ui", "auto check in");
+                Log.d(TAG, "auto check in");
 
                 // opens up recursive sign in activity
                 Intent openAutoSignin = new Intent(getApplicationContext(), RecursiveSignIn.class);
@@ -210,7 +214,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
             {
 
                 // logcat tag to view app progress
-                Log.d("lecturer ui", "retrieve QR");
+                Log.d(TAG, "retrieve QR");
 
                 // code to retrieve QR-Image from database
                 Intent openViewAllModules = new Intent(getApplicationContext(), ViewAllModules.class);
@@ -220,7 +224,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
             } else if (view.getId() == R.id.lec_recall)         // user wishes to send previously stored info
             {
                 // logcat tag to view app progress
-                Log.d("lecturer ui", "send previously stored files");
+                Log.d(TAG, "send previously stored files");
 
                 // to retrieve previously saved data
                 Intent viewStoredData = new Intent(getApplicationContext(), LoadStoredInfo.class);
@@ -239,14 +243,14 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 toast.show();
 
                 // logcat tag to view app progress
-                Log.e("lecturer ui", "manual check in - server not available");
+                Log.e(TAG, "manual check in - server not available");
 
 
             } else if (view.getId() == R.id.lec_auto_signin)    // auto sign in is available, data stored on device
             {
 
                 // logcat tag to view app progress
-                Log.e("lecturer ui", "auto check in - data to be stored on device");
+                Log.e(TAG, "auto check in - data to be stored on device");
 
                 // opens up recursive sign in activity
                 Intent openAutoSignin = new Intent(getApplicationContext(), RecursiveSignIn.class);
@@ -261,7 +265,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
                 toast.show();
 
                 // logcat tag to view app progress
-                Log.e("lecturer ui", "retrieve QR - server not available");
+                Log.e(TAG, "retrieve QR - server not available");
 
             } // if - else to determine user choice
 
@@ -313,7 +317,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
             String scanFormat = scanningResult.getFormatName();
 
 
-            Log.d("lecturer ui", "user wishes to register as another user");
+            Log.d(TAG, "user wishes to register as another user");
 
             // launching Registration Activity
             Intent i = new Intent(getApplicationContext(), InitialReg.class);
@@ -328,7 +332,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
 
         } else {
 
-            Log.e("lecturer ui", "scan failed");
+            Log.e(TAG, "scan failed");
 
             Toast toast = Toast.makeText(getApplicationContext(),
                     "no scan data received!", Toast.LENGTH_SHORT);
@@ -393,7 +397,7 @@ public class LecturerUI extends Activity implements View.OnClickListener
                     serverResponse = "connection available";
 
                     // details have been stored and the student is checked in
-                    Log.d("lecturer ui", "connection established");
+                    Log.d(TAG, "connection established");
 
                 } catch (IOException e) {
 
@@ -401,13 +405,13 @@ public class LecturerUI extends Activity implements View.OnClickListener
                     serverResponse = "connection not available, offline mode activated";
                     serverAvailable = false;
                     // failed to sign-in, PHP has returned an error
-                    Log.e("lecturer ui", e.getMessage());
+                    Log.e(TAG, e.getMessage());
                 }
             } else {
                 // else no internet connection is available
                 serverResponse = "connection not available, offline mode activated";
                 serverAvailable = false;
-                Log.e("lecturer ui", "Internet Connection Unavailable");
+                Log.e(TAG, "Internet Connection Unavailable");
             } // if - else
 
             return null;

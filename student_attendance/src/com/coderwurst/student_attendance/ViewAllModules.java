@@ -60,6 +60,9 @@ public class ViewAllModules extends ListActivity
 	// modules JSONArray
 	JSONArray modules = null;
 
+    // tags for log statements
+    private static final String TAG = "view modules";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
     {
@@ -92,14 +95,14 @@ public class ViewAllModules extends ListActivity
                         .toString();
 
                 // log app progress for testing purposes
-                Log.d("view modules", "stored address; " + moduleID + "," + lectureFile + tutorialFile);
+                Log.d(TAG, "stored address; " + moduleID + "," + lectureFile + tutorialFile);
 
                 // concatenates server address with location on server (returned from database)
                 String lectureUrl = url_location + lectureFile;
                 String tutorialUrl = url_location + tutorialFile;
 
                 // log app progress for testing purposes
-                Log.d("view modules", "actual address; " + lectureUrl + "," + tutorialUrl);
+                Log.d(TAG, "actual address; " + lectureUrl + "," + tutorialUrl);
 
 				// Starting new intent
 				Intent viewQR = new Intent(getApplicationContext(),	ChooseQR.class);
@@ -156,7 +159,7 @@ public class ViewAllModules extends ListActivity
 
 			
 			// log checked for JSON response
-			Log.d("view modules", "all modules; " + json.toString());
+			Log.d(TAG, "all modules; " + json.toString());
 
 			try {
 				// Checking for SUCCESS TAG
@@ -192,7 +195,7 @@ public class ViewAllModules extends ListActivity
 					} // for
 				} else {
 
-					Log.e("view modules", "no modules found");
+					Log.e(TAG, "no modules found");
 
 				} // if - else
 			} catch (JSONException e) {

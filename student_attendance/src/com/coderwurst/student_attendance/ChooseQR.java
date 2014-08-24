@@ -140,7 +140,7 @@ public class ChooseQR extends Activity implements View.OnClickListener
         } else {
 
             moduleCode = moduleID;                  // stores selected module id in protected variable
-            classType = qrID.getText().toString();  // stores selected class type in protected variable
+            classType = title.getText().toString();  // stores selected class type in protected variable
 
             Toast confirmation = Toast.makeText(getApplicationContext(),
                     "module: " + moduleCode + ", class: " + classType, Toast.LENGTH_LONG);

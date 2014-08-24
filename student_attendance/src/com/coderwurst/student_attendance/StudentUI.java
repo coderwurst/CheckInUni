@@ -35,27 +35,31 @@ import java.util.List;
 public class StudentUI extends Activity implements View.OnClickListener
 
 {
-    private Button btnScan;                     // button to initiate sign-in process
+    private Button btnScan;                         // button to initiate sign-in process
 
-    IntentResult scanningResult = null;         // intent result to store scanned information
+    IntentResult scanningResult = null;             // intent result to store scanned information
 
-    private int scanID = 0;                     // int to store type of scan
+    private int scanID = 0;                         // int to store type of scan
 
-    private WifiManager wifi;                           // wifi manager
-    private boolean firstNetwork = false;         // boolean to determine if student is on campus
+    private WifiManager wifi;                       // wifi manager
+    private boolean firstNetwork = false;           // boolean to determine if student is on campus
     private boolean secondNetwork = false;
     private boolean thirdNetwork = false;
     private boolean fourthNetwork = false;
 
 
-    private int wifiInRange = 0;                // to store the numbers of wifi SSIDs in range
+    private int wifiInRange = 0;                    // to store the numbers of wifi SSIDs in range
 
-    private boolean onCampus = false;           // boolean to determine if 2 Uni wifi SSIDs are in range
+    private boolean onCampus = false;               // boolean to determine if 2 Uni wifi SSIDs are in range
 
-    private static boolean serverAvailable = MainScreenActivity.serverAvailable;            // to determine if the server is available
+    // to determine if the server is available
+    private static boolean serverAvailable = MainScreenActivity.serverAvailable;
     private String serverResponse;
 
     private Context context = this;             // context to be used to check server connectivity
+
+    // tags for log statements
+    private static final String TAG = "student ui";
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -84,7 +88,7 @@ public class StudentUI extends Activity implements View.OnClickListener
     {
         if(view.getId()==R.id.scan_button)      // user wishes to check-in to class
         {
-            Log.d("student ui", "student wishes to check into a class");
+            Log.d(TAG, "student wishes to check into a class");
             // to be used when scanning in QR-Code to register attendance
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();      // opens Zxing scanner
@@ -103,13 +107,13 @@ public class StudentUI extends Activity implements View.OnClickListener
         // to determine if the scan was successful
         if(scanningResult != null && resultCode == RESULT_OK)
         {
-            Log.d("student ui", "scanned info ok");
+            Log.d(TAG, "scanned info ok");
 
             // only if the student has been determined to be on cmapus can the check-in process be completed
             if (onCampus)
             {
 
-                Log.d("student ui", "student is on campus");
+                Log.d(TAG, "student is on campus");
 
                 // Toast contents used to follow data flow through app, confirm input
                 String scanContent = scanningResult.getContents();
@@ -117,7 +121,7 @@ public class StudentUI extends Activity implements View.OnClickListener
                 // formatTxt.setText("FORMAT: " + scanFormat);
                 // contentTxt.setText("CONTENT: " + scanContent);
 
-                Log.d("student ui", "scan content: " + scanContent);
+                Log.d(TAG, "scan content: " + scanContent);
 
                  /**
                  * the following if-else block is implemented at this stage as it is
@@ -128,7 +132,7 @@ public class StudentUI extends Activity implements View.OnClickListener
                 if (scanID == 2 && scanFormat.equals("QR_CODE"))            // "QR_CODE" is only valid QR-Code format
                 {
 
-                    Log.d("student ui", "student to check in");
+                    Log.d(TAG, "student to check in");
 
                     // launching SignIn Activity
                     Intent openSignIn = new Intent(getApplicationContext(), SignIn.class);
@@ -144,7 +148,7 @@ public class StudentUI extends Activity implements View.OnClickListener
                 } else if (scanID == 2 && !scanFormat.equals("QR_CODE"))    // in the event the user does not scan a QR
                 {
 
-                    Log.e("student ui", "student has scanned wrong type of code");
+                    Log.e(TAG, "student has scanned wrong type of code");
 
                     // informs user that the code recently scanned is not of correct type
                     Toast QRIncorrectFormat = Toast.makeText(getApplicationContext(),
@@ -154,7 +158,7 @@ public class StudentUI extends Activity implements View.OnClickListener
                 } else if (scanID == 1 && scanFormat.equals("CODE_128"))         // to ensure scanned image is correct
                 {
 
-                    Log.d("student ui", "user wishes to register as another user");
+                    Log.d(TAG, "user wishes to register as another user");
 
                     // launching Registration Activity
                     Intent openReg = new Intent(getApplicationContext(), InitialReg.class);
@@ -170,7 +174,7 @@ public class StudentUI extends Activity implements View.OnClickListener
                 } else if (scanID == 1 && !scanFormat.equals("CODE_128"))          // scan is incorrect format
                 {
 
-                    Log.e("student ui", "student has scanned wrong type of code");   // log in java console to show error
+                    Log.e(TAG, "student has scanned wrong type of code");   // log in java console to show error
 
                     // user informed of error
                     Toast IDIncorrectFormat = Toast.makeText(getApplicationContext(),
@@ -180,7 +184,7 @@ public class StudentUI extends Activity implements View.OnClickListener
                 } // series of else - if statements
             } else          // student not on campus and data to be stored
             {
-                Log.d("student ui", "student not on campus");
+                Log.d(TAG, "student not on campus");
                 // inform user of incompatible scan
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "error 101; please contact class lecturer", Toast.LENGTH_LONG);
@@ -189,7 +193,7 @@ public class StudentUI extends Activity implements View.OnClickListener
             }// if-else to confirm scan data has been received
         } else {
 
-            Log.e("student ui", "check in failed");   // log in java console to show an error has occurred
+            Log.e(TAG, "check in failed");   // log in java console to show an error has occurred
 
             // inform user of incompatible scan
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -201,7 +205,7 @@ public class StudentUI extends Activity implements View.OnClickListener
 
 
     /**
-     * the following method uses wifimanager to perform a number of checks in order to determine if there
+     * the following method uses wifi manager to perform a number of checks in order to determine if there
      * are 2 recognised university of ulster networks in range to determine if the student is on campus
      */
 
@@ -356,7 +360,7 @@ public class StudentUI extends Activity implements View.OnClickListener
                     serverResponse = "connection available";
 
                     // details have been stored and the student is checked in
-                    Log.d("student ui", "Server connection established");
+                    Log.d(TAG, "Server connection established");
 
                 } catch (IOException e) {
 
@@ -364,13 +368,13 @@ public class StudentUI extends Activity implements View.OnClickListener
                     serverResponse = "connection not available, offline mode activated";
                     serverAvailable = false;
                     // failed to sign-in, PHP has returned an error
-                    Log.e("student ui", "Server connection unavailable" + e.getMessage());
+                    Log.e(TAG, "Server connection unavailable" + e.getMessage());
                 }
             } else {
                 // else no internet connection is available
                 serverResponse = "connection not available, offline mode activated";
                 serverAvailable = false;
-                Log.e("student ui", "Internet Connection Unavailable");
+                Log.e(TAG, "Internet Connection Unavailable");
             } // if - else
 
             return null;

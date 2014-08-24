@@ -23,6 +23,9 @@ public class Splash extends Activity
 {
     private WifiManager wifi;                                   // wifi manager object
 
+    // tags for log statements
+    private static final String TAG = "splash";
+
     // called when the activity is first created
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -32,7 +35,7 @@ public class Splash extends Activity
 
         // show splash screen
         setContentView(R.layout.splash);                // opens up the splash XML file
-        Log.d("splash", "starting");
+        Log.d(TAG, "starting");
 
         // begin checking network information
         new CheckWifi().execute();
@@ -68,7 +71,7 @@ public class Splash extends Activity
             {
 
                 wifi.setWifiEnabled(true);
-                Log.d("wifi", "wifi activated");
+                Log.d(TAG, "wifi activated");
 
             } // if
 
@@ -85,12 +88,12 @@ public class Splash extends Activity
             while (wifi.isWifiEnabled() == false)       // turns wifi on if currently off
             {
                 state = wifi.getWifiState();
-                Log.d("wifi", "current state: " + state);
+                Log.d(TAG, "current state: " + state);
                 // wait
             } // while
 
             state = wifi.getWifiState();
-            Log.d("wifi", "final state: " + state);
+            Log.d(TAG, "final state: " + state);
 
 
             // time stamp
@@ -101,7 +104,7 @@ public class Splash extends Activity
             double seconds = (double)duration / 1000000000.0;
 
             // at this point wifi is activated
-            Log.d("wifi", "time taken: " + seconds);
+            Log.d(TAG, "time taken: " + seconds);
 
             return 1;
         } // doInBackground
@@ -117,7 +120,7 @@ public class Splash extends Activity
             Intent mainIntent = new Intent(Splash.this,MainScreenActivity.class);   // creates an Intent
             Splash.this.startActivity(mainIntent);                                  // runs new activity
             Splash.this.finish();                                                   // closes splash activity
-            Log.d("splash", "leaving");
+            Log.d(TAG, "leaving");
         } // onPostExecute
     } // LoadData
 

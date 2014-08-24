@@ -100,6 +100,9 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
     // boolean to determine if server connection is still available
     private boolean serverAvailable;
 
+    // tags for log statements
+    private static final String TAG = "recursive";
+
     /**
      * Each time this screen is accessed, the app checks the Lecturer UI for server connectivity. As the Lecturer UI
      * contains code to check for server access each time it is called, it means that the recursive mode also
@@ -226,7 +229,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
             if (view.getId() == R.id.lec_scan_id)
             {
                 // logcat tag to view app progress
-                Log.d("recursive", "user wants to scan student id");
+                Log.d(TAG, "user wants to scan student id");
 
                 IntentIntegrator scanIntegrator = new IntentIntegrator(this);
                 scanIntegrator.initiateScan();
@@ -238,7 +241,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
             {
 
                 // logcat to view app progress
-                Log.d("recursive", "user wants to scan module code");
+                Log.d(TAG, "user wants to scan module code");
 
                 // calls scanner to register new details in system
                 IntentIntegrator scanIntegrator = new IntentIntegrator(this);
@@ -257,7 +260,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 if (scannedID == true && scannedModule == true)     // verifies that all info necessary is present
                 {
                     // logcat to view app progress
-                    Log.d("recursive", "scanned details to be sent to database");
+                    Log.d(TAG, "scanned details to be sent to database");
 
                     // new LecturerSignStudentIn().execute();          // code to submit details to the database
 
@@ -279,7 +282,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 {
 
                     // logcat to view app progress
-                    Log.e("recursive", "necessary details have not been successfully scanned");
+                    Log.e(TAG, "necessary details have not been successfully scanned");
 
                     Toast incompleteData = Toast.makeText(getApplicationContext(),
                             "please ensure the Student ID and Module Code have both been scanned...", Toast.LENGTH_LONG);
@@ -371,7 +374,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
             String scanFormat = scanningResult.getFormatName();
 
             // logcat to view app progress
-            Log.d("recursive", "scanned details; " + scanContent);
+            Log.d(TAG, "scanned details; " + scanContent);
 
              /**
              * the following if-else block is implemented at this stage as it is
@@ -386,7 +389,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 String scannedQRInfo = scanContent;
 
                 // logcat to view app progress
-                Log.d("recursive", "scanned module details");
+                Log.d(TAG, "scanned module details");
 
                 /** extract the necessary information out of this string to be used using special chars {} for module and []
                  * for class type */
@@ -402,8 +405,8 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 QRCorrectFormat.show();
 
                 // logcat to view app progress
-                Log.d("recursive", "module info; " + moduleInfo);
-                Log.d("recursive", "module type; " + classInfo);
+                Log.d(TAG, "module info; " + moduleInfo);
+                Log.d(TAG, "module type; " + classInfo);
 
                 scannedModule = true;       // boolean to ensure necessary information has been included before processing
 
@@ -412,7 +415,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
             {
 
                 // logcat to view app progress
-                Log.e("recursive", "incorrect data for module code scanned" + scanFormat);
+                Log.e(TAG, "incorrect data for module code scanned" + scanFormat);
 
                 // toast to notify user of error in scanning of information
                 Toast QRIncorrectFormat = Toast.makeText(getApplicationContext(),
@@ -424,7 +427,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
             {
 
                 // logcat to view app progress
-                Log.d("recursive", "scanned id details");
+                Log.d(TAG, "scanned id details");
 
                 // code to perform device beep to confirm successful scan
                 try
@@ -443,7 +446,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 // stores scanned ID as the student number
                 String scannedIDInfo = scanContent;
 
-                Log.d("recursive", scannedIDInfo);
+                Log.d(TAG, scannedIDInfo);
 
                 studentNo = scannedIDInfo;      // CHANGE TO STORE THE SCANNED ID AS AN ADDITION TO A LINKED LIST
 
@@ -459,7 +462,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 // if internet is available, return forename
                 if(serverAvailable)
                 {
-                    Log.d("recursive","batch id; " + contents);  // allows programmer to follow progress for testing
+                    Log.d(TAG,"batch id; " + contents);  // allows programmer to follow progress for testing
                     new returnForename().execute();             // runs background task to retrieve student forename
 
                 } else {
@@ -484,7 +487,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
             {
 
                 // logcat to view app progress
-                Log.e("recursive", "incorrect data for student id scanned" + scanFormat);
+                Log.e(TAG, "incorrect data for student id scanned" + scanFormat);
 
                 // informs user of an errornous scan
                 Toast IDIncorrectFormat = Toast.makeText(getApplicationContext(),
@@ -494,7 +497,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
 
             } else {
 
-                Log.e("recirsive", "scan incomplete");
+                Log.e(TAG, "scan incomplete");
 
                 // in the event that the image has not been successfully scanned, informs user to try again
                 Toast errorScan = Toast.makeText(getApplicationContext(),
@@ -506,7 +509,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         } else {
 
             // handle cancel
-            Log.d("recursive","batch status; complete, returning to check in screen");
+            Log.d(TAG,"batch status; complete, returning to check in screen");
 
         }// if-else to confirm scan data has been received
 
@@ -599,7 +602,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
         {
 
                 // logcat to view progress of app
-                Log.d("recursive", "info sent to database; " + scannedStuNo);
+                Log.d(TAG, "info sent to database; " + scannedStuNo);
 
                 // parameters to be passed into PHP script on server side
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -612,7 +615,7 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                         "POST", params);
 
                 // check log cat for response
-                Log.d("recursive", "database response" + jsonForename.toString());
+                Log.d(TAG, "database response" + jsonForename.toString());
 
             try
             {
@@ -622,12 +625,12 @@ public class RecursiveSignIn extends Activity implements View.OnClickListener
                 if (success == 1)
                 {
                     // check log cat for response
-                    Log.d("recursive", "database response; " + forename);
+                    Log.d(TAG, "database response; " + forename);
 
                 } else
                 {
                     // failed to find name
-                    Log.e("recursive", "database response; php error");
+                    Log.e(TAG, "database response; php error");
 
                     // error message needed for when sign in is not successful
                     dialogText = "an error has occurred, please try again...";

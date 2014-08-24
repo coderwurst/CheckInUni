@@ -75,6 +75,16 @@ public class InitialReg extends Activity
 
     private static boolean serverAvailable = MainScreenActivity.serverAvailable;
 
+    // tags for log statements
+    private static final String TAG = "intial reg";
+
+    /**
+     * the onCreate method in this class determines the user type from the initial character of the
+     * scanned ID, and performs a background task to authenticate the user, and in the case of a
+     * student ID also authenticate the device ID
+     */
+
+
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -88,27 +98,27 @@ public class InitialReg extends Activity
         deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
 
         // user Authentication Check with server to ensure that the user is registered to use app
-        Log.d("initial reg", "ID Auth " + scannedID);          // logcat tag to view string contents
-        Log.d("initial reg", "Device ID " + deviceID);
+        Log.d(TAG, "ID Auth " + scannedID);          // logcat tag to view string contents
+        Log.d(TAG, "Device ID " + deviceID);
 
         // assign the app student or staff user privileges
         if(scannedID.charAt(0) == 'E' || scannedID.charAt(0) == 'e')
         {
-            Log.d("initial reg", "user is a staff member");          // logcat tag to view string contents (testing purposes only)
+            Log.d(TAG, "user is a staff member");          // logcat tag to view string contents (testing purposes only)
 
             staffUser = true;       // boolean stored in shared preferences, automatically loaded on next start up
 
         } else if (scannedID.charAt(0) == 'B' || scannedID.charAt(0) == 'b')
         {
 
-            Log.d("initial reg", "user is a student");          // logcat tag to view string contents (testing purposes only)
+            Log.d(TAG, "user is a student");          // logcat tag to view string contents (testing purposes only)
 
             studentUser = true;     // boolean stored in shared preferences, automatically loaded on next start up
 
         } else {        // scanned data is neither a staff or student number
 
 
-            Log.e("initial reg", "scanned data incorrect");          // logcat tag to view string contents (testing purposes only)
+            Log.e(TAG, "scanned data incorrect");          // logcat tag to view string contents (testing purposes only)
 
             // in the event that neither an B or a E id has been scanned....
             Toast errorScan = Toast.makeText(getApplicationContext(),
@@ -132,7 +142,7 @@ public class InitialReg extends Activity
 
         // the users' details can be sent to the database for authentication
         new AuthenticateUser().execute();
-        Log.d("initial reg", "user wishes to register on device");  // logcat tag to view string contents
+        Log.d(TAG, "user wishes to register on device");  // logcat tag to view string contents
 
     }// OnCreate
 
@@ -198,17 +208,17 @@ public class InitialReg extends Activity
 
             if (studentUser == true)
             {
-                Log.d("initial reg", "student user being authenticated");          // logcat tag to view string contents (testing purposes only)
+                Log.d(TAG, "student user being authenticated");          // logcat tag to view string contents (testing purposes only)
 
                 jsonUser = jsonParser.makeHttpRequest(url_student_auth, "POST", params);
 
-                Log.d("initial reg", "device ID being authenticated");
+                Log.d(TAG, "device ID being authenticated");
                 jsonDevice = jsonParser.makeHttpRequest(url_device_auth, "POST", deviceParams);
 
 
             } else if (staffUser == true)
             {
-                Log.d("initial reg", "staff user being authenticated");          // logcat tag to view string contents (testing purposes only)
+                Log.d(TAG, "staff user being authenticated");          // logcat tag to view string contents (testing purposes only)
 
 
                 jsonUser = jsonParser.makeHttpRequest(url_staff_auth, "POST", params);
@@ -216,7 +226,7 @@ public class InitialReg extends Activity
             } else
             {
 
-                Log.e("initial reg", "scanned details are not that of student or staff");          // logcat tag to view string contents (testing purposes only)
+                Log.e(TAG, "scanned details are not that of student or staff");          // logcat tag to view string contents (testing purposes only)
 
 
                 // in the event that neither an B or a E id has been scanned....
@@ -278,7 +288,7 @@ public class InitialReg extends Activity
 
                     if (success == 1)
                     {
-                        Log.d("initial reg", "user successfully authenticated");          // logcat tag to view string contents (testing purposes only)
+                        Log.d(TAG, "user successfully authenticated");          // logcat tag to view string contents (testing purposes only)
 
 
                         // successfully authenticated user must be saved to sharedPreferences
@@ -289,19 +299,19 @@ public class InitialReg extends Activity
 
                         if (staffUser == true)
                         {
-                            Log.d("initial reg", "user type set to staff");             // logcat tag to view string contents (testing purposes only)
+                            Log.d(TAG, "user type set to staff");             // logcat tag to view string contents (testing purposes only)
 
                             editor.putInt("user_Type", 1);                                // stored in the preferences a staff user
 
                         } else if (studentUser == true)
                         {
-                            Log.d("initial reg", "user type set to student");           // logcat tag to view string contents (testing purposes only)
+                            Log.d(TAG, "user type set to student");           // logcat tag to view string contents (testing purposes only)
 
                             editor.putInt("user_Type", 2);                                // stored in the preferences a student user
 
                         } else
                         {
-                            Log.d("initial reg", "user type not recognised");           // logcat tag to view string contents (testing purposes only)
+                            Log.d(TAG, "user type not recognised");           // logcat tag to view string contents (testing purposes only)
 
                             editor.putInt("user_Type", 0);                              // for testing purposes, allows Type to be reset
 
@@ -309,7 +319,7 @@ public class InitialReg extends Activity
 
                         editor.commit();                                                // save changes
 
-                        Log.d("initial reg", "ID value; " + user_id);          // logcat tag to view contents of string
+                        Log.d(TAG, "ID value; " + user_id);          // logcat tag to view contents of string
 
                         // once user has been saved, return to main screen - to determine which UI to be called
                         Intent openMainScreen = new Intent(getApplicationContext(), MainScreenActivity.class);
@@ -320,7 +330,7 @@ public class InitialReg extends Activity
                     } else                                                              // the database has returned an error
                     {
 
-                        Log.e("initial reg", "scanned details are incorrect");          // tag to view error
+                        Log.e(TAG, "scanned details are incorrect");          // tag to view error
 
                         dialogText = "oops! an error has occurred, please try again...";// inform user that an error has occurred
 
@@ -343,7 +353,7 @@ public class InitialReg extends Activity
 
             } else if (studentUser == true && deviceOK == false)
             {
-                Log.e("initial reg", "student already registered on another device");          // tag to view error
+                Log.e(TAG, "student already registered on another device");          // tag to view error
 
                 dialogText = "oops! an error has occurred, please try again...";                // inform user that they are already registered
 
