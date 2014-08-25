@@ -22,7 +22,7 @@
                     android:id="@+id/UULogo"
                     android:background="@drawable/uulogo"
                     android:contentDescription="@string/uuj_logo_att"
-                    android:layout_marginTop="250dp"
+                    android:layout_marginTop="110dp"
                     android:layout_centerHorizontal="true"/>
 
             <Button android:id="@+id/scan_button"
@@ -31,8 +31,8 @@
                     android:layout_gravity="center"
                     android:background="@drawable/checkin"
                     android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/UULogo"
-                    android:layout_marginTop="75dp"/>
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="50dp"/>
 
         </RelativeLayout>
     </FrameLayout>
