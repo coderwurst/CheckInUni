@@ -38,7 +38,8 @@ public class ChooseQR extends Activity implements View.OnClickListener
     private Button btnTutorialQR;
     private Button btnSaveDetails;
 
-    private TextView qrID;                                  // informs user of current choice of QR-Code
+    // informs user of current choice of QR-Code
+    private TextView qrID;
     private TextView title;
 
     // webview to hold image stored on server, accessed with url provided from ViewAllModules
@@ -47,6 +48,9 @@ public class ChooseQR extends Activity implements View.OnClickListener
     // string to store selected info to be used as defaults for other lecturer functionality
     protected static String moduleCode = null;
     protected static String classType = null;
+
+    // tags for log statements
+    private static final String TAG = "choose qr";
 
     /**
      * Included in this onCreate method, is a small piece of code on line 56 to prevent the device from
@@ -76,7 +80,7 @@ public class ChooseQR extends Activity implements View.OnClickListener
         title.setText("lecture");
 
         // logcat staement to follow app process on console
-        Log.d("choose qr ", "qr address; " + lectureUrl + "," + tutorialUrl);
+        Log.d(TAG, "qr address; " + lectureUrl + "," + tutorialUrl);
 
         // load the default QR-Code data into the webview (lecture)
         webview = (WebView)this.findViewById(R.id.webView);
@@ -119,7 +123,7 @@ public class ChooseQR extends Activity implements View.OnClickListener
     @Override
     public void onClick (View view)
     {
-        if(view.getId()==R.id.lec_tutqr)
+        if(view.getId() == R.id.lec_tutqr)
         {
             ChooseQR.this.webview.loadData("<html><head><style type='text/css'>body{margin:auto auto;text-align:center;} img{width:90%;} </style></head><body><img src='" + tutorialUrl + "'/></body></html>" ,"text/html",  "UTF-8");
             // set textview default contents to lecture
@@ -128,7 +132,8 @@ public class ChooseQR extends Activity implements View.OnClickListener
             btnLectureQR.setBackgroundResource(R.drawable.lecture);
 
 
-        } else if (view.getId()==R.id.lec_lecqr){
+        } else if (view.getId() == R.id.lec_lecqr)
+        {
 
             ChooseQR.this.webview.loadData("<html><head><style type='text/css'>body{margin:auto auto;text-align:center;} img{width:90%;} </style></head><body><img src='" + lectureUrl + "'/></body></html>" ,"text/html",  "UTF-8");
             // set textview default contents to lecture

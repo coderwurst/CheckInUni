@@ -65,23 +65,28 @@
                       android:textSize="12sp"
                       android:layout_below="@+id/module_id"/>
 
-            <!-- Input Type -->
-            <Spinner android:id="@id/typeSpinner"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="2dp"
-                      android:layout_marginLeft="50dp"
-                      android:layout_marginRight="250dp"
-                      android:layout_alignParentLeft="true"
-                      android:layout_below="@+id/typeTextView"
-                      android:background="@android:drawable/btn_dropdown"/>
+            <!-- Input Class Type -->
+            <Button android:id="@+id/chooseLecture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/lecture_small"
+                    android:layout_below="@id/typeTextView"
+                    android:layout_alignLeft="@id/module_id"/>
 
-            <!-- Button Subimit -->
+            <Button android:id="@+id/chooseTutorial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/tutorial_small"
+                    android:layout_alignTop="@+id/chooseLecture"
+                    android:layout_toRightOf="@id/chooseLecture"/>
+
+            <!-- Button Submit -->
             <Button android:id="@id/add_student_man"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/lecturercheckinhoriz"
-                    android:layout_alignTop="@id/typeSpinner" android:layout_alignRight="@id/module_id"/>
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignRight="@id/module_id"/>
 
         </RelativeLayout>
 

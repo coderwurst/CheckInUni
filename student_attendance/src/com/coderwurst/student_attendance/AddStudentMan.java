@@ -28,18 +28,19 @@ import android.view.View;
  * ************************
  */
 
-public class AddStudentMan extends Activity
+public class AddStudentMan extends Activity implements View.OnClickListener
 {
 
     // fields to store data
     private EditText inputStudentID;
     private EditText inputModuleID;
-    // private EditText inputType;
 
     // strings to hold entered information
     private String sStudentID;
     private String sModuleID;
     private String sClassType;
+    private boolean sLecture = false;
+    private boolean sTutorial= false;
 
     // button to sent student info to database
 	private Button btnSignIn;
@@ -49,7 +50,7 @@ public class AddStudentMan extends Activity
     private String dialogText = "success";
 
 	// JSON parser class
-	JSONParser jsonParser = new JSONParser();
+	private JSONParser jsonParser = new JSONParser();
 
 	// server IP address
     private static String serverAddress = MainScreenActivity.serverIP;
@@ -57,59 +58,43 @@ public class AddStudentMan extends Activity
 	// single product url
 	private static final String url_man_signin = "http://" + serverAddress + "/xampp/student_attendance/sign_in.php";
 
-
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
 
     // dropdown menu components
-    private Spinner dropdown;
+    private Button btnTutorial;
+    private Button btnLecture;
 
     // data previously stored from Choose QR class
     protected static String addModuleID = null;
     protected static String addClassType = null;
 
+    // tags for log statements
+    private static final String TAG = "add manual";
+
 
     @Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+    {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_student_man);
 
-        Log.d("add student manually", "mod ID: " + addModuleID);
-
+        Log.d(TAG, "mod ID: " + addModuleID);
 
         // logcat tag to view app progress
-        Log.d("add student manual", "manual ui open");
+        Log.d(TAG, "manual ui open");
 
         // button to send details to server
 		btnSignIn = (Button) findViewById(R.id.add_student_man);
 
+        // button to determine if class is a lecture or tutorial
+        btnLecture = (Button)findViewById(R.id.chooseLecture);
+        btnTutorial = (Button)findViewById(R.id.chooseTutorial);
+
         // confirm details button click event
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-                // retrieves current text entered into each field to be used to check if all data has been entered
-                sStudentID = inputStudentID.getText().toString();
-                sModuleID = inputModuleID.getText().toString();
-                sClassType = dropdown.getSelectedItem().toString();
-
-                if (sStudentID.isEmpty() || sModuleID.isEmpty() || sClassType.isEmpty())
-                {
-                    // informs the user that at least one piece of information has not yet been entered
-                    Toast errorToast = Toast.makeText(getApplicationContext(),
-                            "please check that all details have been entered and try again", Toast.LENGTH_LONG);
-
-                    errorToast.show();
-
-                } else
-                {
-                    // starting background task check student in
-                    new SignStudentIn().execute();
-
-                } // if - else to prevent an incomplete record being stored on the database
-            } // onClick
-        }); // onClickListener
+        btnSignIn.setOnClickListener(this);
+        btnLecture.setOnClickListener(this);
+        btnTutorial.setOnClickListener(this);
 
         // text fields to be updated by user, until then an example input is shown
         inputStudentID = (EditText) findViewById(R.id.student_id);
@@ -125,9 +110,76 @@ public class AddStudentMan extends Activity
             inputModuleID.setText(addModuleID);
         } // if - else
 
-        populateDeviceTypeSpinner();        // call to load the dropdown menu with programmed options
+        setClassType();
 
     } // onCreate
+
+    /**
+     * the onCLick method in this class controls the appearance for the lecture and tutorial choice buttons
+     * as well as a check to ensure all information has been entered before sending to the database.
+     * It was decided during Phase 3 of testing to remove a Spinner object for the choice between lecture
+     * and tutorial - as with only 2 options a drop down list was not required.
+     */
+
+    @Override
+    public void onClick(View view)
+    {
+        if(view.getId() == R.id.chooseLecture)
+        {
+            btnLecture.setBackgroundResource(R.drawable.lecture_small_enabled);
+            btnTutorial.setBackgroundResource(R.drawable.tutorial_small);
+
+            sLecture = true;
+            sTutorial = false;
+
+            Log.d(TAG, "user select: lecture");
+
+        } else if (view.getId() == R.id.chooseTutorial)
+        {
+            btnTutorial.setBackgroundResource(R.drawable.tutorial_small_enabled);
+            btnLecture.setBackgroundResource(R.drawable.lecture_small);
+
+            sTutorial = true;
+            sLecture = false;
+
+            Log.d(TAG, "user select: tutorial");
+
+        } else if (view.getId() == R.id.add_student_man)
+        {
+
+            // retrieves current text entered into each field to be used to check if all data has been entered
+            sStudentID = inputStudentID.getText().toString();
+            sModuleID = inputModuleID.getText().toString();
+
+            if (sLecture)
+            {
+                sClassType = "lecture";
+            } else if (sTutorial)
+            {
+                sClassType = "tutorial";
+            } else
+            {
+                sClassType = null;
+            } // if - else - if - else
+
+            if (sStudentID.isEmpty() || sModuleID.isEmpty() || sClassType.isEmpty())
+            {
+                // informs the user that at least one piece of information has not yet been entered
+                Toast errorToast = Toast.makeText(getApplicationContext(),
+                        "please check that all details have been entered and try again", Toast.LENGTH_LONG);
+
+                errorToast.show();
+
+            } else
+            {
+                // starting background task check student in
+                new SignStudentIn().execute();
+
+            } // if - else to prevent an incomplete record being stored on the database
+        } // if - else - if for choosing onClick functions
+
+    } // onClick
+
 
     /**
      * This method is used to create a drop down menu (spinner) to hold the values for the types
@@ -136,31 +188,37 @@ public class AddStudentMan extends Activity
      * 'tutorial', but this could be extended later to include; 'lad', 'seminar' or others
      **/
 
-    private void populateDeviceTypeSpinner()
+    private void setClassType()
     {
-        // assigns the spinner object to the element in the xml file
-        dropdown = (Spinner)findViewById(R.id.typeSpinner);
-
-        // finds the array storing the information in the values resource file, Strings
-        ArrayAdapter<CharSequence> deviceTypeArrayAdapter = ArrayAdapter.createFromResource(this, R.array.classType, android.R.layout.simple_spinner_item);
-
-        // sets the contents of the previously found array to an array adapter
-        deviceTypeArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // assigns the contents of the array to the dropdown object
-        dropdown.setAdapter(deviceTypeArrayAdapter);
-
         // if - else block to select previously selected class type info form ChooseQR.java (if any)
         if(addClassType == "lecture")
         {
-            dropdown.setSelection(0);
+            btnLecture.setBackgroundResource(R.drawable.lecture_small_enabled);
+            btnTutorial.setBackgroundResource(R.drawable.tutorial_small);
+
+            sLecture = true;
+            sTutorial = false;
+
+            Log.d(TAG, "saved class type: lecture");
+
         } else if (addClassType == "tutorial")
         {
-            dropdown.setSelection(1);
-        } else
+            btnTutorial.setBackgroundResource(R.drawable.tutorial_small_enabled);
+            btnLecture.setBackgroundResource(R.drawable.lecture_small);
 
-        // if no previously saved selection, set the default according to array index (currently lecture)
-        dropdown.setSelection(0);
+            sTutorial = true;
+            sLecture = false;
+
+            Log.d(TAG, "saved class type: tutorial");
+
+        } else
+        {
+            // if no previously saved selection, both booleans set to false
+            sLecture = false;
+            sTutorial = false;
+
+            Log.d(TAG, "no saved class type");
+        } // if - else - if - else
 
     } // populateDeviceSpinner
 
@@ -200,10 +258,19 @@ public class AddStudentMan extends Activity
             // data captured from input fields stored in strings
             String student_id = inputStudentID.getText().toString();
             String module_id = inputModuleID.getText().toString();
-            String type = dropdown.getSelectedItem().toString();
+            String type;
+
+            if(sLecture)
+            {
+                type = "lecture";
+            } else
+            {
+                type = "tutorial";
+            } // if -else
+
 
             // logcat tag to view app progress
-            Log.d("add student manual", "details to be sent: " + student_id + "," + module_id + "," + type);
+            Log.d(TAG, "details to be sent: " + student_id + "," + module_id + "," + type);
 
             // parameters to be passed into PHP script on server side
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -217,7 +284,7 @@ public class AddStudentMan extends Activity
                     "POST", params);
 
             // check log cat for response
-            Log.d("add student manual", "database response; " + json.toString());
+            Log.d(TAG, "database response; " + json.toString());
 
             // check for success tag if data has been successfully added to database
             try {
@@ -226,7 +293,7 @@ public class AddStudentMan extends Activity
                 if (success == 1) {
 
                     // details have been stored and the student is checked in
-                    Log.d("add student manual", "check in success");
+                    Log.d(TAG, "check in success");
 
                     // finish this activity, returns user to home screen
                     finish();
@@ -234,7 +301,7 @@ public class AddStudentMan extends Activity
                 } else {
 
                     // failed to sign-in, PHP has returned an error
-                    Log.e("add student manual", "php error occurred");
+                    Log.e(TAG, "php error occurred");
 
                     // error message needed for when sign in is not successful
                     dialogText = "an error has occurred, please try again later...";
